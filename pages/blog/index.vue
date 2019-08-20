@@ -8,8 +8,7 @@
 
   .columns
     .column(v-for='entry in blogPosts')
-      BlogEntry(:key='entry.id' :entry='entry')
-
+      blog-entry-header(:key='entry.id' :entry='entry')
 </template>
 
 <style lang="sass">
@@ -21,12 +20,12 @@
 <script>
 import Prismic from 'prismic-javascript'
 import PrismicConfig from '~/prismic.config.js'
-import BlogEntry from '@/components/BlogEntry.vue'
+import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 
 export default {
   name: 'Blog',
   components: {
-    BlogEntry
+    BlogEntryHeader
   },
   head () {
     return {

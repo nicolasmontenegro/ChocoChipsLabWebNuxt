@@ -1,17 +1,21 @@
 <template lang="pug">
 .entry-header
   .entry-picture-head(:style='picture_head')
-  nuxt-link(:to='link')
+
+  nuxt-link(v-if='linkable' :to='link')
     prismic-rich-text(class='entry-title' :field='entry.data.title')
+  prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
+
   p.entry-meta
     span Publicado el {{ entry.first_publication_date }}
     span(v-if='entry.last_publication_date') &emsp;|&emsp;Actualizado el {{ entry.last_publication_date }}
+
   prismic-rich-text(class='entry-lead' :field='entry.data.lead')
-  nuxt-link(:to='link')
+
+  nuxt-link(v-if='linkable' :to='link')
     .is-medium
       strong
         i Leer más
-  p {{ entry }} {{ $prismic.richTextAsPlain(entry.data.title) }}
 </template>
 
 <script>
@@ -23,6 +27,11 @@ export default {
       type: Object,
       default: () => {},
       required: true
+    },
+    linkable: {
+      type: Boolean,
+      default: true,
+      required: false
     }
   },
   computed: {
