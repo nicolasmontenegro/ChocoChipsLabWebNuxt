@@ -9,6 +9,8 @@
   .columns
     .column
       blog-entry-header(:entry='entry' :linkable='false')
+
+  slices-block(:slices='entry.data.body')
 </template>
 
 <style lang="sass">
@@ -21,11 +23,13 @@
 import Prismic from 'prismic-javascript'
 import PrismicConfig from '~/prismic.config.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
+import SlicesBlock from '~/components/SlicesBlock.vue'
 
 export default {
   name: 'BlogEntry',
   components: {
-    BlogEntryHeader
+    BlogEntryHeader,
+    SlicesBlock
   },
   head () {
     return {

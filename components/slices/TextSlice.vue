@@ -1,7 +1,6 @@
 <template lang="pug">
-.post-part.single.container
-  {{ slice }}
-  //- prismic-rich-text(class='textslice' :field='slice.primary.text')
+.text-slice
+  prismic-rich-text(v-for='(item, p_index) in slice.items' :key='text_key(index, p_index)' :field='item.paragraph')
 </template>
 
 <script>
@@ -11,7 +10,20 @@ export default {
       type: Object,
       default: () => {},
       required: true
+    },
+    index: {
+      type: Number,
+      default: 0,
+      required: true
     }
+  },
+  methods: {
+    text_key (index, pIndex) { return `p_${index}_${pIndex}` }
   }
 }
 </script>
+
+<style lang="sass">
+.text-slice p
+  margin-bottom: 1rem
+</style>

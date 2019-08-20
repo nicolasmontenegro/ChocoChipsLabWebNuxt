@@ -1,20 +1,25 @@
 <template lang="pug">
 .slide
-  //- Slice section template
   section(v-for="(slice, index) in slices" :key="'slice-' + index")
-    //- Text slice template -->
-    template(v-if="slice.slice_type === 'text'")
-      //- Here :slice="slice" passes the data to the component -->
-      text-slice(:slice='slice')
+    template(v-if='slice.slice_type === "paragraph"')
+      text-slice(:slice='slice', :index='index')
+    template(v-if='slice.slice_type === "embed_video_audio"')
+      embed-audio-video(:slice='slice', :index='index')
+    template(v-if='slice.slice_type === "photo"')
+      photo(:slice='slice', :index='index')
 </template>
 
 <script>
 // Imports for all slices
-const TextSlice = () => import('../components/slices/TextSlice.vue')
+import TextSlice from '../components/slices/TextSlice.vue'
+import EmbedAudioVideo from '../components/slices/EmbedAudioVideo.vue'
+import Photo from '../components/slices/Photo.vue'
 
 export default {
   components: {
-    TextSlice
+    TextSlice,
+    EmbedAudioVideo,
+    Photo
   },
   props: {
     slices: {
