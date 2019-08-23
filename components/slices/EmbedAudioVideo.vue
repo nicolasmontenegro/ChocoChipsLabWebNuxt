@@ -16,7 +16,19 @@ export default {
 
 <style lang="sass">
 .embed-slice
-  margin-bottom: 1rem
+  padding: 3rem 0
+  position: relative
+
+  &::before
+    content: ''
+    position: absolute
+    height: 100%
+    width: 100vw
+    right: 50%
+    margin-right: -50vw
+    top: 0
+    background: black
+    z-index: -1
 
   iframe
     height: 25rem

@@ -30,3 +30,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.slide
+  padding-bottom: 5rem
+</style>

@@ -34,10 +34,8 @@ export default {
 
 <style lang="sass">
 .photo-slice
-  margin-bottom: 1rem
   position: relative
-  padding: 2rem 0
-  // color: white
+  padding: 3rem 0
 
   &::before
     content: ''

@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style lang="sass">
-.text-slice p
-  margin-bottom: 1rem
+.text-slice
+  &:not(first-child)
+    margin-top: 1rem
+
+  p
+    margin-bottom: 1rem
 </style>
