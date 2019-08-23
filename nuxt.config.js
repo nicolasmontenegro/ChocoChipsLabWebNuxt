@@ -23,6 +23,18 @@ export default {
     __dangerouslyDisableSanitizers: ['script']
   },
   /*
+  ** Extend the routes created by Nuxt.js
+  */
+  router: {
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'BlogPage',
+        path: '/blog/page/:page',
+        component: resolve(__dirname, 'pages/blog/index.vue')
+      })
+    }
+  },
+  /*
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
