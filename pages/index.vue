@@ -26,7 +26,7 @@ export default {
   name: 'Home',
   head () {
     return {
-      title: 'Prismic Nuxt.js Blog'
+      title: 'Choco Chips Lab'
     }
   },
   async asyncData ({ context, error, req }) {

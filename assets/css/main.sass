@@ -2,17 +2,17 @@ html, body
   margin: 0 !important
   padding: 0 !important
 
-
-.container > *::before
-  content: ''
-  position: absolute
-  min-height: 100vh
-  height: 100%
-  width: 100vw
-  right: 50%
-  margin-right: -50vw
-  top: 0
-  z-index: -10
+.container 
+  & > *::before
+    content: ''
+    position: absolute
+    min-height: 100vh
+    height: 100%
+    width: 100vw
+    right: 50%
+    margin-right: -50vw
+    top: 0
+    z-index: -10
 
 
 h1, h2, h3, h4, h5, h6
@@ -23,3 +23,7 @@ h1, h2, h3, h4, h5, h6
 
   .title
     font-size: 3em !important
+
+.columns
+  margin-top: inherit !important
+  margin-bottom: inherit !important
