@@ -13,10 +13,9 @@
     .column.has-text-centered
       nuxt-link(to="/blog")
         strong Blog
-    .column.has-text-centered(v-for='i in 3')
-      a(href='#')
-        strong Link {{ i }}
-
+    .column.has-text-centered
+      nuxt-link(to="/about/me")
+        strong Acerca de
 </template>
 
 <script>
