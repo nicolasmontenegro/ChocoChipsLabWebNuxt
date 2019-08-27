@@ -1,21 +1,13 @@
 <template lang="pug">
 .blog
   .columns
-    .column.has-text-centered
-      h1.title.is-1 Blog
-      h1.subtitle.is-1
-        nuxt-link(to="/") Volver al inicio
-
-  .columns
     .column(v-for='entry in blogPosts')
       blog-entry-header(:key='entry.id' :entry='entry')
+
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
 </template>
 
 <style lang="sass">
-.blog
-  &::before
-    background-color: rgba(244, 236, 216, 1) !important
 </style>
 
 <script>
@@ -31,9 +23,7 @@ export default {
     Pagination
   },
   head () {
-    return {
-      title: 'Blog - Choco Chips Lab'
-    }
+    return { title: 'Blog' }
   },
   async asyncData ({ params, error, req, query }) {
     try {
@@ -64,6 +54,12 @@ export default {
       // Returns error page
       error({ statusCode: 404, message: 'Page not found' })
     }
+  },
+  mounted () {
+    this.$store.commit(
+      'navegation/setNavegation',
+      { section: { name: 'Blog', style: 'blog' }, back: { url: '/', name: 'Inicio' } }
+    )
   }
 }
 </script>

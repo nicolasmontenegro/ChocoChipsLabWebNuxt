@@ -1,0 +1,20 @@
+$text-color-blog: #363636
+$background-color-blog: #f4ecd8
+
+$text-color-home: white
+$background-color-home: #ff5337
+
+$text-color-about: white
+$background-color-about: #8c31b6
+
+@mixin container($selector, $text-color, $background-color)
+  .container.#{$selector}
+    &, strong, h1, h2, h3, h4, h5, h6
+      color: $text-color !important
+
+    &::before
+      background-color: $background-color
+
+@include container("blog", $text-color-blog, $background-color-blog)
+@include container("home", $text-color-home, $background-color-home)
+@include container("about", $text-color-about, $background-color-about)

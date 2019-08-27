@@ -1,12 +1,7 @@
 <template lang="pug">
-.page
-  .columns
-    .column.has-text-centered
-      h1.title.is-1 Acerca de mi
-      h1.subtitle.is-1
-        nuxt-link(to="/") Volver al indice
-
-  slices-block(:slices='page.data.body')
+.columns
+  .column
+    slices-block(:slices='page.data.body')
 </template>
 
 <script>
@@ -43,14 +38,15 @@ export default {
       // Returns error page
       error({ statusCode: 404, message: 'Page not found' })
     }
+  },
+  mounted () {
+    this.$store.commit(
+      'navegation/setNavegation',
+      { section: { name: 'Acerca de mi', style: 'about' }, back: { url: '/', name: 'Inicio' } }
+    )
   }
 }
 </script>
 
 <style lang="sass">
-.page
-  color: white
-
-  &::before
-    background-color: #8c31b6 !important
 </style>
