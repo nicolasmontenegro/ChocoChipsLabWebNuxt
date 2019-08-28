@@ -15,8 +15,14 @@ $link-hover-color-about: #8c31b6
     &, strong, h1, h2, h3, h4, h5, h6
       color: $text-color
 
-    a:hover, a:hover > *
-      color: $link-hover-color !important
+    a:not(.simple)
+      transition: color 333ms ease-out
+
+      &:hover, &:hover > *
+        color: $link-hover-color !important
+
+      &:focus, &:focus > *, &:focus-within, &:focus-within > *
+        color: darken( $link-hover-color, 10% ) !important
 
     &::before
       background-color: $background-color

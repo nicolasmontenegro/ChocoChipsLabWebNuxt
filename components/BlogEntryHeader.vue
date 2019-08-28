@@ -1,6 +1,8 @@
 <template lang="pug">
 .entry-header
-  .entry-picture-head(:style='picture_head')
+  nuxt-link.simple(v-if='linkable' :to='link')
+    .entry-picture-head(:style='picture_head')
+  .entry-picture-head(v-else :style='picture_head')
 
   nuxt-link(v-if='linkable' :to='link')
     prismic-rich-text(class='entry-title' :field='entry.data.title')
@@ -36,7 +38,7 @@ export default {
   },
   computed: {
     picture_head () {
-      return { background: ('url(' + (this.entry ? this.entry.data.header_image.url : null) + ')') }
+      return { background: ('rgb(226, 226, 226) url(' + (this.entry ? this.entry.data.header_image.url : null) + ')') }
     },
     link () {
       return LinkResolver(this.entry)
