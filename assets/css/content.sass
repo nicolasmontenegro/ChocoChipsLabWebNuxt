@@ -11,6 +11,12 @@ $background-color-about: #8c31b6
 $link-hover-color-about: #8c31b6
 
 @mixin container($selector, $text-color, $background-color, $link-hover-color)
+  .loading-page.#{$selector}
+    background: $background-color
+
+    &, > *
+      color: $text-color
+
   .container.#{$selector}
     &, strong, h1, h2, h3, h4, h5, h6
       color: $text-color

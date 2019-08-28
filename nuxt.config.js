@@ -37,7 +37,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: '~/components/Loading.vue',
   /*
   ** Global CSS
   */
