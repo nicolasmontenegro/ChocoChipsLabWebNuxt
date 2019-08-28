@@ -17,6 +17,28 @@ html, body
 h1, h2, h3, h4, h5, h6
   font-family: 'Palanquin Dark', sans-serif
 
+a 
+  position: relative 
+  display: inline-block
+
+  &::before
+    content: ''
+    transition: width 333ms ease-out
+    background-color: #fff
+    position: absolute
+    border-radius: 5px
+    height: calc(100% + 10px)
+    width: 0%
+    top: -5px
+    right: -5px
+    z-index: -1
+
+  &:hover, &:active, &:focus
+    &::before
+      width: calc(100% + 10px)
+      left: -5px
+      right: inherit
+
 .title-main
   margin: 2rem
 
@@ -26,5 +48,6 @@ h1, h2, h3, h4, h5, h6
 .columns
   margin-top: inherit !important
   margin-bottom: inherit !important
+
 
 @import '~/assets/css/content.sass'

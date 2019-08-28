@@ -47,7 +47,9 @@ export default {
 
 <style lang="sass">
 .entry-header
-  & *
+  position: relative
+
+  & > *
     position: relative
     z-index: 3
 

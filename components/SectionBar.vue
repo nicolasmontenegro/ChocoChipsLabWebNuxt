@@ -28,40 +28,17 @@ export default {
 
 <style lang="sass">
 .sectionbar
-  h1, h2, h3, h4, h5, h6
-    color: white !important
+  .title, .subtitle
+    margin-bottom: .5rem
 
   .link_back
-    margin: 1rem 0
+    margin-bottom: 1rem
 
   .links
-    a
-      color: white !important
-      transition: all 333ms ease-in
-      position: relative
+    li
+      margin-bottom: .2rem
 
-      &::before
-        content: ''
-        transition: all 111ms ease-out
-        background-color: #fff
-        position: absolute
-        border-radius: 5px
-        height: 200%
-        width: 300%
-        top: -50%
-        right: -100%
-        z-index: -1
-        transform: scale(.8)
-        opacity: 0
-
-      &:hover
-        color: #bf1b00 !important
-
-      &:active, &:focus
-        color: #7e291b !important
-
-      &:hover, &:active, &:focus
-        &::before
-          transform: scale(1)
-          opacity: 1
+      a
+        font-size: 130%
+        // display: block
 </style>
