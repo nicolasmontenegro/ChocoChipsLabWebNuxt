@@ -12,25 +12,25 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/bulma": "^1.2.1",
+    "@nuxtjs/bulma": "^1.2.6",
     "@nuxtjs/style-resources": "^1.0.0",
-    "cross-env": "^5.2.0",
-    "nuxt": "^2.0.0",
+    "cross-env": "^5.2.1",
+    "nuxt": "^2.11.0",
     "prismic-dom": "^2.1.0",
-    "prismic-javascript": "^2.0.1",
+    "prismic-javascript": "^2.1.5",
     "prismic-vue": "git+https://github.com/prismicio/prismic-vue.git#nuxt"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^1.0.1",
+    "@nuxtjs/eslint-config": "^1.1.2",
     "@nuxtjs/eslint-module": "^0.2.1",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.3",
     "eslint": "^5.15.1",
-    "eslint-plugin-nuxt": ">=0.4.2",
-    "node-sass": "^4.12.0",
-    "nodemon": "^1.18.9",
-    "pug": "^2.0.3",
+    "eslint-plugin-nuxt": "^0.5.0",
+    "node-sass": "^4.13.1",
+    "nodemon": "^1.19.4",
+    "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^1.0.0"
+    "sass-loader": "^7.3.1",
+    "style-loader": "^1.1.3"
   }
 }
