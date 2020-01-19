@@ -19,3 +19,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.container .content.main
+  @media screen and (max-width: $desktop)
+    padding-top: 2rem
+</style>

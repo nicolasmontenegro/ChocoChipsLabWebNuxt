@@ -1,5 +1,5 @@
 <template lang="pug">
-.sectionbar(:class="[sectionBarClass, isExpanded]")
+.sectionbar(:class="[isExpanded]")
   .is-spaced.title-site
     logo
     h1.title.is-spaced.is-1 Choco Chips Lab
@@ -42,7 +42,6 @@ export default {
   },
   computed: {
     navegation () { return this.$store.state.navegation || null },
-    sectionBarClass () { return this.$store.state.navegation.section.style },
     isExpanded () { return (this.is_expanded ? 'is-expanded' : '') }
   }
 }
@@ -63,12 +62,19 @@ export default {
       a
         font-size: 130%
         // display: block
+
   @media screen and (max-width: $desktop)
     position: fixed
     margin: -.75rem
     width: 100%
     padding: 0 .5rem
     z-index: 1500
+
+    .navegation-site
+      padding: 0 1rem 1rem
+
+    &:not(.is-expanded) .navegation-site
+        display: none
 
     .title-site
       display: flex

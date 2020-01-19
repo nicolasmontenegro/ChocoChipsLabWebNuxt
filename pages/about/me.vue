@@ -25,8 +25,6 @@ export default {
       const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
       const page = await api.getByUID('page', 'about_me')
 
-      console.log(page)
-
       // Load the edit button
       if (process.client) { window.prismic.setupEditButton() }
 

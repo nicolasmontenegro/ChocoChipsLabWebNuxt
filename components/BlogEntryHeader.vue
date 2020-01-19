@@ -39,7 +39,6 @@ export default {
   computed: {
     picture_head () {
       const imgUrl = (this.entry && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : require('~/assets/images/chocolate chip cookie bg.svg')
-      console.log(imgUrl)
       return { background: `url('${imgUrl}')` }
     },
     link () {
