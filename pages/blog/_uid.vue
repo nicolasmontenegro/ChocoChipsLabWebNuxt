@@ -5,9 +5,18 @@
       blog-entry-header(:entry='entry' :linkable='false')
 
   slices-block(:slices='entry.data.body')
+
+  .columns.is-centered
+    .column.is-1
+      logo
 </template>
 
 <style lang="sass">
+.main .blog
+  .slide
+    padding-bottom: 0rem
+  .logo
+    width: 100%
 </style>
 
 <script>
@@ -16,12 +25,14 @@ import Prismic from 'prismic-javascript'
 import PrismicConfig from '~/prismic.config.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 import SlicesBlock from '~/components/SlicesBlock.vue'
+import Logo from '~/components/vectors/Logo.vue'
 
 export default {
   name: 'BlogEntry',
   components: {
     BlogEntryHeader,
-    SlicesBlock
+    SlicesBlock,
+    Logo
   },
   head () {
     return {

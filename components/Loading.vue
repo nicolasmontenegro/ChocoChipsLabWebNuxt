@@ -1,12 +1,18 @@
 <template lang="pug">
 //-(v-if="loading")
 transition(name="loading")
-  .loading-page(v-if="loading" :class='containerClass')
-    h1.title.is-1 Cargando
+  .loading-page.is-spaced(v-if="loading")
+    logo
+    //- h1.title.is-1 Cargando
 </template>
 
 <script>
+import Logo from '~/components/vectors/Logo.vue'
+
 export default {
+  components: {
+    Logo
+  },
   data: () => ({
     loading: false
   }),
@@ -32,23 +38,35 @@ export default {
   width: 100vw
   z-index: 1000
   overflow: hidden
+  opacity: 1
 
   display: flex
   align-items: center
   justify-content: center
+  flex-direction: column
 
   > *
     height: min-content
     white-space: nowrap
 
+  background: #e2e2e2
+
+  .logo
+    fill: #bababa
+
+  &, > *
+    color: #bababa
+
 .loading-enter-active
-  transition: width 333ms ease-out
+  transition: opacity 333ms ease-out // width 333ms ease-out,
 .loading-leave-active
-  transition: width 333ms ease-in
+  transition: opacity 333ms ease-in // width 333ms ease-in,
 .loading-enter
-  width: 0
-  left: 0
+  // width: 50vw
+  // right: 0
+  opacity: 0
 .loading-leave-to
-  width: 0
-  right: 0
+  // width: 50vw
+  // left: 0
+  opacity: 0
 </style>

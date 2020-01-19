@@ -47,4 +47,8 @@ export default {
     top: 0
     background: #b2a176
     z-index: -1
+
+    @media screen and (min-width: $tablet)
+      right: 67.1%
+
 </style>

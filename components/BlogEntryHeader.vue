@@ -38,7 +38,9 @@ export default {
   },
   computed: {
     picture_head () {
-      return { background: ('rgb(226, 226, 226) url(' + (this.entry ? this.entry.data.header_image.url : null) + ')') }
+      const imgUrl = (this.entry && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : require('~/assets/images/chocolate chip cookie bg.svg')
+      console.log(imgUrl)
+      return { background: `url('${imgUrl}')` }
     },
     link () {
       return LinkResolver(this.entry)

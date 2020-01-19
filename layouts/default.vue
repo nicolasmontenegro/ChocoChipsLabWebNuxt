@@ -3,7 +3,7 @@
   .columns
     .column.is-3
       SectionBar
-    .column.is-9
+    .column.is-9.content.main
       nuxt
 </template>
 

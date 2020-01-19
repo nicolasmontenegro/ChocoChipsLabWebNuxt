@@ -64,8 +64,17 @@ export default {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma'
+    '@nuxtjs/bulma',
+    // https://github.com/nuxt-community/style-resources-module#readme
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    // your settings here
+    sass: [
+      'assets/css/utils/*.sass',
+      'bulma/sass/utilities/_all.sass'
+    ]
+  },
   /*
   ** Build configuration
   */

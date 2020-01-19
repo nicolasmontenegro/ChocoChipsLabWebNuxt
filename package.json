@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nuxtjs/bulma": "^1.2.1",
+    "@nuxtjs/style-resources": "^1.0.0",
     "cross-env": "^5.2.0",
     "nuxt": "^2.0.0",
     "prismic-dom": "^2.1.0",

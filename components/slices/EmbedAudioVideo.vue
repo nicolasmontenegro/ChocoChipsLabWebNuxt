@@ -30,6 +30,9 @@ export default {
     background: black
     z-index: -1
 
+    @media screen and (min-width: $tablet)
+      right: 67.1%
+
   iframe
     height: 25rem
     width: 100%

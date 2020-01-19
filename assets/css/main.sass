@@ -18,8 +18,11 @@ h1, h2, h3, h4, h5, h6
   font-family: 'Palanquin Dark', sans-serif
 
 a:not(.simple)
-  position: relative 
   display: inline-block
+
+  &, > *
+    position: relative
+    z-index: 3
 
   &::before
     content: ''
@@ -31,7 +34,7 @@ a:not(.simple)
     width: 0%
     top: -5px
     right: -5px
-    z-index: -1
+    z-index: 0
 
   &:hover, &:active, &:focus
     &::before
@@ -49,5 +52,11 @@ a:not(.simple)
   margin-top: inherit !important
   margin-bottom: inherit !important
 
+.columns
+  flex-wrap: wrap
+
+  @media screen and (max-width: $desktop)
+    padding-left: $padding-mobile
+    padding-right: $padding-mobile
 
 @import '~/assets/css/content.sass'

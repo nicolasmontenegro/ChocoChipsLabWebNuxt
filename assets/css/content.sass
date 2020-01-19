@@ -1,21 +1,19 @@
-$text-color-blog: #363636
-$background-color-blog: #f4ecd8
-$link-hover-color-blog: #363636
-
-$text-color-home: white
-$background-color-home: #ff5337
-$link-hover-color-home: #ff5337
-
-$text-color-about: white
-$background-color-about: #8c31b6
-$link-hover-color-about: #8c31b6
-
 @mixin container($selector, $text-color, $background-color, $link-hover-color)
+  // .sectionbar.#{$selector}
+  //    background: $background-color-blog
+
+    .arrow
+      fill: $text-color
+
+  .loading-page.#{$selector}, .container.#{$selector}
+    .logo:not(.special) *
+      fill: $text-color
+
   .loading-page.#{$selector}
-    background: $background-color
+    background: $background-color-blog
 
     &, > *
-      color: $text-color
+      color: $text-color-blog
 
   .container.#{$selector}
     &, strong, h1, h2, h3, h4, h5, h6

@@ -1,7 +1,7 @@
 <template lang="pug">
 .blog
   .columns
-    .column(v-for='entry in blogPosts')
+    .column.is-12-tablet.is-12-desktop.is-6-widescreen(v-for='entry in blogPosts')
       blog-entry-header(:key='entry.id' :entry='entry')
 
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
