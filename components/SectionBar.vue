@@ -66,7 +66,6 @@ export default {
 
         a
           font-size: 130%
-          // display: block
 
   @media screen and (max-width: $desktop)
     position: fixed

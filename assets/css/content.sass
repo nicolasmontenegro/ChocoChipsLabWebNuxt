@@ -17,11 +17,12 @@
       .arrow path
         stroke: $text-color !important
 
-    &, strong, h1, h2, h3, h4, h5, h6
+    &, h1, h2, h3, h4, h5, h6, a, strong
       color: $text-color
 
     a:not(.simple)
-      transition: color 333ms ease-out
+      &, & > *
+        transition: color 333ms ease-out
 
       &:hover, &:hover > *
         color: $link-hover-color !important

@@ -9,8 +9,8 @@
   prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
 
   p.entry-meta
-    span Publicado el {{ entry.first_publication_date }}
-    span(v-if='entry.last_publication_date') &emsp;|&emsp;Actualizado el {{ entry.last_publication_date }}
+    span Publicado el {{ toLocalDate(entry.first_publication_date) }}
+    span(v-if='entry.last_publication_date') &emsp;|&emsp;Actualizado el {{ toLocalDate(entry.last_publication_date) }}
 
   prismic-rich-text(class='entry-lead' :field='entry.data.lead')
 
@@ -34,6 +34,11 @@ export default {
       type: Boolean,
       default: true,
       required: false
+    }
+  },
+  methods: {
+    toLocalDate (strDate) {
+      return new Date(strDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     }
   },
   computed: {

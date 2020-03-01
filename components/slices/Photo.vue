@@ -35,7 +35,7 @@ export default {
 <style lang="sass">
 .photo-slice
   position: relative
-  padding: 3rem 0
+  padding: 2rem 0
 
   &::before
     content: ''

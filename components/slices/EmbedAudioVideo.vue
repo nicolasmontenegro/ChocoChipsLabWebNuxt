@@ -16,7 +16,7 @@ export default {
 
 <style lang="sass">
 .embed-slice
-  padding: 3rem 0
+  padding: 2rem 0
   position: relative
 
   &::before
