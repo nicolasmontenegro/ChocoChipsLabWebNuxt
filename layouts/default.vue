@@ -1,9 +1,9 @@
 <template lang="pug">
 .container(:class='containerClass')
-  .columns
-    .column.is-3
+  .columns.is-desktop.is-gapless
+    .column.is-3-desktop
       SectionBar
-    .column.is-9.content.main
+    .column.is-9-desktop.content.main
       nuxt
 </template>
 
@@ -23,5 +23,5 @@ export default {
 <style lang="sass">
 .container .content.main
   @media screen and (max-width: $desktop)
-    padding-top: 2rem
+    padding-top: 4rem !important
 </style>

@@ -3,7 +3,7 @@
   .is-spaced.title-site
     logo
     h1.title.is-spaced.is-1 Choco Chips Lab
-    .is-hidden-desktop(v-on:click="is_expanded = !is_expanded")
+    .button-expand.is-hidden-desktop(@click="is_expanded = !is_expanded")
       arrow
   .navegation-site
     template(v-if='navegation !== null')
@@ -16,13 +16,13 @@
     ul.links
       li
         nuxt-link(to='/')
-          strong Inicio
+          strong(@click="is_expanded = false") Inicio
       li
         nuxt-link(to='/blog')
-          strong Blog
+          strong(@click="is_expanded = false") Blog
       li
         nuxt-link(to='/about/me')
-          strong Acerca de<del></del>
+          strong(@click="is_expanded = false") Acerca de<del></del>
 </template>
 
 <script>
@@ -49,32 +49,48 @@ export default {
 
 <style lang="sass">
 .sectionbar
-  .title, .subtitle
-    margin-bottom: .5rem
+  .title-site
+    .logo
+      margin-top: .5rem
 
-  .link_back
-    margin-bottom: 1rem
+    .title, .subtitle
+      margin-bottom: .5rem
 
-  .links
-    li
-      margin-bottom: .2rem
+  .navegation-site
+    .link_back
+      margin-bottom: 1rem
 
-      a
-        font-size: 130%
-        // display: block
+    .links
+      li
+        margin-bottom: .2rem
+
+        a
+          font-size: 130%
+          // display: block
 
   @media screen and (max-width: $desktop)
     position: fixed
-    margin: -.75rem
+    padding: 0
     width: 100%
-    padding: 0 .5rem
     z-index: 1500
+    left: 0
+    top: 0
+
+    .button-expand
+      padding: 1rem
 
     .navegation-site
       padding: 0 1rem 1rem
+      transition: max-height 333ms ease-in, padding 333ms ease-in, opacity 333ms ease-in
+      max-height: 15rem
+      overflow-y: hidden
+      opacity: 1
 
     &:not(.is-expanded) .navegation-site
-        display: none
+        max-height: 0
+        opacity: 0
+        padding: 0
+        overflow-y: auto
 
     .title-site
       display: flex
@@ -83,6 +99,7 @@ export default {
 
       .logo
         max-width: 3rem
+        margin: 0 .5rem
 
       .title
         font-size: 2rem

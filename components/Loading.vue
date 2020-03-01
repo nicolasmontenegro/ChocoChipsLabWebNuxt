@@ -36,7 +36,7 @@ export default {
   position: fixed
   height: 100vh
   width: 100vw
-  z-index: 1000
+  z-index: 3000
   overflow: hidden
   opacity: 1
 
