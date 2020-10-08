@@ -17,9 +17,9 @@ export default {
     __dangerouslyDisableSanitizers: ['script']
   },
   /*
-  ** Customize the progress-bar color
+  ** Customize the loading page
   */
-  //loading: '~/components/Loading.vue',
+  loading: '~/components/Loading.vue',
   /*
   ** Global CSS
   */
