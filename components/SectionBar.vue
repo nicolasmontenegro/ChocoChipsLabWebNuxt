@@ -6,13 +6,6 @@
     .button-expand.is-hidden-desktop(@click="is_expanded = !is_expanded")
       arrow
   .navegation-site
-    template(v-if='navegation !== null')
-      h2.subtitle.is-spaced.is-3(v-if='navegation.section')
-        strong {{ navegation.section.name }}
-      p.link_back
-        nuxt-link(v-if='navegation.back.url' :to='navegation.back.url')
-          strong Volver a {{ navegation.back.name }}
-
     ul.links
       li
         nuxt-link(to='/')
@@ -41,7 +34,6 @@ export default {
     }
   },
   computed: {
-    navegation () { return this.$store.state.navegation || null },
     isExpanded () { return (this.is_expanded ? 'is-expanded' : '') }
   }
 }
@@ -62,7 +54,7 @@ export default {
 
     .links
       li
-        margin-bottom: .2rem
+        margin-bottom: .5rem
 
         a
           font-size: 130%

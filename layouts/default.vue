@@ -4,6 +4,12 @@
     .column.is-3-desktop
       SectionBar
     .column.is-9-desktop.content.main
+      template(v-if='navegation !== null')
+        h1.title.is-1.mb-1.mt-4(v-if='navegation.section')
+          strong {{ navegation.section.name }}
+        p.link_back.mb-0
+          nuxt-link(v-if='navegation.back.url' :to='navegation.back.url')
+            strong Volver a {{ navegation.back.name }}
       nuxt
 </template>
 
@@ -15,6 +21,7 @@ export default {
     SectionBar
   },
   computed: {
+    navegation () { return this.$store.state.navegation || null },
     containerClass () { return this.$store.state.navegation.section.style }
   }
 }
