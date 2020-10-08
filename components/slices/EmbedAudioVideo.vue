@@ -1,5 +1,5 @@
 <template lang="pug">
-.embed-slice(v-html='$prismic.richTextAsPlain(slice.primary.content)')
+.embed-slice(v-html='$prismic.asText(slice.primary.content)')
 </template>
 
 <script>

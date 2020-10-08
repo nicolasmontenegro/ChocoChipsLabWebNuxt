@@ -36,11 +36,6 @@ export default {
       required: false
     }
   },
-  methods: {
-    toLocalDate (strDate) {
-      return new Date(strDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    }
-  },
   computed: {
     picture_head () {
       const imgUrl = (this.entry && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : require('~/assets/images/chocolate chip cookie bg.svg')
@@ -48,6 +43,11 @@ export default {
     },
     link () {
       return LinkResolver(this.entry)
+    }
+  },
+  methods: {
+    toLocalDate (strDate) {
+      return new Date(strDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     }
   }
 }

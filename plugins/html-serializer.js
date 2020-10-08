@@ -9,13 +9,13 @@ import linkResolver from './link-resolver'
 const Elements = prismicDOM.RichText.Elements
 
 export default function (type, element, content, children) {
-  // Generate links to Prismic Documents as <router-link> components
+  // Generate links to Prismic Documents as <nuxt-link> components
   if (type === Elements.hyperlink) {
     let result = ''
     const url = prismicDOM.Link.url(element.data, linkResolver)
 
     if (element.data.link_type === 'Document') {
-      result = `<router-link to="${url}">${content}</router-link>`
+      result = `<nuxt-link to="${url}">${content}</nuxt-link>`
     } else {
       const target = element.data.target ? `target="'${element.data.target}'" rel="noopener"` : ''
       result = `<a href="${url}" ${target}>${content}</a>`
@@ -23,7 +23,7 @@ export default function (type, element, content, children) {
     return result
   }
 
-  // If the image is also a link to a Prismic Document, it will return a <router-link> component
+  // If the image is also a link to a Prismic Document, it will return a <nuxt-link> component
   if (type === Elements.image) {
     let result = `<img src="${element.url}" alt="${element.alt || ''}" copyright="${element.copyright || ''}">`
 
@@ -31,7 +31,7 @@ export default function (type, element, content, children) {
       const url = prismicDOM.Link.url(element.linkTo, linkResolver)
 
       if (element.linkTo.link_type === 'Document') {
-        result = `<router-link to="${url}">${result}</router-link>`
+        result = `<nuxt-link to="${url}">${result}</nuxt-link>`
       } else {
         const target = element.linkTo.target ? `target="${element.linkTo.target}" rel="noopener"` : ''
         result = `<a href="${url}" ${target}>${result}</a>`
@@ -44,22 +44,22 @@ export default function (type, element, content, children) {
 
   switch (type) {
     case Elements.heading1:
-      return `<h1 class='title is-1'>${children.join('')}</h1>`
+      return `<h1 class='title is-1 m-0'>${children.join('')}</h1>`
 
     case Elements.heading2:
-      return `<h2 class='title is-2'>${children.join('')}</h2>`
+      return `<h2 class='title is-2 m-0'>${children.join('')}</h2>`
 
     case Elements.heading3:
-      return `<h3 class='title is-3'>${children.join('')}</h3>`
+      return `<h3 class='title is-3 m-0'>${children.join('')}</h3>`
 
     case Elements.heading4:
-      return `<h4 class='title is-4'>${children.join('')}</h4>`
+      return `<h4 class='title is-4 m-0'>${children.join('')}</h4>`
 
     case Elements.heading5:
-      return `<h5 class='title is-5'>${children.join('')}</h5>`
+      return `<h5 class='title is-5 m-0'>${children.join('')}</h5>`
 
     case Elements.heading6:
-      return `<h6 class='title is-6'>${children.join('')}</h6>`
+      return `<h6 class='title is-6 m-0'>${children.join('')}</h6>`
 
     case Elements.paragraph:
       return `<p>${children.join('')}</p>`
