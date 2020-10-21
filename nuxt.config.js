@@ -46,7 +46,9 @@ export default {
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
     // https://github.com/nuxt-community/style-resources-module#readme
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    // https://i18n.nuxtjs.org
+    'nuxt-i18n'
   ],
   styleResources: {
     // your settings here
@@ -66,6 +68,28 @@ export default {
       config.resolve.alias['vue'] = 'vue/dist/vue.common'
     }
   },
+  /*
+  ** i18n (Internationalization)
+  */
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        file: 'en-US.js'
+      },
+      {
+        code: 'es',
+        file: 'es-CL.js'
+      }
+    ],
+    defaultLocale: 'es',
+    strategy: 'prefix_except_default',
+    lazy: true,
+    langDir: 'lang/'
+  },
+  /*
+  ** CMS Config
+  */
   prismic: {
     endpoint: 'https://chocochips-lab-blog.cdn.prismic.io/api/v2'	,
     linkResolver: '@/plugins/link-resolver',

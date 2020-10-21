@@ -3,7 +3,7 @@
   .columns.is-centered
     .column.is-6
       img(src='https://i.kym-cdn.com/entries/icons/facebook/000/021/033/Screenshot_236.jpg')
-
+  p {{ $t('welcome') }}
 </template>
 
 <script>
