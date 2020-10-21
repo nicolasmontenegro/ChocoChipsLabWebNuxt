@@ -15,5 +15,10 @@ export default {
     published: 'Publicado {date}',
     updated: 'Actualizado {date}',
     read_more: 'Leer más'
+  },
+  slices: {
+    photo: {
+      source: 'Fuente'
+    }
   }
 }

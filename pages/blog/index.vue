@@ -35,8 +35,7 @@ export default {
       const blogPosts = await api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
-          // pageSize: 10,
-          pageSize: 2,
+          pageSize: 10,
           page: (query.page || 1)
         }
       )

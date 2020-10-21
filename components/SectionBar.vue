@@ -2,7 +2,8 @@
 .sectionbar(:class="[isExpanded]")
   .is-spaced.title-site
     logo
-    h1.title.is-spaced.is-1 Choco Chips Lab
+    h1.title.is-spaced.is-1 
+     | Choco Chips Lab
     .button-expand.is-hidden-desktop(@click="is_expanded = !is_expanded")
       arrow
   .navegation-site
