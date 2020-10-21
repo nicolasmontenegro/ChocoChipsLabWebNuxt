@@ -14,28 +14,15 @@ export default {
   head () {
     return { title: 'Inicio' }
   },
-  async asyncData ({ context, error, req }) {
+  async asyncData ({ $prismic, context, error, req }) {
     try {
-      // Query to get API object
-      const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
-
       // Query to get blog home content
-      const document = await api.getSingle('homepage')
+      const document = await $prismic.api.getSingle('homepage')
       const homepageContent = document.data
-
-      // Query to get posts content to preview
-      const blogPosts = await api.query(
-        Prismic.Predicates.at('document.type', 'blog_entry')
-      )
-
-      // Load the edit button
-      if (process.client) { window.prismic.setupEditButton() }
 
       // Returns data to be used in template
       return {
-        homepageContent,
-        documentId: document.id,
-        posts: blogPosts.results
+        homepageContent
       }
     } catch (e) {
       // Returns error page

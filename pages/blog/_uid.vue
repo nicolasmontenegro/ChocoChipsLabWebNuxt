@@ -41,7 +41,7 @@ export default {
   },
   async asyncData ({ app, $prismic, params, error }) {
     try {
-      // Query to get API object
+      // Query to get entry
       const entry = await $prismic.api.getByUID(
         'blog_entry', 
         params.uid,

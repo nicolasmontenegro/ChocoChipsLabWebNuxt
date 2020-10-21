@@ -26,13 +26,10 @@ export default {
   head () {
     return { title: 'Blog' }
   },
-  async asyncData ({ app, params, error, req, query }) {
+  async asyncData ({ app, $prismic, params, error, req, query }) {
     try {
-      // Query to get API object
-      const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
-
       // Query to get posts content to preview
-      const blogPosts = await api.query(
+      const blogPosts = await $prismic.api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
           lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
@@ -40,10 +37,7 @@ export default {
           page: (query.page || 1)
         }
       )
-
-      // Load the edit button
-      if (process.client) { window.prismic.setupEditButton() }
-
+      
       // Returns data to be used in template
       return {
         blogPosts: blogPosts.results,
