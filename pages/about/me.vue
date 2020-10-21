@@ -19,14 +19,13 @@ export default {
       title: this.$t('sections.about_me')
     }
   },
-  async asyncData ({ context, error, req }) {
+  async asyncData ({ app, $prismic, context, error }) {
     try {
-      // Query to get API object
-      const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
-      const page = await api.getByUID('page', 'about_me')
-
-      // Load the edit button
-      if (process.client) { window.prismic.setupEditButton() }
+      // Query to get object
+      const page = await $prismic.api.getByUID(
+        'page', 
+        'about_me',
+        {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
 
       // Returns data to be used in template
       return {
