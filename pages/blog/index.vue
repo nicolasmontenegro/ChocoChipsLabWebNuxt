@@ -26,7 +26,7 @@ export default {
   head () {
     return { title: 'Blog' }
   },
-  async asyncData ({ params, error, req, query }) {
+  async asyncData ({ app, params, error, req, query }) {
     try {
       // Query to get API object
       const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
@@ -35,6 +35,7 @@ export default {
       const blogPosts = await api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
+          lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
           pageSize: 10,
           page: (query.page || 1)
         }
