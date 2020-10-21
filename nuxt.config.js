@@ -1,11 +1,9 @@
-import PrismicConfig from './prismic.config'
-
 export default {
-  mode: 'universal',
   /*
   ** Headers of the page
   */
   head: {
+    mode: 'universal',
     titleTemplate: '%s - Choco Chips Lab',
     meta: [
       { charset: 'utf-8' },
@@ -16,26 +14,10 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Palanquin+Dark&display=swap' }
     ],
-    script: [
-      { innerHTML: '{ window.prismic = { endpoint: "' + PrismicConfig.apiEndpoint + '"} }' },
-      { src: '//static.cdn.prismic.io/prismic.min.js' }
-    ],
     __dangerouslyDisableSanitizers: ['script']
   },
   /*
-  ** Extend the routes created by Nuxt.js
-  */
-  router: {
-    extendRoutes (routes, resolve) {
-      routes.push({
-        name: 'BlogPage',
-        path: '/blog/page/:page',
-        component: resolve(__dirname, 'pages/blog/index.vue')
-      })
-    }
-  },
-  /*
-  ** Customize the progress-bar color
+  ** Customize the loading page
   */
   loading: '~/components/Loading.vue',
   /*
@@ -48,16 +30,14 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/link-resolver.js',
-    '~/plugins/html-serializer.js',
-    '~/plugins/prismic-vue.js'
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/prismic'
   ],
   /*
   ** Nuxt.js modules
@@ -66,7 +46,9 @@ export default {
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
     // https://github.com/nuxt-community/style-resources-module#readme
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    // https://i18n.nuxtjs.org
+    'nuxt-i18n'
   ],
   styleResources: {
     // your settings here
@@ -79,18 +61,43 @@ export default {
   ** Build configuration
   */
   build: {
-    postcss: {
-      preset: {
-        features: {
-          customProperties: false
-        }
-      }
-    },
     /*
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-      config.resolve.alias.vue = 'vue/dist/vue.common'
+      config.resolve.alias['vue'] = 'vue/dist/vue.common'
     }
+  },
+  /*
+  ** i18n (Internationalization)
+  */
+  i18n: {
+    locales: [
+      {
+        name: 'English',
+        code: 'en',
+        iso: 'en-US',
+        file: 'en-US.js'
+      },
+      {
+        name: 'Español',
+        code: 'es',
+        iso: 'es-cl',
+        file: 'es-CL.js'
+      }
+    ],
+    defaultLocale: 'es',
+    strategy: 'prefix_except_default',
+    lazy: true,
+    langDir: 'lang/'
+  },
+  /*
+  ** CMS Config
+  */
+  prismic: {
+    endpoint: 'https://chocochips-lab-blog.cdn.prismic.io/api/v2'	,
+    linkResolver: '@/plugins/link-resolver',
+    htmlSerializer: '@/plugins/html-serializer',
+    /* see configuration for more */
   }
 }

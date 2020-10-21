@@ -36,18 +36,16 @@ export default {
   },
   head () {
     return {
-      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : 'Blog'),
-      section: 'Blog'
+      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog')),
     }
   },
-  async asyncData ({ params, error, req }) {
+  async asyncData ({ app, $prismic, params, error }) {
     try {
-      // Query to get API object
-      const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
-      const entry = await api.getByUID('blog_entry', params.uid)
-
-      // Load the edit button
-      if (process.client) { window.prismic.setupEditButton() }
+      // Query to get entry
+      const entry = await $prismic.api.getByUID(
+        'blog_entry', 
+        params.uid,
+        {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
 
       // Returns data to be used in template
       return {
@@ -61,7 +59,7 @@ export default {
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
-      { section: { name: 'Blog', style: 'blog' }, back: { url: '/blog', name: 'Blog' } }
+      { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
     )
   }
 }

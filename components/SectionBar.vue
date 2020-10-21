@@ -2,27 +2,25 @@
 .sectionbar(:class="[isExpanded]")
   .is-spaced.title-site
     logo
-    h1.title.is-spaced.is-1 Choco Chips Lab
+    h1.title.is-spaced.is-1 
+     | Choco Chips Lab
     .button-expand.is-hidden-desktop(@click="is_expanded = !is_expanded")
       arrow
   .navegation-site
-    template(v-if='navegation !== null')
-      h2.subtitle.is-spaced.is-3(v-if='navegation.section')
-        strong {{ navegation.section.name }}
-      p.link_back
-        nuxt-link(v-if='navegation.back.url' :to='navegation.back.url')
-          strong Volver a {{ navegation.back.name }}
-
     ul.links
       li
-        nuxt-link(to='/')
-          strong(@click="is_expanded = false") Inicio
+        nuxt-link(:to="localePath({name: 'index'})")
+          strong(@click="is_expanded = false") {{ $t('sections.index') }}
       li
-        nuxt-link(to='/blog')
-          strong(@click="is_expanded = false") Blog
+        nuxt-link(:to="localePath({name: 'blog'})")
+          strong(@click="is_expanded = false") {{ $t('sections.blog') }}
       li
-        nuxt-link(to='/about/me')
-          strong(@click="is_expanded = false") Acerca de<del></del>
+        nuxt-link(:to="localePath({name: 'about-me'})")
+          strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
+
+    p.links.mt-5
+      nuxt-link(v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)") {{ locale.name }}
+
 </template>
 
 <script>
@@ -41,8 +39,8 @@ export default {
     }
   },
   computed: {
-    navegation () { return this.$store.state.navegation || null },
-    isExpanded () { return (this.is_expanded ? 'is-expanded' : '') }
+    isExpanded () { return (this.is_expanded ? 'is-expanded' : '') },
+    availableLocales () { return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale) }
   }
 }
 </script>
@@ -62,10 +60,10 @@ export default {
 
     .links
       li
-        margin-bottom: .2rem
+        margin-bottom: .5rem
 
-        a
-          font-size: 130%
+      a
+        font-size: 130%
 
   @media screen and (max-width: $desktop)
     position: fixed

@@ -89,3 +89,5 @@ sw.*
 \.gcloudignore
 
 app\.yaml
+
+*.code-workspace
