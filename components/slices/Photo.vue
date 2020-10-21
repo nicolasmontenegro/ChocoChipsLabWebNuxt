@@ -4,7 +4,7 @@
   p {{ slice.primary.image.alt }}
   p(v-if='source_link && source')
     small
-      | Fuente:&nbsp;
+      | {{ $t('slices.photo.source') }}:&nbsp;
       strong
         prismic-link(v-if='source_link' :field='source_link') {{ source }}
         span(v-else) {{ source }}

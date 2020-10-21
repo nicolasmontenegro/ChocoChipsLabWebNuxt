@@ -2,20 +2,25 @@
 .sectionbar(:class="[isExpanded]")
   .is-spaced.title-site
     logo
-    h1.title.is-spaced.is-1 Choco Chips Lab
+    h1.title.is-spaced.is-1 
+     | Choco Chips Lab
     .button-expand.is-hidden-desktop(@click="is_expanded = !is_expanded")
       arrow
   .navegation-site
     ul.links
       li
-        nuxt-link(to='/')
-          strong(@click="is_expanded = false") Inicio
+        nuxt-link(:to="localePath({name: 'index'})")
+          strong(@click="is_expanded = false") {{ $t('sections.index') }}
       li
-        nuxt-link(to='/blog')
-          strong(@click="is_expanded = false") Blog
+        nuxt-link(:to="localePath({name: 'blog'})")
+          strong(@click="is_expanded = false") {{ $t('sections.blog') }}
       li
-        nuxt-link(to='/about/me')
-          strong(@click="is_expanded = false") Acerca de<del></del>
+        nuxt-link(:to="localePath({name: 'about-me'})")
+          strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
+
+    p.links.mt-5
+      nuxt-link(v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)") {{ locale.name }}
+
 </template>
 
 <script>
@@ -34,7 +39,8 @@ export default {
     }
   },
   computed: {
-    isExpanded () { return (this.is_expanded ? 'is-expanded' : '') }
+    isExpanded () { return (this.is_expanded ? 'is-expanded' : '') },
+    availableLocales () { return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale) }
   }
 }
 </script>
@@ -56,8 +62,8 @@ export default {
       li
         margin-bottom: .5rem
 
-        a
-          font-size: 130%
+      a
+        font-size: 130%
 
   @media screen and (max-width: $desktop)
     position: fixed

@@ -3,12 +3,12 @@
 nav.pagination.is-centered(role="navigation" aria-label="pagination")
   ul.pagination-list(v-if="totalPageCount")
     li
-      nuxt-link.pagination-previous(v-if="prevPage != null" :to="routePage(prevPage)") &laquo; Anterior
+      nuxt-link.pagination-previous(v-if="prevPage != null" :to="routePage(prevPage)" :prefetch="false") &laquo; {{ $t('navigation.prev') }}
     li(v-if="num != null" v-for="num in pageNumbers")
-      nuxt-link.pagination-link( v-if="num != $route.query.page && num != currentPage" :to="routePage(num)") {{ num }}
+      nuxt-link.pagination-link( v-if="num != $route.query.page && num != currentPage" :to="routePage(num)" :prefetch="false") {{ num }}
       span.pagination-link.is-current( v-else) {{ num }}
     li
-      nuxt-link.pagination-next(v-if="nextPage != null" :to="routePage(nextPage)") Siguiente &raquo;
+      nuxt-link.pagination-next(v-if="nextPage != null" :to="routePage(nextPage)" :prefetch="false") {{ $t('navigation.next') }} &raquo;
   //- ul.page-guides(v-if="totalPageCount > 1")
   //-   li
   //-     nuxt-link(v-if="$route.query.page != 1 && $route.query.page" :to="{ path: '/', query: { page: 1 }}") Primero
@@ -58,11 +58,16 @@ export default {
     },
     routePage (num) {
       return {
-        name: this.$route.name,
-        force: true,
-        params: { page: num }
+        path: this.$route.path,
+        query: { page: num },
+        force: true
       }
     }
   }
 }
 </script>
+
+<style lang="sass">
+nav.pagination > ul.pagination-list
+  list-style: none
+</style>

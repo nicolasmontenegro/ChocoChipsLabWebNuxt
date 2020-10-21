@@ -22,10 +22,11 @@ export default {
     BlogEntryHeader,
     Pagination
   },
+  watchQuery: ['page'],
   head () {
     return { title: 'Blog' }
   },
-  async asyncData ({ params, error, req, query }) {
+  async asyncData ({ app, params, error, req, query }) {
     try {
       // Query to get API object
       const api = await Prismic.getApi(PrismicConfig.apiEndpoint, { req })
@@ -34,8 +35,9 @@ export default {
       const blogPosts = await api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
+          lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
           pageSize: 10,
-          page: (params.page || 1)
+          page: (query.page || 1)
         }
       )
 
@@ -58,7 +60,7 @@ export default {
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
-      { section: { name: 'Blog', style: 'blog' }, back: { url: '/', name: 'Inicio' } }
+      { section: { name: 'blog', style: 'blog' }, back: { name: 'index' } }
     )
   }
 }

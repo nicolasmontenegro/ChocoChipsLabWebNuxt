@@ -1,23 +1,25 @@
 <template lang="pug">
 .entry-header
-  nuxt-link.simple(v-if='linkable' :to='link')
+  nuxt-link.simple(v-if='linkable' :to='localePath(link)')
     .entry-picture-head(:style='picture_head')
   .entry-picture-head(v-else :style='picture_head')
 
-  nuxt-link(v-if='linkable' :to='link')
+  nuxt-link(v-if='linkable' :to='localePath(link)')
     prismic-rich-text(class='entry-title' :field='entry.data.title')
   prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
 
   p.entry-meta
-    span Publicado el {{ toLocalDate(entry.first_publication_date) }}
-    span(v-if='entry.last_publication_date') &emsp;|&emsp;Actualizado el {{ toLocalDate(entry.last_publication_date) }}
+    span {{ $t('blog.published', {date: toLocalDate(entry.first_publication_date)}) }}
+    template(v-if='entry.last_publication_date')
+      span &emsp;|&emsp;
+      span {{ $t('blog.updated', {date: toLocalDate(entry.last_publication_date)}) }}
 
   prismic-rich-text(class='entry-lead' :field='entry.data.lead')
 
-  nuxt-link(v-if='linkable' :to='link')
+  nuxt-link(v-if='linkable' :to='localePath(link)')
     .is-medium
       strong
-        i Leer más
+        i {{ $t('blog.read_more') }}
 </template>
 
 <script>
@@ -47,7 +49,7 @@ export default {
   },
   methods: {
     toLocalDate (strDate) {
-      return new Date(strDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      return new Date(strDate).toLocaleDateString(this.$i18n.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     }
   }
 }
