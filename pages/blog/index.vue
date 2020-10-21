@@ -22,6 +22,7 @@ export default {
     BlogEntryHeader,
     Pagination
   },
+  watchQuery: ['page'],
   head () {
     return { title: 'Blog' }
   },
@@ -34,8 +35,9 @@ export default {
       const blogPosts = await api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
-          pageSize: 10,
-          page: (params.page || 1)
+          // pageSize: 10,
+          pageSize: 2,
+          page: (query.page || 1)
         }
       )
 
@@ -58,7 +60,7 @@ export default {
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
-      { section: { name: 'Blog', style: 'blog' }, back: { url: '/', name: 'Inicio' } }
+      { section: { name: 'blog', style: 'blog' }, back: { name: 'index' } }
     )
   }
 }

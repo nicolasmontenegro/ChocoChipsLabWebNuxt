@@ -36,8 +36,7 @@ export default {
   },
   head () {
     return {
-      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : 'Blog'),
-      section: 'Blog'
+      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog')),
     }
   },
   async asyncData ({ params, error, req }) {
@@ -61,7 +60,7 @@ export default {
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
-      { section: { name: 'Blog', style: 'blog' }, back: { url: '/blog', name: 'Blog' } }
+      { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
     )
   }
 }

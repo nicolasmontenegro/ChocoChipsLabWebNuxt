@@ -16,7 +16,7 @@ export default {
   },
   head () {
     return {
-      title: 'Acerca de mi'
+      title: this.$t('sections.about_me')
     }
   },
   async asyncData ({ context, error, req }) {
@@ -40,7 +40,7 @@ export default {
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
-      { section: { name: 'Acerca de mi', style: 'about' }, back: { url: '/', name: 'Inicio' } }
+      { section: { name: 'about_me', style: 'about' }, back: { name: 'index' } }
     )
   }
 }
