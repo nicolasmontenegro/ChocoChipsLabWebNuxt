@@ -15,6 +15,9 @@
         nuxt-link(:to="localePath({name: 'blog'})")
           strong(@click="is_expanded = false") {{ $t('sections.blog') }}
       li
+        nuxt-link(:to="localePath({name: 'portfolio'})")
+          strong(@click="is_expanded = false") {{ $t('sections.portfolio') }}
+      li
         nuxt-link(:to="localePath({name: 'about-me'})")
           strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
 

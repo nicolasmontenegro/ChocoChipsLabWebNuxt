@@ -3,6 +3,7 @@ export default {
   sections: {
     index: 'Inicio',
     blog: 'Blog',
+    portfolio: 'Portafolio',
     about_me: 'Acerca de'
   },
   navigation: {
