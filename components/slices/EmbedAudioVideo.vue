@@ -19,19 +19,19 @@ export default {
   padding: 2rem 0
   position: relative
 
-  &::before
-    content: ''
-    position: absolute
-    height: 100%
-    width: 100vw
-    right: 50%
-    margin-right: -50vw
-    top: 0
-    background: black
-    z-index: -1
+  // &::before
+  //   content: ''
+  //   position: absolute
+  //   height: 100%
+  //   width: 100vw
+  //   right: 50%
+  //   margin-right: -50vw
+  //   top: 0
+  //   background: black
+  //   z-index: -1
 
-    @media screen and (min-width: $tablet)
-      right: 67.1%
+  //   @media screen and (min-width: $tablet)
+  //     right: 67.1%
 
   iframe
     height: 25rem

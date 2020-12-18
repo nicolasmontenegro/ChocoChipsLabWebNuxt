@@ -38,18 +38,18 @@ export default {
   position: relative
   padding: 2rem 0
 
-  &::before
-    content: ''
-    position: absolute
-    height: 100%
-    width: 100vw
-    right: 50%
-    margin-right: -50vw
-    top: 0
-    background: #b2a176
-    z-index: -1
+  // &::before
+  //   content: ''
+  //   position: absolute
+  //   height: 100%
+  //   width: 100vw
+  //   right: 50%
+  //   margin-right: -50vw
+  //   top: 0
+  //   background: #b2a176
+  //   z-index: -1
 
-    @media screen and (min-width: $tablet)
-      right: 67.1%
+  //   @media screen and (min-width: $tablet)
+  //     right: 67.1%
 
 </style>
