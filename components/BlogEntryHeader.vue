@@ -1,26 +1,27 @@
 <template lang="pug">
-.entry-header.blog
+.entry-header.blog(:class='{ mini: mini }')
   nuxt-link.simple(v-if='linkable' :to='localePath(link)')
     .entry-picture-head(:style='picture_head')
   .entry-picture-head(v-else :style='picture_head')
 
-  p.m-0
+  .content
+    p.m-0
+      nuxt-link(v-if='linkable' :to='localePath(link)')
+        prismic-rich-text(class='entry-title' :field='entry.data.title')
+      prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
+
+    p.entry-meta
+      span {{ $t('blog.published', {date: toLocalDate(entry.first_publication_date)}) }}
+      template(v-if='entry.last_publication_date')
+        span &emsp;|&emsp;
+        span {{ $t('blog.updated', {date: toLocalDate(entry.last_publication_date)}) }}
+
+    prismic-rich-text(class='entry-lead' :field='entry.data.lead')
+
     nuxt-link(v-if='linkable' :to='localePath(link)')
-      prismic-rich-text(class='entry-title' :field='entry.data.title')
-    prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
-
-  p.entry-meta
-    span {{ $t('blog.published', {date: toLocalDate(entry.first_publication_date)}) }}
-    template(v-if='entry.last_publication_date')
-      span &emsp;|&emsp;
-      span {{ $t('blog.updated', {date: toLocalDate(entry.last_publication_date)}) }}
-
-  prismic-rich-text(class='entry-lead' :field='entry.data.lead')
-
-  nuxt-link(v-if='linkable' :to='localePath(link)')
-    .is-medium
-      strong
-        i {{ $t('blog.read_more') }}
+      .is-medium
+        strong
+          i {{ $t('blog.read_more') }}
 </template>
 
 <script>
@@ -36,6 +37,11 @@ export default {
     linkable: {
       type: Boolean,
       default: true,
+      required: false
+    },
+    mini: {
+      type: Boolean,
+      default: false,
       required: false
     }
   },

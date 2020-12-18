@@ -33,6 +33,24 @@
     font-size: 80%
     font-weight: normal
 
+  &.mini
+    @media screen and (min-width: $tablet)
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+
+      & > *:first-child
+        width: 33%
+        padding-right: .5rem
+        padding-top: 8px
+
+      & > *:last-child
+        width: 66%
+
+      .entry-picture-head
+        height: 10rem
+        width: 100%
+
 
 @mixin bg-entry-header($background-color)
   background: linear-gradient(to bottom, rgba($background-color,0) 0%, rgba($background-color,0.75) 33%, rgba($background-color,1) 66%, rgba($background-color,1) 100%);
