@@ -9,10 +9,17 @@
       prismic-rich-text(class='entry-title' :field='entry.data.title')
     prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
 
-  nuxt-link(v-if='linkable' :to='localePath(link)')
-    .is-medium
-      strong
-        i {{ $t('blog.read_more') }}
+  p.m-0
+    span 
+      | {{ $t(`portfolio.origin_type.${entry.data.origin_type}`) }}
+      | &emsp;
+    span.has-text-weight-semibold {{ entry.data.company_name }}
+    
+  p.m-0
+    nuxt-link(v-if='linkable' :to='localePath(link)')
+      .is-medium
+        strong
+          i {{ $t('blog.read_more') }}
 </template>
 
 <script>

@@ -13,9 +13,16 @@ export default {
     back: 'Volver'
   },
   blog:{
+    related: 'Ir a la entrada del blog para ver más',
     published: 'Publicado {date}',
     updated: 'Actualizado {date}',
     read_more: 'Leer más'
+  },
+  portfolio: {
+    origin_type: {
+      Employee: "Empresa",
+      Freelance: "Cliente"
+    }
   },
   slices: {
     photo: {
