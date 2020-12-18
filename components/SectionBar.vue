@@ -58,6 +58,8 @@ export default {
       margin-bottom: .5rem
 
   .navegation-site
+    font-family: 'Palanquin Dark', sans-serif
+    
     .link_back
       margin-bottom: 1rem
 
