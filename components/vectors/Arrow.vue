@@ -1,44 +1,36 @@
 <template>
   <svg
-    id="svg8"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:cc="http://creativecommons.org/ns#"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns="http://www.w3.org/2000/svg"
+    id="svg-arrow"
+    class="arrow"
     version="1.1"
     viewBox="0 0 141.37183 86.277214"
     height="86.277214mm"
-    width="141.37183mm"
-    class="arrow"
-  >
+    width="141.37183mm">
     <defs
-      id="defs2"
-    />
+      id="defs2" />
     <metadata
-      id="metadata5"
-    >
+      id="metadata5">
       <rdf:RDF>
         <cc:Work
-          rdf:about=""
-        >
+          rdf:about="">
           <dc:format>image/svg+xml</dc:format>
           <dc:type
-            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
-          />
-          <dc:title />
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+          <dc:title></dc:title>
         </cc:Work>
       </rdf:RDF>
     </metadata>
     <g
-      id="layer1"
-      transform="translate(-15.205456,-205.98296)"
-    >
+      id="layer1">
       <path
         id="path826"
-        d="m 25.891369,216.67733 60,65.00001 60.000001,-65.00001"
-        style="fill:none;stroke:#000000;stroke-width:21.16666603;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-      />
+        d="M 10.584173,10.58433 70.668675,75.663006 130.66868,10.662996"
+        style="fill:none;stroke:#000000;stroke-width:21.1667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </svg>
 </template>

@@ -1,9 +1,9 @@
 <template lang="pug">
 .container(:class='containerClass')
-  .columns.is-desktop.is-gapless
+  .columns.is-desktop.is-gapless.is-justify-content-space-between
     .column.is-3-desktop
       SectionBar
-    .column.is-9-desktop.content.main
+    .column.is-8-desktop.content.main
       template(v-if='navegation !== null')
         h1.title.is-1.mb-1.mt-4(v-if='navegation.section.name')
           strong {{ $t(`sections.${navegation.section.name}`) }}

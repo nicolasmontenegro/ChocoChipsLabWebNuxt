@@ -3,6 +3,7 @@ export default {
   sections: {
     index: 'Home',
     blog: 'Blog',
+    portfolio: 'Porfolio',
     about_me: 'About me'
   },
   navigation: {
@@ -12,9 +13,16 @@ export default {
     back: 'Back'
   },
   blog:{
+    related: 'Go to the blog post to read more',
     published: 'Published at {date}',
     updated: 'Updated at {date}',
     read_more: 'Read more'
+  },
+  portfolio: {
+    origin_type: {
+      Employee: "Employee",
+      Freelance: "Freelance"
+    }
   },
   slices: {
     photo: {
