@@ -3,17 +3,10 @@
   .columns
     .column
       portfolio-entry-header(:entry='entry' :linkable='false')
-
   
   section
     .description
       prismic-rich-text(:field='entry.data.description')
-
-  section.link-to-blog.mt-6.mb-6(v-if='entry.data.link_to_blog_entry.id')
-    p.is-size-5.m-0 
-      strong {{ $t('blog.related') }}
-    .mx-4.my-2
-      blog-entry-header(:entry='entry.data.link_to_blog_entry.entry' :mini='true')
 
   slices-block(:slices='entry.data.body')
 
@@ -62,16 +55,7 @@ export default {
         'portfolio_entry', 
         params.uid,
         {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
-
-      // Get blog page related
-
-      if (entry.data.link_to_blog_entry.id){
-        entry.data.link_to_blog_entry.entry = await $prismic.api.getByUID(
-          'blog_entry', 
-          entry.data.link_to_blog_entry.uid,
-          {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
-      }
-
+        
       // Returns data to be used in template
       return {
         entry

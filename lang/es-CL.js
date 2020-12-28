@@ -13,7 +13,7 @@ export default {
     back: 'Volver'
   },
   blog:{
-    related: 'Ir a la entrada del blog para ver más',
+    related: 'Publicación relacionada',
     published: 'Publicado {date}',
     updated: 'Actualizado {date}',
     read_more: 'Leer más'

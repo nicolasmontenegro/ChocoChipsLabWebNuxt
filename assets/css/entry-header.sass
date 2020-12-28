@@ -16,6 +16,12 @@
     z-index: 1
     // margin-bottom: -15px
 
+    @media screen and (max-width: $tablet)
+      height: 200px
+
+    @media screen and (max-width: $desktop)
+      height: 300px
+
     /*&::after
       content: ''
       position: absolute
@@ -50,6 +56,11 @@
       .entry-picture-head
         height: 10rem
         width: 100%
+
+    @media screen and (max-width: $tablet)
+      .entry-picture-head
+        height: 8rem
+        
 
 
 @mixin bg-entry-header($background-color)
