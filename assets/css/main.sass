@@ -4,15 +4,19 @@ html, body
 
   font-family: 'Hind', sans-serif
 
-.container::before
-  content: ''
-  position: fixed
-  height: 100%
-  width: 100vw
-  right: 50%
-  margin-right: -50vw
-  top: 0
-  z-index: -10
+  @media screen and (min-width: $tablet)
+    font-size: 1.1em
+
+.container
+  &::before
+    content: ''
+    position: fixed
+    height: 100%
+    width: 105vw
+    right: 50%
+    margin-right: -50vw
+    top: 0
+    z-index: -10
 
 
 h1, h2, h3, h4, h5, h6
