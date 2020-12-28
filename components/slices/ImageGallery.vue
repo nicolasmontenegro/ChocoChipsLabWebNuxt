@@ -1,7 +1,11 @@
 <template lang="pug">
-.photo-gallery-slice
+.photo-gallery-slice.my-4
   //- p {{ name_of_gallery }}
-  lingallery(:addons="{ enableLargeView: true }" :iid.sync="current_id"  :items="image_list")
+  lingallery(
+      :addons='{ enableLargeView: true }' 
+      :iid.sync='current_id'  
+      :items='image_list'
+      :responsive='true')
   //- .photo-item(v-for="photo in slice.items")
     //- p {{ photo }}
     //- img(:src='photo.gallery_image.url' alt='photo.gallery_image.alt')
@@ -33,12 +37,15 @@ export default {
   },
   data () {
     return {
-      current_id: {
-        type: Number,
-        default: null,
-        required: true
-      }
+      current_id: null
     }
+  },
+  mounted () {
+    this.$nextTick(() =>  {
+      var el_lin = this.$el.getElementsByClassName("lingallery_caption")[0]
+      el_lin.style = ""
+      el_lin.classList.add("mx-3", "my-1", "px-4", "py-3", "has-text-left")
+    })
   },
   computed: {
     name_of_gallery () {
@@ -81,7 +88,20 @@ export default {
 </script>
 
 <style lang="sass">
-.photo-slice
+.photo-gallery-slice
+  .lingalleryContainer .lingallery
+    .lingallery_caption
+      position: relative
+      text-align: start
+      border-radius: 10px
+
+    .control
+      display: block !important
+
+    > img 
+      max-height: 600px
+
+
   // position: relative
   // padding: 2rem 0
 

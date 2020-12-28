@@ -1,9 +1,9 @@
 <template lang="pug">
-.photo-slice
+.photo-slice.py-4
   .img-content
     img(:src='image_item.src' alt='slice.primary.image.alt' @click='show_large_view=true')
     large-view(v-if='show_large_view' :item='image_item' @close-large-view="show_large_view = false")
-  .img-foot.mt-1.mx-3.p-3
+  .img-foot.mt-1.mx-3.py-3.px-4(v-if='slice.primary.image.alt || (source_link && source)')
     p.m-0 {{ slice.primary.image.alt }}
     p.m-0(v-if='source_link && source')
       small
@@ -11,14 +11,16 @@
         strong
           prismic-link(v-if='source_link' :field='source_link') {{ source }}
           span(v-else) {{ source }}
+  .is-hidden
+    lingallery(:addons="{ enableLargeView: true }" :iid.sync="current_id"  :items="image_item_list")
 </template>
 
 <script>
 import PrismicDOM from 'prismic-dom'
 
-if (process.client) {
+/*lif (process.client) {
   require('lingallery')
-}
+}*/
 
 export default {
   props: {
@@ -35,8 +37,11 @@ export default {
   },
   data () {
     return {
-      show_large_view: false
+      show_large_view: false,
+      current_id: null
     }
+  },
+  created () {
   },
   computed: {
     source () { return (this.slice.primary.source === undefined ? undefined : PrismicDOM.RichText.asText(this.slice.primary.source)) },
@@ -49,6 +54,9 @@ export default {
         largeViewSrc: this.slice.primary.image.url, 
         alt: this.slice.primary.image.alt
       }
+    },
+    image_item_list () {
+      return [this.image_item] 
     }
   },
   methods: {
@@ -64,7 +72,6 @@ export default {
 <style lang="sass">
 .photo-slice
   position: relative
-  padding: 2rem 0
   display: flex
   flex-direction: column
   align-content: center
@@ -79,7 +86,7 @@ export default {
       cursor: pointer
 
   .img-foot
-    background: #ccc3b0
+    border-radius: 10px
 
     > p
       width: 100%
