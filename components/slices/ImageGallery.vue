@@ -17,11 +17,6 @@
 
 <script>
 import PrismicDOM from 'prismic-dom'
-// import Lingallery from 'lingallery'
-
-if (process.client) {
-  require('lingallery')
-}
 
 export default {
   props: {
