@@ -1,5 +1,5 @@
 <template lang="pug">
-.embed-slice(v-html='$prismic.asText(slice.primary.content)')
+.embed-slice.mb-6.pt-2(v-html='$prismic.asText(slice.primary.content)')
 </template>
 
 <script>
@@ -16,8 +16,8 @@ export default {
 
 <style lang="sass">
 .embed-slice
-  padding: 2rem 0
   position: relative
+  display: flex
 
   // &::before
   //   content: ''

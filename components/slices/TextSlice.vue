@@ -1,5 +1,5 @@
 <template lang="pug">
-.text-slice.py-4
+.text-slice.mb-6
   prismic-rich-text(v-for='(item, p_index) in slice.items' :key='text_key(index, p_index)' :field='item.paragraph')
 </template>
 
@@ -24,7 +24,6 @@ export default {
 </script>
 
 <style lang="sass">
-.text-slice
-  p
-    margin-bottom: 1rem
+.text-slice > :not(:last-child)
+    padding-bottom: 1rem
 </style>

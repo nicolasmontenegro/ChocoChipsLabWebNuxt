@@ -1,9 +1,9 @@
 <template lang="pug">
-.photo-slice.py-4
+.photo-slice.mb-6.pt-2
   .img-content
     img(:src='image_item.src' alt='slice.primary.image.alt' @click='show_large_view=true')
     large-view(v-if='show_large_view' :item='image_item' @close-large-view="show_large_view = false")
-  .img-foot.mt-1.mx-3.py-3.px-4(v-if='slice.primary.image.alt || (source_link && source)')
+  .img-foot.mt-1.py-3.px-4(v-if='slice.primary.image.alt || (source_link && source)')
     p.m-0 {{ slice.primary.image.alt }}
     p.m-0(v-if='source_link && source')
       small
@@ -81,6 +81,10 @@ export default {
     flex-direction: row
     justify-content: center
     max-height: 600px
+
+    @media screen and (max-width: $desktop)
+      #largeViewContainer a
+        top: 80px
     
     > img:hover
       cursor: pointer

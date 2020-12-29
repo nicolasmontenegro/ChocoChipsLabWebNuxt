@@ -1,5 +1,5 @@
 <template lang="pug">
-.blog
+.portfolio.index
   .columns
     .column.is-12-tablet.is-12-desktop.is-6-widescreen(v-for='entry in portfolio_entry')
       portfolio-entry-header(:key='entry.id' :entry='entry')
@@ -59,3 +59,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.portfolio .entry-header
+  
+</style>

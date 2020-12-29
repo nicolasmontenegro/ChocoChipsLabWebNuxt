@@ -11,8 +11,10 @@
           | Chips 
           br
           | Lab
-    .column.is-narrow.is-hidden-desktop.col-arrow
-      .button-expand.p-2(@click="is_expanded = !is_expanded")
+    .column.is-narrow.is-hidden-desktop.col-arrow(@click="is_expanded = !is_expanded")
+      span.is-3
+        strong  {{ $t('navigation.menu')}}
+      .button-expand.p-2
         arrow
   .navegation-site
     ul.links
@@ -83,7 +85,7 @@ export default {
   @media screen and (max-width: $desktop)
     position: fixed
     padding: 0
-    width: 100%
+    width: 100vw
     z-index: 1500
     left: 0
     top: 0
@@ -105,6 +107,13 @@ export default {
       opacity: 0
       padding: 0
       overflow-y: hidden
+
+    .col-arrow
+      &, *
+        cursor: pointer
+
+      .button-expand
+        display: flex
 
     .title-site
       .logo

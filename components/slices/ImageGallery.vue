@@ -1,5 +1,5 @@
 <template lang="pug">
-.photo-gallery-slice.my-4
+.photo-gallery-slice.mb-6.pt-2
   //- p {{ name_of_gallery }}
   lingallery(
       :addons='{ enableLargeView: true }' 
@@ -44,7 +44,7 @@ export default {
     this.$nextTick(() =>  {
       var el_lin = this.$el.getElementsByClassName("lingallery_caption")[0]
       el_lin.style = ""
-      el_lin.classList.add("mx-3", "my-1", "px-4", "py-3", "has-text-left")
+      el_lin.classList.add(/*"mx-3",*/ "my-1", "px-4", "py-3", "has-text-left")
     })
   },
   computed: {
@@ -101,6 +101,10 @@ export default {
     > img 
       max-height: 600px
 
+
+    @media screen and (max-width: $desktop)
+      #largeView #largeViewContainer a
+        top: 80px
 
   // position: relative
   // padding: 2rem 0

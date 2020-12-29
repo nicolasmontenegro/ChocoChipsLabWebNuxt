@@ -1,7 +1,7 @@
 <template lang="pug">
 .blog
-  .columns
-    .column
+  .columns.is-gapless
+    .column.mb-6
       blog-entry-header(:entry='entry' :linkable='false')
 
   slices-block(:slices='entry.data.body')

@@ -1,8 +1,8 @@
 <template lang="pug">
-.link-to-blog.mt-6.mb-6(v-if='entry.data')
+.link-to-blog.mb-6(v-if='entry.data')
   p.is-size-5.m-0 
     strong {{ $t('blog.related') }}
-  .px-4.py-2.entry-related
+  .px-4.py-3.entry-related
     blog-entry-header(:entry='entry' :mini='true')
 </template>
 
@@ -43,9 +43,13 @@ export default {
 <style lang="sass">
 .entry-related
   border-width: 2px
-  border-style: solid
-  border-color: white
+  border-style: solid  
   border-radius: 10px
+
+  &
+    font-size: 0.9rem
+  
+
   // &::before
   //   content: ''
   //   position: absolute

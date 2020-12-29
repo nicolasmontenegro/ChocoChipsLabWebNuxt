@@ -10,7 +10,8 @@ export default {
     back_to: 'Volver a {section}',
     next: 'Siguiente',
     prev: 'Anterior',
-    back: 'Volver'
+    back: 'Volver',
+    menu: 'Menú'
   },
   blog:{
     related: 'Publicación relacionada',
