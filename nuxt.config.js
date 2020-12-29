@@ -30,7 +30,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~/plugins/lingallery.js', ssr: false}
+    {src: '~/plugins/lingallery.js', ssr: false},
+    {src: '~/plugins/vue-carousel.js', ssr: false},
   ],
   /*
   ** Nuxt.js dev-modules
