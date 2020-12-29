@@ -1,17 +1,22 @@
 export default {
-  welcome: 'Welcome!',
+  welcome: 'Welcome!',  
   sections: {
     index: 'Home',
     blog: 'Blog',
     portfolio: 'Porfolio',
     about_me: 'About me'
   },
+  entries: {
+    blog_entry: 'Blog',
+    portfolio_entry: 'Porfolio'
+  },
   navigation: {
     back_to: 'Back to {section}',
     next: 'Next',
     prev: 'Previous',
     back: 'Back',
-    menu: 'Menu'
+    menu: 'Menu',
+    read_more: 'Read more'
   },
   blog:{
     related: 'Go to the blog post to read more',

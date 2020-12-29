@@ -38,7 +38,26 @@
       color: $text-color !important
     
     .entry-related
-      border-color: darken($background-color, 10%) 
+      border-color: lighten($background-color, 10%) 
+
+    .lingallery .control span, .VueCarousel .VueCarousel-navigation-button
+      color: lighten($text-color, 10%) !important
+      text-shadow: none
+      font-size: 1.25rem
+    
+    .VueCarousel .VueCarousel-dot--active
+      background-color: darken($background-color, 20%) !important
+    
+    .lingallery .lingallery_thumbnails_content_elem img
+      border-color: darken($background-color, 20%) !important
+      margin-left: 5px;
+
+  .entry-header.generic
+    .entry_type > .subtitle.#{$selector}_entry
+      color: $text-color
+      &::before
+        background-color: $background-color
+        border-color: lighten($background-color, 10%) 
 
 @include container("blog", $text-color-blog, $background-color-blog, $link-hover-color-blog)
 @include container("home", $text-color-home, $background-color-home, $link-hover-color-home)

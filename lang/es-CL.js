@@ -6,12 +6,17 @@ export default {
     portfolio: 'Portafolio',
     about_me: 'Acerca de'
   },
+  entries: {
+    blog_entry: 'Blog',
+    portfolio_entry: 'Portafolio'
+  },
   navigation: {
     back_to: 'Volver a {section}',
     next: 'Siguiente',
     prev: 'Anterior',
     back: 'Volver',
-    menu: 'Menú'
+    menu: 'Menú',
+    read_more: 'Leer más'
   },
   blog:{
     related: 'Publicación relacionada',
