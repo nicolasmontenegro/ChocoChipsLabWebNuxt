@@ -30,12 +30,15 @@ export default {
     }
   },
   async fetch () {
+    this.entry = await this.$entryData(this.slice.primary.entry)
+    /*
     if (this.slice.primary.entry.id){
       this.entry = await this.$prismic.api.getByUID(
         this.slice.primary.entry.type, 
-        this.slice.primary.entry.uid/*,
-        {lang: this.app.i18n.locales.find(e => e.code == this.app.i18n.locale).iso}*/ )
+        this.slice.primary.entry.uid,
+        {lang: this.$i18n.locales.find(e => e.code == this.$i18n.locale).iso})
     }
+    */
   }
 }
 </script>
