@@ -32,7 +32,8 @@ export default {
   plugins: [
     {src: '~/plugins/lingallery.js', ssr: false},
     {src: '~/plugins/vue-carousel.js', ssr: false},
-    {src: '~/plugins/helpers.js'}
+    {src: '~/plugins/helpers.js'},
+    {src: '~/plugins/postscribe.js', ssr: false}
   ],
   /*
   ** Nuxt.js dev-modules
