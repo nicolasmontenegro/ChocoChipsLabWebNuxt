@@ -88,6 +88,5 @@ sw.*
 .DS_Store
 \.gcloudignore
 
-app\.yaml
 
 *.code-workspace
