@@ -1,5 +1,5 @@
 <template lang="pug">
-.embed-slice(v-html='$prismic.asText(slice.primary.content)')
+.embed-slice.mb-6
 </template>
 
 <script>
@@ -10,30 +10,45 @@ export default {
       default: () => {},
       required: true
     }
+  },
+  data () {
+    return {
+      loaded: false
+    }
+  },
+  mounted () {
+    this.$nextTick(() =>  {
+      this.$postscribe(this.$el, this.$prismic.asText(this.slice.primary.content))
+    })
   }
 }
 </script>
 
 <style lang="sass">
 .embed-slice
-  padding: 2rem 0
   position: relative
+  display: flex
 
-  &::before
-    content: ''
-    position: absolute
-    height: 100%
-    width: 100vw
-    right: 50%
-    margin-right: -50vw
-    top: 0
-    background: black
-    z-index: -1
+  // &::before
+  //   content: ''
+  //   position: absolute
+  //   height: 100%
+  //   width: 100vw
+  //   right: 50%
+  //   margin-right: -50vw
+  //   top: 0
+  //   background: black
+  //   z-index: -1
 
-    @media screen and (min-width: $tablet)
-      right: 67.1%
+  //   @media screen and (min-width: $tablet)
+  //     right: 67.1%
 
-  iframe
-    height: 25rem
+  & > *
+    max-height: 25rem
     width: 100%
+
+  // Fix for Embed Like Gist
+  .emgithub-container
+    table
+      width: unset
 </style>

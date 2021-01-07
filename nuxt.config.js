@@ -11,8 +11,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Palanquin+Dark&display=swap' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }/*,
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Palanquin+Dark&display=swap' }*/
     ],
     __dangerouslyDisableSanitizers: ['script']
   },
@@ -30,6 +30,10 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    {src: '~/plugins/lingallery.js', ssr: false},
+    {src: '~/plugins/vue-carousel.js', ssr: false},
+    {src: '~/plugins/helpers.js'},
+    {src: '~/plugins/postscribe.js', ssr: false}
   ],
   /*
   ** Nuxt.js dev-modules
@@ -37,7 +41,10 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/prismic'
+    // https://prismic.nuxtjs.org/
+    '@nuxtjs/prismic', 
+    // https://www.npmjs.com/package/@nuxtjs/google-fonts
+    '@nuxtjs/google-fonts'
   ],
   /*
   ** Nuxt.js modules
@@ -99,5 +106,16 @@ export default {
     linkResolver: '@/plugins/link-resolver',
     htmlSerializer: '@/plugins/html-serializer',
     /* see configuration for more */
+  },
+  /*
+  ** Google Fonts Config
+  */
+  googleFonts: {
+    families: {
+      'Roboto': true,
+      'Palanquin+Dark': true,
+      'Hind': [300, 400, 600],
+    },
+    display: 'swap'
   }
 }

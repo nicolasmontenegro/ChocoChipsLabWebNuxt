@@ -1,11 +1,21 @@
 <template lang="pug">
 .sectionbar(:class="[isExpanded]")
-  .is-spaced.title-site
-    logo
-    h1.title.is-spaced.is-1 
-     | Choco Chips Lab
-    .button-expand.is-hidden-desktop(@click="is_expanded = !is_expanded")
-      arrow
+  .columns.is-mobile.is-gapless.py-2.title-site
+    .column.is-narrow.col-logo
+      logo
+    .column
+      h1.pl-2.title 
+        nuxt-link(:to="localePath({name: 'index'})")
+          | Choco
+          br
+          | Chips 
+          br
+          | Lab
+    .column.is-narrow.is-hidden-desktop.col-arrow(@click="is_expanded = !is_expanded")
+      span.is-3
+        strong  {{ $t('navigation.menu')}}
+      .button-expand.p-2
+        arrow
   .navegation-site
     ul.links
       li
@@ -14,6 +24,9 @@
       li
         nuxt-link(:to="localePath({name: 'blog'})")
           strong(@click="is_expanded = false") {{ $t('sections.blog') }}
+      li
+        nuxt-link(:to="localePath({name: 'portfolio'})")
+          strong(@click="is_expanded = false") {{ $t('sections.portfolio') }}
       li
         nuxt-link(:to="localePath({name: 'about-me'})")
           strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
@@ -48,13 +61,17 @@ export default {
 <style lang="sass">
 .sectionbar
   .title-site
-    .logo
-      margin-top: .5rem
+    
+    .col-logo, .col-arrow
+      display: flex
+      align-items: center
 
-    .title, .subtitle
-      margin-bottom: .5rem
+    .title
+      font-size: 2.1rem
 
   .navegation-site
+    font-family: 'Palanquin Dark', sans-serif
+    
     .link_back
       margin-bottom: 1rem
 
@@ -68,41 +85,45 @@ export default {
   @media screen and (max-width: $desktop)
     position: fixed
     padding: 0
-    width: 100%
+    width: 100vw
     z-index: 1500
     left: 0
     top: 0
-
-    .button-expand
-      padding: 1rem
+    box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.40)
+    border-radius: 0 0 10px 10px;
 
     .navegation-site
-      padding: 0 1rem 1rem
-      transition: max-height 333ms ease-in, padding 333ms ease-in, opacity 333ms ease-in
+      padding: .5rem 1rem 1rem
+      
+      transition: max-height 333ms ease-in, transform 333ms ease-in, padding 333ms ease-in, opacity 333ms ease-in
       max-height: 15rem
       overflow-y: hidden
       opacity: 1
-
+      overflow-y: auto
+    
     &:not(.is-expanded) .navegation-site
-        max-height: 0
-        opacity: 0
-        padding: 0
-        overflow-y: auto
+      transform: translate(-20px, .5rem)
+      max-height: 0
+      opacity: 0
+      padding: 0
+      overflow-y: hidden
+
+    .col-arrow
+      &, *
+        cursor: pointer
+
+      .button-expand
+        display: flex
 
     .title-site
-      display: flex
-      align-items: center
-      max-height: 4rem
-
       .logo
-        max-width: 3rem
-        margin: 0 .5rem
+        width: 3rem
+        height: 3rem
 
       .title
-        font-size: 2rem
-        width: 100%
-        padding: 0 .5rem
+        font-size: .95rem
 
       .arrow
-        max-width: 1rem
+        width: 1rem
+        height: 1rem
 </style>

@@ -15,9 +15,13 @@
     "@nuxtjs/bulma": "^1.3.0",
     "@nuxtjs/prismic": "^1.2.4",
     "@nuxtjs/style-resources": "^1.0.0",
+    "@nuxtjs/google-fonts": "^1.2.0",
     "cross-env": "^7.0.2",
     "nuxt": "^2.14.6",
-    "nuxt-i18n": "^6.15.4"
+    "nuxt-i18n": "^6.15.4",
+    "lingallery": "^1.3.7",
+    "vue-carousel": "^0.18.0",
+    "postscribe": "^2.0.8"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",

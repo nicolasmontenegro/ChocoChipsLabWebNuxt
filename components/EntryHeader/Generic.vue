@@ -1,33 +1,35 @@
 <template lang="pug">
-.entry-header.blog(:class='{ mini: mini }')
+.entry-header.generic(:class='{ mini: mini }')
   nuxt-link.simple(v-if='linkable' :to='localePath(link)')
     .entry-picture-head(:style='picture_head')
   .entry-picture-head(v-else :style='picture_head')
 
   .content
-    p.m-0
+    .m-0
       nuxt-link(v-if='linkable' :to='localePath(link)')
         prismic-rich-text(class='entry-title' :field='entry.data.title')
       prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
 
-    p.entry-meta
+    p.entry-meta.m-0
       span {{ $t('blog.published', {date: toLocalDate(entry.first_publication_date)}) }}
       template(v-if='entry.last_publication_date')
         span &emsp;|&emsp;
         span {{ $t('blog.updated', {date: toLocalDate(entry.last_publication_date)}) }}
 
-    prismic-rich-text(class='entry-lead' :field='entry.data.lead')
+    .mb-2.px-1.entry_type
+      h4.subtitle.m-0.mb-1(:class='entry.type') {{ $t(`entries.${entry.type}`) }}
 
     nuxt-link(v-if='linkable' :to='localePath(link)')
       .is-medium
         strong
-          i {{ $t('blog.read_more') }}
+          i {{ $t('navigation.read_more') }}
 </template>
 
 <script>
 import LinkResolver from '~/plugins/link-resolver.js'
 
 export default {
+  name: 'EntryHeaderGeneric',
   props: {
     entry: {
       type: Object,
@@ -63,10 +65,35 @@ export default {
 </script>
 
 <style lang="sass">
-@import '~/assets/css/entry-header.sass'
-.entry-header.blog
-  & > *
-    .entry-picture-head
-      &::after
-        @include bg-entry-header($background-color-blog)
+@import '~/assets/css/utils/colors.sass'
+.entry-header
+  .entry_type > .subtitle
+    display: inline-block
+    position: relative
+    padding: 2px
+
+    &::before
+      content: ''
+      position: absolute
+      border-radius: 5px
+      height: 115%
+      width: calc(100% + 4px)
+      top: 0
+      right: -2px
+      z-index: -1
+      border-width: 2px
+      border-style: solid  
+      border-radius: 10px
+
+
+    
+
+    
+  /*.blog
+    & > *
+      .entry-picture-head
+        &::after
+          @include bg-entry-header($background-color-blog)*/
+
+
 </style>

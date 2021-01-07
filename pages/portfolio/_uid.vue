@@ -1,8 +1,12 @@
 <template lang="pug">
-.blog
-  .columns.is-gapless
-    .column.mb-6
-      blog-entry-header(:entry='entry' :linkable='false')
+.portfolio
+  .columns
+    .column
+      portfolio-entry-header(:entry='entry' :linkable='false')
+  
+  section
+    .description
+      prismic-rich-text(:field='entry.data.description')
 
   slices-block(:slices='entry.data.body')
 
@@ -12,7 +16,9 @@
 </template>
 
 <style lang="sass">
-.main .blog
+.main .portfolio
+  .description
+    font-size: 120%
   .slide
     padding-bottom: 0rem
   .logo
@@ -23,13 +29,16 @@
 import PrismicDOM from 'prismic-dom'
 import Prismic from 'prismic-javascript'
 import PrismicConfig from '~/prismic.config.js'
+import LinkResolver from '~/plugins/link-resolver.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
+import PortfolioEntryHeader from '~/components/PortfolioEntryHeader.vue'
 import SlicesBlock from '~/components/SlicesBlock.vue'
 import Logo from '~/components/vectors/Logo.vue'
 
 export default {
-  name: 'BlogEntry',
+  name: 'PortfolioEntry',
   components: {
+    PortfolioEntryHeader,
     BlogEntryHeader,
     SlicesBlock,
     Logo
@@ -43,10 +52,10 @@ export default {
     try {
       // Query to get entry
       const entry = await $prismic.api.getByUID(
-        'blog_entry', 
+        'portfolio_entry', 
         params.uid,
         {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
-
+        
       // Returns data to be used in template
       return {
         entry
@@ -59,8 +68,13 @@ export default {
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
-      { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
+      { section: { name: 'portfolio', style: 'portfolio' }, back: { name: 'portfolio' } }
     )
-  }
+  },
+  methods: {
+    link (link_to) {
+      return LinkResolver(link_to)
+    }
+  },
 }
 </script>

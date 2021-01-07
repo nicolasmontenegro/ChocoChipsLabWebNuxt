@@ -1,21 +1,31 @@
 html, body
   margin: 0 !important
   padding: 0 !important
+  overflow-x: hidden
 
-.container::before
-  content: ''
-  position: absolute
-  min-height: 100vh
-  height: 100%
-  width: 100vw
-  right: 50%
-  margin-right: -50vw
-  top: 0
-  z-index: -10
+  font-family: 'Hind', sans-serif
+
+  @media screen and (min-width: $tablet)
+    font-size: 1.1em
+  
+  #__layout
+    overflow: hidden
+
+.container
+  &::before
+    content: ''
+    position: fixed
+    height: 100vh
+    width: 105vw
+    right: 50%
+    margin-right: -50vw
+    top: 0
+    z-index: -10
 
 
 h1, h2, h3, h4, h5, h6
   font-family: 'Palanquin Dark', sans-serif
+  line-height: 100% !important
 
 a:not(.simple)
   display: inline-block
@@ -30,13 +40,13 @@ a:not(.simple)
     background-color: #fff
     position: absolute
     border-radius: 5px
-    height: calc(100% + 10px)
+    height: 110%
     width: 0%
-    top: -5px
+    top: 0
     right: -5px
     z-index: -1
 
-  &:hover, &:active, &:focus
+  &:hover //, &:active, &:focus
     &::before
       width: calc(100% + 10px)
       left: -5px
@@ -60,3 +70,4 @@ a:not(.simple)
     padding-right: $padding-mobile
 
 @import '~/assets/css/content.sass'
+@import '~/assets/css/entry-header.sass'
