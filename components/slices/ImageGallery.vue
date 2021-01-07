@@ -1,22 +1,10 @@
 <template lang="pug">
-.photo-gallery-slice.mb-6.pt-2
-  //- p {{ name_of_gallery }}
+.photo-gallery-slice.mb-6
   lingallery(
       :addons='{ enableLargeView: true }' 
       :iid.sync='current_id'  
       :items='image_list'
       :responsive='true')
-  //- .photo-item(v-for="photo in slice.items")
-    //- p {{ photo }}
-    //- img(:src='photo.gallery_image.url' alt='photo.gallery_image.alt')
-    //- p {{ photo.gallery_image.alt }}
-    //- p {{ image_list }}
-    //- p(v-if='source_link && source')
-    //-     small
-    //-     | {{ $t('slices.photo.source') }}:&nbsp;
-    //-     strong
-    //-         prismic-link(v-if='source_link' :fielsd='source_link') {{ source }}
-    //-         span(v-else) {{ source }}
 </template>
 
 <script>

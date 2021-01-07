@@ -30,10 +30,10 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~/plugins/lingallery.js', ssr: false},
-    {src: '~/plugins/vue-carousel.js', ssr: false},
+    {src: '~/plugins/lingallery.js', mode:'client'},
+    {src: '~/plugins/vue-carousel.js', mode:'client'},
     {src: '~/plugins/helpers.js'},
-    {src: '~/plugins/postscribe.js', ssr: false}
+    {src: '~/plugins/postscribe.js', mode:'client'}
   ],
   /*
   ** Nuxt.js dev-modules
@@ -44,7 +44,9 @@ export default {
     // https://prismic.nuxtjs.org/
     '@nuxtjs/prismic', 
     // https://www.npmjs.com/package/@nuxtjs/google-fonts
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    // https://github.com/nuxt-community/style-resources-module#readme
+    '@nuxtjs/style-resources'
   ],
   /*
   ** Nuxt.js modules
@@ -52,8 +54,6 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
-    // https://github.com/nuxt-community/style-resources-module#readme
-    '@nuxtjs/style-resources',
     // https://i18n.nuxtjs.org
     'nuxt-i18n'
   ],
@@ -71,9 +71,8 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
-      config.resolve.alias['vue'] = 'vue/dist/vue.common'
-    }
+    extractCSS: true,
+    cssSourceMap: true
   },
   /*
   ** i18n (Internationalization)
