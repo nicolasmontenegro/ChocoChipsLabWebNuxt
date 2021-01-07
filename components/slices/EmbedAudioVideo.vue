@@ -44,11 +44,14 @@ export default {
   //     right: 67.1%
 
   & > *
-    max-height: 25rem
     width: 100%
 
   // Fix for Embed Like Gist
   .emgithub-container
     table
       width: unset
+
+      td.hljs-ln-code
+        width: 100%
+
 </style>

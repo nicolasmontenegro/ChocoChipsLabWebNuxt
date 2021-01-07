@@ -5,7 +5,7 @@
       logo
     .column
       h1.pl-2.title 
-        nuxt-link(:to="localePath({name: 'index'})")
+        nuxt-link.pr-2(:to="localePath({name: 'index'})")
           | Choco
           br
           | Chips 
