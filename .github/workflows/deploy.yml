@@ -25,32 +25,40 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v2
+
+      # Set system path 
+      - name: Set system path
+        run: echo "${{github.workspace}}/.nuxt/" >> $GITHUB_PATH
         
-      # Setup node
       # https://github.com/marketplace/actions/setup-node-js-environment
       - uses: actions/setup-node@v2
         with:
           node-version: '13'
 
-      # Install dependences
       - name: Install dependences
-        run: npm install
+        run: npm install --quiet
       
-      # Build dist
       - name: Build dist
         run: npm run build
-        
-      # Deploy google app engine
-      # https://github.com/marketplace/actions/deploy-google-app-engine
-      - name: Deploy google app engine
-        uses: vijayp23/deploy-gae-action@1.0.1
+
+      # - name: Current date
+      #   run: echo "DATETIME_NOW=$(date +'%Y%m%dt%H%M%S')" >> $GITHUB_ENV
+
+      # https://github.com/marketplace/actions/publish-app-to-google-app-engine
+      - name: Initialize Google Cloud SDK
+        uses: zxyle/publish-gae-action@master
         with:
-          service-account: ${{ secrets.SERVICE_ACCOUNT }}
-          project-id: ${{ secrets.PROJECT_ID }}
-          config-files: './app.yml'
-          # Optional
-          # service-version: 3                          #default value : ""
-          delete-previous-versions: true              #default value : false
-          service-name: ${{ secrets.SERVICE_NAME }}   #default value : default
-          no-cache: false                             #default value : false
-          debug: false                                #default value : false
+          service_account_email: ${{ secrets.SA_EMAIL }}
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          gae_config_path: ${{ github.workspace }}/app.yaml
+          # An optional variables parameter can be used
+          # gae_variables: ${{ secrets.GAE_VARIABLES }}
+
+      - name: Publish app to Google App Engine
+        run: |
+          # This client-secret.json is converted by GCP_SA_KEY.
+          gcloud auth activate-service-account ${{ secrets.SA_EMAIL }} --key-file=client-secret.json
+          gcloud config set project ${{ secrets.PROJECT_ID }}
+          gcloud -q app deploy app.yaml --promote
+        
