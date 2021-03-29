@@ -2,15 +2,8 @@
 .sectionbar(:class="[isExpanded]")
   .columns.is-mobile.is-gapless.py-2.title-site
     .column.is-narrow.col-logo
-      logo
-    .column
-      h1.pl-2.title 
-        nuxt-link.pr-2(:to="localePath({name: 'index'})")
-          | Choco
-          br
-          | Chips 
-          br
-          | Lab
+      nuxt-link.is-inline-flex.py-2(:to="localePath({name: 'index'})")
+        logo-title
     .column.is-narrow.is-hidden-desktop.col-arrow(@click="is_expanded = !is_expanded")
       span.is-3
         strong  {{ $t('navigation.menu')}}
@@ -37,13 +30,13 @@
 </template>
 
 <script>
-import Logo from '~/components/vectors/Logo.vue'
+import LogoTitle from '~/components/vectors/LogoTitle.vue'
 import Arrow from '~/components/vectors/Arrow.vue'
 
 export default {
   name: 'SectionBar',
   components: {
-    Logo,
+    LogoTitle,
     Arrow
   },
   data () {
@@ -58,13 +51,16 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
 .sectionbar
   .title-site
     
     .col-logo, .col-arrow
       display: flex
       align-items: center
+
+    .col-logo a::before
+      height: 100% !important
 
     .title
       font-size: 2.1rem
