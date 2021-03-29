@@ -1,7 +1,7 @@
 {
   "name": "ChocoChipsLabWebNuxt",
   "version": "1.0.0",
-  "description": "My astonishing Nuxt.js project",
+  "description": "Choco Chips Lab's blog",
   "author": "Nicolás Montenegro",
   "private": true,
   "scripts": {
@@ -13,15 +13,16 @@
   },
   "dependencies": {
     "@nuxtjs/bulma": "^1.3.0",
+    "@nuxtjs/google-fonts": "^1.2.0",
     "@nuxtjs/prismic": "^1.2.4",
     "@nuxtjs/style-resources": "^1.0.0",
-    "@nuxtjs/google-fonts": "^1.2.0",
     "cross-env": "^7.0.2",
+    "lingallery": "^1.3.7",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.15.4",
-    "lingallery": "^1.3.7",
-    "vue-carousel": "^0.18.0",
-    "postscribe": "^2.0.8"
+    "nuxt-rfg-icon": "^0.6.4",
+    "postscribe": "^2.0.8",
+    "vue-carousel": "^0.18.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
@@ -31,7 +32,7 @@
     "eslint-plugin-nuxt": "^1.0.0",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^10.0.2",
     "style-loader": "^1.3.0"

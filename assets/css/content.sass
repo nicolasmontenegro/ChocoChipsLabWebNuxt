@@ -22,10 +22,12 @@
 
     a:not(.simple)
       &, & *
-        transition: color 333ms ease-out
+        position: relative
+        transition: color 500ms ease-out, fill 500ms ease-out
 
-      &:hover, &:hover *
+      &:hover, &:hover *, 
         color: $link-hover-color !important
+        fill: $link-hover-color !important
 
       &:focus, &:focus > *, &:focus-within, &:focus-within > *
         color: darken( $link-hover-color, 10% ) !important
