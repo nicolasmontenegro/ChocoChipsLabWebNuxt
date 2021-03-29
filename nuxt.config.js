@@ -11,7 +11,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }/*,
+      /*{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Palanquin+Dark&display=swap' }*/
     ],
     __dangerouslyDisableSanitizers: ['script']
@@ -55,7 +55,10 @@ export default {
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
     // https://i18n.nuxtjs.org
-    'nuxt-i18n'
+    'nuxt-i18n',
+    // https://github.com/pimlie/nuxt-rfg-icon
+    'nuxt-rfg-icon',
+    '@nuxtjs/manifest',
   ],
   styleResources: {
     // your settings here
@@ -116,5 +119,14 @@ export default {
       'Hind': [300, 400, 600],
     },
     display: 'swap'
+  },
+  /*
+  ** RealFaviconGenerator Favicon's for NUXT
+  */
+  'rfg-icon': {
+    static: true,
+    staticPath: '/_favicons/',
+    masterPicture: 'static/icon.png',
+    rfg: require('./assets/faviconDescription.json')
   }
 }

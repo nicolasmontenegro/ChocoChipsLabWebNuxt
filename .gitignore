@@ -87,4 +87,8 @@ sw.*
 # Mac OSX
 .DS_Store
 
+# VSCode workspace
 *.code-workspace
+
+# Static icons
+/static/_favicons
