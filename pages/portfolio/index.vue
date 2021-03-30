@@ -33,6 +33,7 @@ export default {
         Prismic.Predicates.at('document.type', 'portfolio_entry'),
         {
           lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
+          orderings: '[document.first_publication_date desc]',
           pageSize: 10,
           page: (query.page || 1)
         }
