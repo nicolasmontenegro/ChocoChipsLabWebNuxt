@@ -36,7 +36,54 @@ export default {
   },
   head () {
     return {
-      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog')),
+      title: this.title,
+      meta: [
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: this.title
+        },
+        {
+          hid: 'twitter:description',
+          name: 'twitter:description',
+          content: PrismicDOM.RichText.asText(this.entry.data.lead)
+        },
+        {
+          hid: 'twitter:image',
+          name: 'twitter:image',
+          content: this.entry.data.header_image.url
+        },
+        {
+          hid: 'twitter:image:alt',
+          name: 'twitter:image:alt',
+          content: this.title
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.title
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: PrismicDOM.RichText.asText(this.entry.data.lead)
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.entry.data.header_image.url
+        },
+        {
+          hid: 'og:image:secure_url',
+          property: 'og:image:secure_url',
+          content: this.entry.data.header_image.url
+        },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: this.title
+        }
+      ]
     }
   },
   async asyncData ({ app, $prismic, params, error }) {
@@ -61,6 +108,11 @@ export default {
       'navegation/setNavegation',
       { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
     )
+  },
+  computed: {
+    title () {
+      return this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog');
+    }
   }
 }
 </script>
