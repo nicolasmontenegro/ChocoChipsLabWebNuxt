@@ -82,12 +82,12 @@ export default {
   */
   i18n: {
     locales: [
-      {
-        name: 'English',
-        code: 'en',
-        iso: 'en-US',
-        file: 'en-US.js'
-      },
+      // {
+      //   name: 'English',
+      //   code: 'en',
+      //   iso: 'en-US',
+      //   file: 'en-US.js'
+      // },
       {
         name: 'Español',
         code: 'es',
@@ -96,7 +96,7 @@ export default {
       }
     ],
     defaultLocale: 'es',
-    strategy: 'prefix_except_default',
+    strategy: 'prefix_and_default',
     lazy: true,
     langDir: 'lang/'
   },
