@@ -96,7 +96,7 @@ export default {
       }
     ],
     defaultLocale: 'es',
-    strategy: 'prefix_and_default',
+    strategy: 'prefix',
     lazy: true,
     langDir: 'lang/'
   },
