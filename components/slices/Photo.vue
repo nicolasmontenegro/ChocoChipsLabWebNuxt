@@ -83,16 +83,18 @@ $max-height: 400px
     flex-direction: row
     justify-content: center
     max-height: $max-height
-
-    @media screen and (max-width: $desktop)
-      #largeViewContainer a
-        top: 80px
     
     > img
       max-height: $max-height
 
       &:hover
         cursor: pointer
+    
+    ::v-deep
+      .largeViewContainer 
+        a
+          @media screen and (max-width: $desktop)
+            top: 92px
 
   .img-foot
     border-radius: 10px

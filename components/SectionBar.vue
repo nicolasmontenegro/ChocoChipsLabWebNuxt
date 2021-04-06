@@ -1,6 +1,6 @@
 <template lang="pug">
 .sectionbar(:class="[isExpanded]")
-  .columns.is-mobile.is-gapless.py-2.title-site
+  .columns.is-mobile.is-gapless.py-2.title-site.is-justify-content-space-between
     .column.is-narrow.col-logo
       nuxt-link.is-inline-flex.py-2(:to="localePath({name: 'index'})")
         logo-title
@@ -8,7 +8,7 @@
       span.is-3
         strong  {{ $t('navigation.menu')}}
       .button-expand.p-2
-        arrow
+        arrow(:class="{'is-expanded': is_expanded}")
   .navegation-site
     ul.links
       li
@@ -110,6 +110,12 @@ export default {
 
       .button-expand
         display: flex
+        
+        /deep/ .arrow
+          transition: transform 200ms ease-in-out
+
+          &.is-expanded
+            transform: rotate(-180deg)
 
     .title-site
       .logo
