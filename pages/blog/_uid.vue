@@ -1,6 +1,6 @@
 <template lang="pug">
 .blog
-  .columns.is-gapless
+  .columns
     .column.mb-6
       blog-entry-header(:entry='entry' :linkable='false')
 

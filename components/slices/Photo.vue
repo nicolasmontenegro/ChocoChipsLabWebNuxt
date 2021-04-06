@@ -69,7 +69,9 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
+$max-height: 400px
+
 .photo-slice
   position: relative
   display: flex
@@ -80,14 +82,19 @@ export default {
     display: flex
     flex-direction: row
     justify-content: center
-    max-height: 600px
-
-    @media screen and (max-width: $desktop)
-      #largeViewContainer a
-        top: 80px
+    max-height: $max-height
     
-    > img:hover
-      cursor: pointer
+    > img
+      max-height: $max-height
+
+      &:hover
+        cursor: pointer
+    
+    ::v-deep
+      .largeViewContainer 
+        a
+          @media screen and (max-width: $desktop)
+            top: 92px
 
   .img-foot
     border-radius: 10px
