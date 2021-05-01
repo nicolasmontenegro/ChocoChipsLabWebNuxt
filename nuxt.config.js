@@ -59,6 +59,8 @@ export default {
     // https://github.com/pimlie/nuxt-rfg-icon
     'nuxt-rfg-icon',
     '@nuxtjs/manifest',
+    // https://github.com/nuxt-community/robots-module
+    '@nuxtjs/robots',
   ],
   styleResources: {
     // your settings here
@@ -128,5 +130,12 @@ export default {
     staticPath: '/_favicons/',
     masterPicture: 'static/icon.png',
     rfg: require('./assets/faviconDescription.json')
-  }
+  },
+  /*
+  ** @nuxtjs/robots
+  */
+  robots: {
+    UserAgent: '*',
+    Disallow: '/'
+  },
 }
