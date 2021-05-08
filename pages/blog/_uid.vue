@@ -1,10 +1,10 @@
 <template lang="pug">
 .blog
   .columns
-    .column.mb-6
+    .column.mb-5
       blog-entry-header(:entry='entry' :linkable='false')
 
-  slices-block(:slices='entry.data.body')
+  LazySlicesBlock(:slices='entry.data.body')
 
   .columns.is-centered
     .column.is-1
@@ -24,14 +24,12 @@ import PrismicDOM from 'prismic-dom'
 import Prismic from 'prismic-javascript'
 import PrismicConfig from '~/prismic.config.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
-import SlicesBlock from '~/components/SlicesBlock.vue'
 import Logo from '~/components/vectors/Logo.vue'
 
 export default {
   name: 'BlogEntry',
   components: {
     BlogEntryHeader,
-    SlicesBlock,
     Logo
   },
   head () {
