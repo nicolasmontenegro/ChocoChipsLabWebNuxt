@@ -1,7 +1,7 @@
 <template lang="pug">
 .blog
   .columns
-    .column.mb-6
+    .column.mb-5
       blog-entry-header(:entry='entry' :linkable='false')
 
   LazySlicesBlock(:slices='entry.data.body')
