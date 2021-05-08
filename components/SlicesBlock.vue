@@ -14,16 +14,11 @@
 </template>
 
 <script>
-// Imports for all slices
-import TextSlice from '../components/slices/TextSlice.vue'
-import EmbedAudioVideo from '../components/slices/EmbedAudioVideo.vue'
-import Photo from '../components/slices/Photo.vue'
-import ImageGallery from '../components/slices/ImageGallery.vue'
-import EntryRelated from '../components/slices/EntryRelated.vue'
+import Subtitle from './slice/Subtitle.vue'
 
 export default {
   components: {
-    TextSlice,
+    Subtitle,
     EmbedAudioVideo,
     Photo,
     ImageGallery,
