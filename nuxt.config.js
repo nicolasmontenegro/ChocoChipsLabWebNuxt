@@ -27,6 +27,11 @@ export default {
     '@/assets/css/main.sass'
   ],
   /*
+  ** components in nested directories 
+  ** https://nuxtjs.org/docs/2.x/directory-structure/components/
+  */
+  components: true,
+  /*
   ** Plugins to load before mounting the App
   */
   plugins: [
