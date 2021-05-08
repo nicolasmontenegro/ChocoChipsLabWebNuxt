@@ -7,7 +7,11 @@ handlers:
     static_dir: .nuxt/dist/client
     secure: always
 
-  - url: /(^(?!robots\.txt).*\.(gif|png|jpg|ico|txt))$
+  - url: /robots\.txt
+    script: auto
+    secure: always
+
+  - url: /(.*\.(gif|png|jpg|ico|txt))$
     static_files: static/\1
     upload: static/.*\.(gif|png|jpg|ico|txt)$
     secure: always
