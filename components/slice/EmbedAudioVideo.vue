@@ -1,5 +1,5 @@
 <template lang="pug">
-.embed-slice.mb-6
+.embed-slice.mb-5
 </template>
 
 <script>
@@ -24,8 +24,8 @@ export default {
 }
 </script>
 
-<style lang="sass">
-.embed-slice
+<style scoped lang="sass">
+.embed-slice ::v-deep
   position: relative
   display: flex
 

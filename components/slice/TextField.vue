@@ -1,5 +1,5 @@
 <template lang="pug">
-.text-slice.mb-6
+.text-slice.mb-5
   prismic-rich-text(v-for='(item, p_index) in slice.items' :key='text_key(index, p_index)' :field='item.paragraph')
 </template>
 
@@ -23,10 +23,14 @@ export default {
 }
 </script>
 
-<style lang="sass">
-.text-slice > :not(:last-child)
-  padding-bottom: 1rem
+<style scoped lang="sass">
+.text-slice ::v-deep
+  > :not(:last-child)
+    padding-bottom: 1.2rem
 
   a
     font-weight: bold
+
+  ol, ul
+    margin-top: 0 !important
 </style>

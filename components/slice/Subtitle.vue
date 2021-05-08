@@ -19,11 +19,3 @@ export default {
   },
 }
 </script>
-
-<style lang="sass">
-.text-slice > :not(:last-child)
-  padding-bottom: 1rem
-
-  a
-    font-weight: bold
-</style>

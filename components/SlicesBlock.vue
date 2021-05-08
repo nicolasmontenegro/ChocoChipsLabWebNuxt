@@ -1,23 +1,31 @@
 <template lang="pug">
 .slide
   section(v-for="(slice, index) in slices" :key="'slice-' + index")
-    template(v-if='slice.slice_type === "paragraph" || slice.slice_type === "text"')
-      text-slice(:slice='slice', :index='index')
+    template(v-if='["paragraph","text"].includes(slice.slice_type)')
+      TextField(:slice='slice', :index='index')
+    template(v-if='slice.slice_type === "subtitle"')
+      Subtitle(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "embed_video_audio"')
-      embed-audio-video(:slice='slice', :index='index')
+      EmbedAudioVideo(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "photo"')
-      photo(:slice='slice', :index='index')
+      Photo(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "image_gallery"')
-      image-gallery(:slice='slice', :index='index')
+      ImageGallery(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "entry_related"')
-      entry-related(:slice='slice', :index='index')
+      EntryRelated(:slice='slice', :index='index')
 </template>
 
 <script>
+import TextField from './slice/TextField.vue'
 import Subtitle from './slice/Subtitle.vue'
+import EmbedAudioVideo from './slice/EmbedAudioVideo.vue'
+import Photo from './slice/Photo.vue'
+import ImageGallery from './slice/ImageGallery.vue'
+import EntryRelated from './slice/EntryRelated.vue'
 
 export default {
   components: {
+    TextField,
     Subtitle,
     EmbedAudioVideo,
     Photo,
@@ -34,7 +42,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
 .slide
   padding-bottom: 5rem
 </style>

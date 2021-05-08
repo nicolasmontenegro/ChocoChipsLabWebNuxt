@@ -1,5 +1,5 @@
 <template lang="pug">
-.link-to-blog.mb-6(v-if='entry.data')
+.link-to-blog.mb-5(v-if='entry.data')
   p.is-size-5.m-0 
     strong {{ $t('blog.related') }}
   .px-4.py-3.entry-related
@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
 .entry-related
   border-width: 2px
   border-style: solid  
