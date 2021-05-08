@@ -1,5 +1,5 @@
 <template lang="pug">
-.photo-slice.mb-6.pt-2
+.photo-slice.mb-5.pt-2
   .img-content
     img(:src='image_item.src' alt='slice.primary.image.alt' @click='show_large_view=true')
     large-view(v-if='show_large_view' :item='image_item' @close-large-view="show_large_view = false")
@@ -72,7 +72,7 @@ export default {
 <style scoped lang="sass">
 $max-height: 400px
 
-.photo-slice
+.photo-slice ::v-deep
   position: relative
   display: flex
   flex-direction: column

@@ -1,5 +1,5 @@
 <template lang="pug">
-.photo-gallery-slice.mb-6
+.photo-gallery-slice.mb-5
   lingallery(
       :addons='{ enableLargeView: true }' 
       :iid.sync='current_id'  
@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
 .photo-gallery-slice
   .lingalleryContainer .lingallery
     .lingallery_caption
