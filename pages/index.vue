@@ -23,7 +23,16 @@
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
           .column.is-6
             a(href="https://1drv.ms/b/s!AhJPmXJoFuMAouBQqtgwAhk5hXDhEQ" target="_blank")
-              strong 📄 Descarga mi cv &#8599;
+  .portfolio.py-6(intersection-style="portfolio")
+    .portfolio-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
+      .column.is-flex-grow-0
+        h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
+      .column.is-flex-grow-0
+        nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
+    .portfolio-content
+      .columns
+        .column.is-12
+          portfolio-entry-header(:key='portfolioEntries[0].id' :entry='portfolioEntries[0]' :mini="true")
   .blog.py-6(intersection-style="blog")
     .blog-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
@@ -39,16 +48,6 @@
           blog-entry-header(:key='blogEntries[1].id' :entry='blogEntries[1]' stylo="vertical-mini")
         .column.is-6
           blog-entry-header(:key='blogEntries[2].id' :entry='blogEntries[2]' stylo="vertical-mini")
-  .portfolio.py-6(intersection-style="portfolio")
-    .portfolio-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
-      .column.is-flex-grow-0
-        h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
-      .column.is-flex-grow-0
-        nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
-    .portfolio-content
-      .columns
-        .column.is-12
-          portfolio-entry-header(:key='portfolioEntries[0].id' :entry='portfolioEntries[0]' :mini="true")
   .connections.py-6(intersection-style="home")
     .connections-header.columns.is-variable.is-justify-content-space-between
       .column.is-flex-grow-0
