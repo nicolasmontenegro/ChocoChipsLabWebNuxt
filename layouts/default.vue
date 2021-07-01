@@ -12,22 +12,14 @@
             strong {{ $t('navigation.back_to', { section: $t(`sections.${navegation.back.name}`) }) }} 
       nuxt
   
-  .footer
-    .columns.is-centered
-      .column.is-4.is-flex.is-flex-direction-column.is-align-items-center
-        logo.mb-2
-        .footer-line.is-flex.is-flex-direction-row.is-flex-wrap-nowrap
-          img.mx-2(src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="height: 30px;")
-          p
-            small ChocoChipsLab 2021
+  Footer.mt-6.mb-4
 </template>
 
 <script>
-import SectionBar from '~/components/SectionBar.vue'
-
 export default {
   components: {
-    SectionBar
+    SectionBar: () => import('~/components/SectionBar.vue'),
+    Footer: () => import('~/components/Footer.vue')
   },
   computed: {
     navegation () { return this.$store.state.navegation },
@@ -42,11 +34,4 @@ export default {
     @media screen and (max-width: $desktop)
       padding-top: 4rem !important
 
-  .footer
-    background-color: initial
-    padding: 0
-
-    .logo
-      height: auto
-      width: 90px
 </style>
