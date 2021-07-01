@@ -23,6 +23,9 @@
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
           .column.is-6
             a(href="https://1drv.ms/b/s!AhJPmXJoFuMAouBQqtgwAhk5hXDhEQ" target="_blank")
+              strong 
+                font-awesome-icon.mr-2(:icon="['fas', 'file-pdf']" size="lg" ) 
+                | Descarga mi cv &#8599;
   .portfolio.py-6(intersection-style="portfolio")
     .portfolio-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
@@ -187,7 +190,7 @@ export default {
     this.intersectionObserver = new IntersectionObserver(
       // callback
       (entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach(entry => {          
           if (entry.isIntersecting) {
             entry.target.classList.remove('is-off-focus')
             this.$store.commit(
@@ -211,7 +214,7 @@ export default {
       })
     document.querySelectorAll('.main-space > *').forEach(node => {
       this.intersectionObserver.observe(node);
-    });    
+    });
 
     this.$lottie.loadAnimation({
       container: document.querySelector('#bg-animation'),
@@ -245,7 +248,7 @@ export default {
         root: null,
         rootMargin: '-50% 0px 0px 0px',
         threshold: [0.0, 0.1, 0.2, 0.3, 0.4],
-  }
+      }
     )
 
     intersectionObserverBg.observe(document.querySelector('.home-section'));
@@ -280,7 +283,7 @@ export default {
 
     .title
       font-size: 4rem
-
+    
     #bg-animation
       position: fixed
       width: 100vw
