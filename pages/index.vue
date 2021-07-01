@@ -129,8 +129,10 @@ export default {
         perPage: 1,
         speed: 333
       },
-      intersectionObserver: null,
-      bgAnimationEventResize: null,
+      intersectionObserver: {
+        scroll: null,
+        bg: null,
+      },
     }
   },
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
@@ -180,6 +182,11 @@ export default {
       error({ statusCode: 404, message: 'Page not found' })
     }
   },
+  methods: {
+    bgAnimationResizeMethod: function () {
+	    this.bg_animation.resize();
+	  }
+  },
   created () {
     this.$store.commit(
       'navegation/setNavegation',
@@ -187,7 +194,7 @@ export default {
     )
   },
   mounted () {
-    this.intersectionObserver = new IntersectionObserver(
+    this.intersectionObserver.scroll = new IntersectionObserver(
       // callback
       (entries, observer) => {
         entries.forEach(entry => {          
@@ -213,12 +220,12 @@ export default {
         threshold: 0
       })
     document.querySelectorAll('.main-space > *').forEach(node => {
-      this.intersectionObserver.observe(node);
+      this.intersectionObserver.scroll.observe(node);
     });
 
+    
     this.$lottie.setQuality('low')
-
-    this.$lottie.loadAnimation({
+    this.bg_animation = this.$lottie.loadAnimation({
       container: document.querySelector('#bg-animation'),
       renderer: 'canvas',
       loop: true,
@@ -230,19 +237,17 @@ export default {
       }
     });
 
-    this.bgAnimationEventResize = window.addEventListener('resize', () => {
-	    this.$lottie.resize();
-	  });	
+    window.addEventListener('resize', this.bgAnimationResizeMethod);	
 
-    let intersectionObserverBg = new IntersectionObserver(
+    this.intersectionObserver.bg = new IntersectionObserver(
       //callback
       (entries, observer) => {
         console.info('intersectionObserverBg')   
         entries.forEach(entry => {
-          console.log(entry)
           document
             .querySelector('#bg-animation canvas')
             .style.opacity = entry.intersectionRatio / 0.4
+          entry.isIntersecting ? this.bg_animation.play() : this.bg_animation.pause()
         })
       },
       // options
@@ -253,9 +258,13 @@ export default {
       }
     )
 
-    intersectionObserverBg.observe(document.querySelector('.home-section'));
-
+    this.intersectionObserver.bg.observe(document.querySelector('.home-section'));
   },
+  beforeDestroy() {
+    this.intersectionObserver.scroll ? this.intersectionObserver.scroll.disconnect() : null
+    this.intersectionObserver.bg ? this.intersectionObserver.bg.disconnect() : null
+    window.removeEventListener('resize', this.bgAnimationResizeMethod);	
+  }
 }
 </script>
 
@@ -287,14 +296,18 @@ export default {
       font-size: 4rem
     
     #bg-animation
+      z-index: -1
       position: fixed
       width: 100vw
       height: 100vh
       top: 0
       left: 0
+
       display: flex
       flex-wrap: wrap
+
       opacity: 0.35
+
       pointer-events: none
 
       ::v-deep canvas
