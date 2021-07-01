@@ -37,11 +37,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~/plugins/lingallery.js', mode:'client'},
-    {src: '~/plugins/vue-carousel.js', mode:'client'},
-    {src: '~/plugins/helpers.js'},
-    {src: '~/plugins/postscribe.js', mode:'client'},
-    {src: '~/plugins/fontawesome.js'}
+    { src: '~/plugins/lingallery.js', mode: 'client' },    
+    { src: '~/plugins/vue-carousel.js', mode: 'client' },    
+    { src: '~/plugins/helpers.js' },    
+    { src: '~/plugins/postscribe.js', mode: 'client' },    
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/lottie.js', mode: 'client' }
+    
   ],
   /*
   ** Nuxt.js dev-modules
