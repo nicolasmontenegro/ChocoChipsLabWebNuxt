@@ -9,8 +9,8 @@
   .column.content(:class='stylo_class_col[1]')
     .pb-2
       nuxt-link(:to='localePath(link)' v-if='linkable')
-        h2.is-2.m-0.entry-title {{ title }}
-      h2.is-2.m-0.entry-title(v-if='!linkable') {{ title }}
+        h2.title.is-2.m-0.entry-title {{ title }}
+      h2.title.is-2.m-0.entry-title(v-if='!linkable') {{ title }}
 
     prismic-rich-text.mb-3(class='entry-lead' :field='entry.data.lead')
 
