@@ -22,26 +22,26 @@
             nuxt-link(:to="localePath({name: 'about-me'})")
               strong 📄 Descarga mi cv
   .blog.py-6(intersection-style="blog")
-    .blog-header.columns.is-variable.is-justify-content-space-between
+    .blog-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
-        h2.is-2 {{ $t(`sections.blog`) }}
+        h2.is-2.m-0 {{ $t(`sections.blog`) }}
       .column.is-flex-grow-0
-        nuxt-link(:to="localePath({name: 'blog'})") ver todo
+        nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
     .blog-content
       .columns
         .column.is-12
-          blog-entry-header(:key='blogEntries[0].id' :entry='blogEntries[0]' :mini="true")
+          blog-entry-header(:key='blogEntries[0].id' :entry='blogEntries[0]' stylo="horizontal")
       .columns
         .column.is-6
-          blog-entry-header(:key='blogEntries[1].id' :entry='blogEntries[1]')
+          blog-entry-header(:key='blogEntries[1].id' :entry='blogEntries[1]' stylo="vertical-mini")
         .column.is-6
-          blog-entry-header(:key='blogEntries[2].id' :entry='blogEntries[2]')
+          blog-entry-header(:key='blogEntries[2].id' :entry='blogEntries[2]' stylo="vertical-mini")
   .portfolio.py-6(intersection-style="portfolio")
-    .portfolio-header.columns.is-variable.is-justify-content-space-between
+    .portfolio-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
-        h2.is-2 {{ $t(`sections.portfolio`) }}
+        h2.is-2.m-0 {{ $t(`sections.portfolio`) }}
       .column.is-flex-grow-0
-        nuxt-link(:to="localePath({name: 'portfolio'})") ver todo
+        nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
     .portfolio-content
       .columns
         .column.is-12
@@ -177,7 +177,7 @@ export default {
       }, 
       {
         root: null,
-        rootMargin: '-30% 0px -60% 0px',
+        rootMargin: '-60% 0px -40% 0px',
         threshold: 0
       })
 
