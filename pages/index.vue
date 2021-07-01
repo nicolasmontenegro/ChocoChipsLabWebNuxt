@@ -12,19 +12,21 @@
       .column.is-3.is-flex.is-flex-direction-column.is-align-self-center
         Logo
       .column.is-6.is-flex.is-flex-direction-column.is-align-self-center
-        h3.is-3 ¡Hola! Este es mi espacio
-        p Lorem ipsum dolor sit amet consectetur adipiscing, elit enim nec rhoncus inceptos convallis dictum, placerat dignissim conubia imperdiet nostra. Mauris tortor feugiat leo interdum ornare metus facilisis semper urna cum, lacus accumsan ante elementum odio aliquam pretium neque. Hendrerit eu sapien tortor nam pretium quam, cubilia posuere nibh nec inceptos varius placerat, primis sagittis feugiat nostra duis.
+        h3.title.is-3 ¡Hola! Este es mi espacio
+        p Me gusta trabajar en proyectos que sean un aporte a la sociedad, y que me permitan aprender tanto de tecnologías nuevas como de experiencias enriquecedoras con mis compañeros.
+        p He participado tanto de proyectos pequeños como de empresas importantes, con diversos grupos de trabajo.Apasionado en la fotografía, realización audiovisual, y los videojuegos.
+        p Mi ideal es hacer la informática algo más útil y amigable para la gente.
         .columns
           .column.is-6
             nuxt-link(:to="localePath({name: 'about-me'})")
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
           .column.is-6
-            nuxt-link(:to="localePath({name: 'about-me'})")
-              strong 📄 Descarga mi cv
+            a(href="https://1drv.ms/b/s!AhJPmXJoFuMAouBQqtgwAhk5hXDhEQ" target="_blank")
+              strong 📄 Descarga mi cv &#8599;
   .blog.py-6(intersection-style="blog")
     .blog-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
-        h2.is-2.m-0 {{ $t(`sections.blog`) }}
+        h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.blog`) }}
       .column.is-flex-grow-0
         nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
     .blog-content
@@ -39,7 +41,7 @@
   .portfolio.py-6(intersection-style="portfolio")
     .portfolio-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
-        h2.is-2.m-0 {{ $t(`sections.portfolio`) }}
+        h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
       .column.is-flex-grow-0
         nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
     .portfolio-content
@@ -49,20 +51,23 @@
   .connections.py-6(intersection-style="home")
     .connections-header.columns.is-variable.is-justify-content-space-between
       .column.is-flex-grow-0
-        h2.is-2 {{ $t(`sections.connections`) }}
+        h2.title.white-space-nowrap.is-2 {{ $t(`sections.connections`) }}
     .connections-content
       .columns.connections-content-twitch.pb-4
         .column.is-4
           h3.is-3 Twitch
-          p Lorem ipsum dolor sit amet consectetur adipiscing, elit enim nec rhoncus inceptos convallis dictum, placerat dignissim conubia imperdiet nostra.
+          p Verás principalmente Splatoon 2, pero de tanto en tanto me atrevo con otros títulos e ideas.
+          p ¡Sígueme y juegemos un rato! 
+          a(href="https://www.twitch.tv/nicochocochips" target="_blank")
+            strong 📺 Ir al canal &#8599;
         .column.is-8
-          iframe(src=`https://player.twitch.tv/?channel=nicochocochips&parent=chocochipslab` frameborder="0" allowfullscreen="true" scrolling="no")
+          iframe(src=`https://player.twitch.tv/?channel=nicochocochips&parent=chocochipslab.com` frameborder="0" allowfullscreen="true" scrolling="no")
           
       .columns.connections-content-twitch.pb-4
         .column.is-12
           h3.is-12 ¡Encuentrame en el ciberespacio!
-        .column.is-4
-          a(href="https://github.com/nicolasmontenegro?tab=repositories") Github
+        .column.is-3
+          a.button.is-ghost.is-fullwidth.is-outlined(href="https://github.com/nicolasmontenegro?tab=repositories") Github
 
   
   //- For posterity... an beyond

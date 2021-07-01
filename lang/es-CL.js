@@ -4,7 +4,7 @@ export default {
     index: 'Inicio',
     blog: 'Blog',
     portfolio: 'Portafolio',
-    about_me: 'Acerca de',
+    about_me: 'Acerca de mi',
     connections: 'Conexiones'
   },
   entries: {
