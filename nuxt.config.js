@@ -122,7 +122,7 @@ export default {
   googleFonts: {
     families: {
       'Roboto': true,
-      'Palanquin+Dark': true,
+      'Palanquin+Dark': [400, 500, 600, 700],
       'Hind': [300, 400, 600],
     },
     display: 'swap'
