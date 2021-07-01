@@ -1,6 +1,7 @@
 <template lang="pug">
 .main-space
   .home-section.is-flex.is-align-content-center.py-6(intersection-style="home")
+    #bg-animation
     .columns.is-variable.is-6.is-centered.is-flex-grow-1
       .column.is-3.is-flex.is-flex-direction-column.is-align-self-center
         Logo
@@ -111,6 +112,7 @@ export default {
         speed: 333
       },
       intersectionObserver: null,
+      bgAnimationEventResize: null,
     }
   },
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
@@ -160,17 +162,17 @@ export default {
       error({ statusCode: 404, message: 'Page not found' })
     }
   },
-  mounted () {
+  created () {
     this.$store.commit(
       'navegation/setNavegation',
       { section: { name: null, style: 'home' }, back: null }
     )
-
+  },
+  mounted () {
     this.intersectionObserver = new IntersectionObserver(
+      // callback
       (entries, observer) => {
         entries.forEach(entry => {
-          console.log(entry)
-          
           if (entry.isIntersecting) {
             entry.target.classList.remove('is-off-focus')
             this.$store.commit(
@@ -186,16 +188,54 @@ export default {
 
         });
       }, 
+      // options
       {
         root: null,
         rootMargin: '-50% 0px -50% 0px',
         threshold: 0
       })
-
     document.querySelectorAll('.main-space > *').forEach(node => {
       this.intersectionObserver.observe(node);
     });    
+
+    this.$lottie.loadAnimation({
+      container: document.querySelector('#bg-animation'),
+      renderer: 'canvas',
+      loop: true,
+      autoplay: true,
+      animationData: require(`~/assets/lottie/bg-mosaic.json`),
+      rendererSettings: {
+        preserveAspectRatio: 'xMinYMin slice', 
+        clearCanvas: true,
+      }
+    });
+
+    this.bgAnimationEventResize = window.addEventListener('resize', () => {
+	    this.$lottie.resize();
+	  });	
+
+    let intersectionObserverBg = new IntersectionObserver(
+      //callback
+      (entries, observer) => {
+        console.info('intersectionObserverBg')   
+        entries.forEach(entry => {
+          console.log(entry)
+          document
+            .querySelector('#bg-animation canvas')
+            .style.opacity = entry.intersectionRatio / 0.4
+        })
+      },
+      // options
+      {
+        root: null,
+        rootMargin: '-50% 0px 0px 0px',
+        threshold: [0.0, 0.1, 0.2, 0.3, 0.4],
   }
+    )
+
+    intersectionObserverBg.observe(document.querySelector('.home-section'));
+
+  },
 }
 </script>
 
@@ -225,6 +265,25 @@ export default {
 
     .title
       font-size: 4rem
+
+    #bg-animation
+      position: fixed
+      width: 100vw
+      height: 100vh
+      top: 0
+      left: 0
+      display: flex
+      flex-wrap: wrap
+      opacity: 0.35
+      pointer-events: none
+
+      ::v-deep canvas
+        transition: opacity 150ms ease-out
+        opacity: 1
+        width: 100%
+        height: auto !important
+        transform-origin: unset !important
+    
 
   .about
     min-height: 95vh
