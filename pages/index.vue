@@ -67,7 +67,9 @@
         .column.is-12
           h3.is-12 ¡Encuentrame en el ciberespacio!
         .column.is-3
-          a.button.is-ghost.is-fullwidth.is-outlined(href="https://github.com/nicolasmontenegro?tab=repositories") Github
+          a.button.is-ghost.is-fullwidth.is-outlined(href="https://github.com/nicolasmontenegro?tab=repositories")
+            font-awesome-icon.mr-2(:icon="['fab', 'github']")
+            | Github
 
   
   //- For posterity... an beyond

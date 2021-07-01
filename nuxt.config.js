@@ -24,7 +24,9 @@ export default {
   ** Global CSS
   */
   css: [
-    '@/assets/css/main.sass'
+    '@/assets/css/main.sass',
+    // https://github.com/FortAwesome/vue-fontawesome#nuxtjs
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   /*
   ** components in nested directories 
@@ -38,7 +40,8 @@ export default {
     {src: '~/plugins/lingallery.js', mode:'client'},
     {src: '~/plugins/vue-carousel.js', mode:'client'},
     {src: '~/plugins/helpers.js'},
-    {src: '~/plugins/postscribe.js', mode:'client'}
+    {src: '~/plugins/postscribe.js', mode:'client'},
+    {src: '~/plugins/fontawesome.js'}
   ],
   /*
   ** Nuxt.js dev-modules
