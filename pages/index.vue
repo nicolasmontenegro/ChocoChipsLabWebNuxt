@@ -66,11 +66,27 @@
           
       .columns.connections-content-twitch.pb-4
         .column.is-12
-          h3.is-12 ¡Encuentrame en el ciberespacio!
+          h3.is-12 ¡Encuéntrame en el ciberespacio!
         .column.is-3
-          a.button.is-ghost.is-fullwidth.is-outlined(href="https://github.com/nicolasmontenegro?tab=repositories")
-            font-awesome-icon.mr-2(:icon="['fab', 'github']")
-            | Github
+          a.outlined.button.is-ghost.is-fullwidth(href="https://github.com/nicolasmontenegro?tab=repositories")
+            strong
+              font-awesome-icon.mr-2(:icon="['fab', 'github']" size="lg" )
+              | Github &#8599;
+        .column.is-3
+          a.outlined.button.is-ghost.is-fullwidth(href="https://www.twitch.tv/nicochocochips")
+            strong
+              font-awesome-icon.mr-2(:icon="['fab', 'twitch']" size="lg" )
+              | Twitch &#8599;
+        .column.is-3
+          a.outlined.button.is-ghost.is-fullwidth(href="https://www.instagram.com/nicochocochips")
+            strong
+              font-awesome-icon.mr-2(:icon="['fab', 'instagram']" size="lg" )
+              | Instagram &#8599;
+        .column.is-3
+          a.outlined.button.is-ghost.is-fullwidth(href="https://twitter.com/NicoChocoChips")
+            strong
+              font-awesome-icon.mr-2(:icon="['fab', 'twitter']" size="lg" )
+              | Twitter &#8599;
 
   
   //- For posterity... an beyond
