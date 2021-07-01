@@ -164,7 +164,8 @@ export default {
         entries.forEach(entry => {
           console.log(entry)
           
-          if (entry.isIntersecting)
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('is-off-focus')
             this.$store.commit(
               'navegation/setNavegation',
               { section: { 
@@ -172,12 +173,15 @@ export default {
                 style: entry.target.getAttribute('intersection-style')
               }, back: null }
             )
+          } else {
+            entry.target.classList.add('is-off-focus')
+          }
 
         });
       }, 
       {
         root: null,
-        rootMargin: '-60% 0px -40% 0px',
+        rootMargin: '-50% 0px -50% 0px',
         threshold: 0
       })
 
@@ -189,11 +193,22 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '~/assets/css/content.sass'
+
 .main-space
   // display: flex
   // flex-direction: column
   // justify-content: space-between
   // min-height: 95vh !important
+
+  & > div
+    opacity: 1
+    @include transition-fade(opacity)
+
+    &.is-off-focus
+      opacity: 0.2
+      pointer-events: none
+
   .home-section
     min-height: 95vh
 

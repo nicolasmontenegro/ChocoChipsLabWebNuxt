@@ -1,4 +1,4 @@
-@mixin transitionFade($attribute)
+@mixin transition-fade($attribute)
   transition: $attribute 800ms ease-out
 
 @mixin container($selector, $text-color, $background-color, $link-hover-color)
@@ -22,7 +22,7 @@
 
     &, h1, h2, h3, h4, h5, h6, a, strong
       color: $text-color
-      @include transitionFade(color)
+      @include transition-fade(color)
 
     a:not(.simple)
       &, & *
@@ -38,7 +38,7 @@
 
     &::before
       background-color: $background-color
-      @include transitionFade(background-color)
+      @include transition-fade(background-color)
 
     .photo-slice .img-foot, .lingallery .lingallery_caption
       background: darken($background-color, 10%) !important
