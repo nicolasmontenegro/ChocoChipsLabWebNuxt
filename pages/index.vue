@@ -216,6 +216,8 @@ export default {
       this.intersectionObserver.observe(node);
     });
 
+    this.$lottie.setQuality('low')
+
     this.$lottie.loadAnimation({
       container: document.querySelector('#bg-animation'),
       renderer: 'canvas',
@@ -247,7 +249,7 @@ export default {
       {
         root: null,
         rootMargin: '-50% 0px 0px 0px',
-        threshold: [0.0, 0.1, 0.2, 0.3, 0.4],
+        threshold: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
       }
     )
 
