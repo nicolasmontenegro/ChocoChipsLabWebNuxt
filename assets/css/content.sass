@@ -1,13 +1,16 @@
+@mixin transitionFade($attribute)
+  transition: $attribute 800ms ease-out
+
 @mixin container($selector, $text-color, $background-color, $link-hover-color)
   .loading-page.#{$selector}, .container.#{$selector}
     .logo:not(.special) *
       fill: $text-color
 
   .loading-page.#{$selector}
-    background: $background-color//-blog
+    background: $background-color
 
     &, > *
-      color: $text-color//-blog
+      color: $text-color
 
   .container.#{$selector}
 
@@ -19,13 +22,14 @@
 
     &, h1, h2, h3, h4, h5, h6, a, strong
       color: $text-color
+      @include transitionFade(color)
 
     a:not(.simple)
       &, & *
         position: relative
         transition: color 500ms ease-out, fill 500ms ease-out
 
-      &:hover, &:hover *, 
+      &:hover, &:hover *,
         color: $link-hover-color !important
         fill: $link-hover-color !important
 
@@ -34,32 +38,33 @@
 
     &::before
       background-color: $background-color
+      @include transitionFade(background-color)
 
     .photo-slice .img-foot, .lingallery .lingallery_caption
       background: darken($background-color, 10%) !important
       color: $text-color !important
-    
+
     .entry-related
-      border-color: lighten($background-color, 10%) 
+      border-color: lighten($background-color, 10%)
 
     .lingallery .control span, .VueCarousel .VueCarousel-navigation-button
       color: lighten($text-color, 10%) !important
       text-shadow: none
       font-size: 1.25rem
-    
+
     .VueCarousel .VueCarousel-dot--active
       background-color: darken($background-color, 20%) !important
-    
+
     .lingallery .lingallery_thumbnails_content_elem img
       border-color: darken($background-color, 20%) !important
-      margin-left: 5px;
+      margin-left: 5px
 
   .entry-header.generic
     .entry_type > .subtitle.#{$selector}_entry
       color: $text-color
       &::before
         background-color: $background-color
-        border-color: lighten($background-color, 10%) 
+        border-color: lighten($background-color, 10%)
 
 @include container("blog", $text-color-blog, $background-color-blog, $link-hover-color-blog)
 @include container("home", $text-color-home, $background-color-home, $link-hover-color-home)
