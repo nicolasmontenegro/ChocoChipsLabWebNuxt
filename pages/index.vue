@@ -22,16 +22,16 @@
         p Apasionado en la fotografía, realización audiovisual, y los videojuegos.
         p Mi ideal es hacer la informática algo más útil y amigable para la gente.
         .columns
-          .column.is-6
+          .column.is-6.is-12-mobile
             nuxt-link(:to="localePath({name: 'about-me'})")
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
-          .column.is-6
+          .column.is-6.is-12-mobile
             a(href="https://1drv.ms/b/s!AhJPmXJoFuMAouBQqtgwAhk5hXDhEQ" target="_blank")
               strong 
                 font-awesome-icon.mr-2(:icon="['fas', 'file-pdf']" size="lg" ) 
                 | Descarga mi cv &#8599;
   .portfolio.py-6(intersection-style="portfolio")
-    .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center
+    .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
       .column.is-flex-grow-0.my-2
@@ -41,10 +41,10 @@
         .column.is-12
           portfolio-entry-header(:key='portfolioEntries[0].id' :entry='portfolioEntries[0]' :mini="true")
   .blog.py-6(intersection-style="blog")
-    .blog-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center
+    .blog-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.blog`) }}
-      .column.is-flex-grow-0.my-2
+      .column.is-flex-grow-0.mt-2
         nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
     .blog-content
       .columns
@@ -56,9 +56,9 @@
         .column.is-6
           blog-entry-header(:key='blogEntries[2].id' :entry='blogEntries[2]' stylo="vertical-mini")
   .connections.py-6(intersection-style="home")
-    .connections-header.columns.is-variable.is-justify-content-space-between
+    .connections-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
-        h2.title.white-space-nowrap.is-2 {{ $t(`sections.connections`) }}
+        h2.title.is-2.white-space-nowrap {{ $t(`sections.connections`) }}
     .connections-content
       .columns.connections-content-twitch.pb-4
         .column.is-4
