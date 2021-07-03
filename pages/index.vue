@@ -146,7 +146,6 @@ export default {
     }
   },
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
-    console.log($entryData)
     try {
       // Query to get blog home content
       // const page_data = await $prismic.api.getSingle('homepage')
@@ -252,7 +251,6 @@ export default {
     this.intersectionObserver.bg = new IntersectionObserver(
       //callback
       (entries, observer) => {
-        console.info('intersectionObserverBg')   
         entries.forEach(entry => {
           document
             .querySelector('#bg-animation canvas')
