@@ -310,7 +310,7 @@ export default {
       @include max-size-cookie
 
     .title
-      font-size: 4.3rem
+      font-size: 4.2rem
 
       @media screen and (max-width: $desktop - 1px)
         display: flex
