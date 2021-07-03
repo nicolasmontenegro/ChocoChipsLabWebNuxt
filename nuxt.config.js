@@ -62,8 +62,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
+    // Doc: https://github.com/buefy/nuxt-buefy
+    'nuxt-buefy',
     // https://i18n.nuxtjs.org
     'nuxt-i18n',
     // https://github.com/pimlie/nuxt-rfg-icon
@@ -76,7 +76,7 @@ export default {
     // your settings here
     sass: [
       'assets/css/utils/*.sass',
-      'bulma/sass/utilities/_all.sass'
+      'bulma/sass/utilities/_all.sass',
     ]
   },
   /*
