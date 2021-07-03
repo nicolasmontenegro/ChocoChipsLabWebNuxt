@@ -1,12 +1,12 @@
 <template lang="pug">
-.columns.entry-header.blog(:class='stylo')
-  .column(:class='stylo_class_col[0]')
+.columns.entry-header.blog(:class='stylo_class.name')
+  .column(:class='stylo_class.cols[0]')
     nuxt-link.simple(v-if='linkable' :to='localePath(link)')
       .entry-picture-head(:style='picture_head' :class='stylo')
     .entry-picture-head(v-else :style='picture_head' :class='stylo')
 
   
-  .column.content(:class='stylo_class_col[1]')
+  .column.content(:class='stylo_class.cols[1]')
     .pb-2
       nuxt-link(:to='localePath(link)' v-if='linkable')
         h2.title.is-2.m-0.entry-title {{ title }}
@@ -43,7 +43,7 @@ export default {
       required: false
     },
     stylo: {
-      type: String,
+      type: [String, Object],
       default: 'vertical',
       required: false
     },
@@ -64,17 +64,27 @@ export default {
     title () {
       return PrismicDOM.RichText.asText(this.entry.data.title)
     },
-    stylo_class_col () {
-      switch(this.stylo) {
+    stylo_class () {      
+      const {type = '', responsiveness = ''} = typeof(this.stylo) == 'string' ? {type: this.stylo} : this.stylo 
+      let cols = []
+      switch(type) {
         case 'vertical':
-          return ['is-12', 'is-12']
+          cols = ['is-12', 'is-12']
+          break
         case 'vertical-mini':
-          return ['is-12', 'is-12']
+          cols = ['is-12', 'is-12']
+          break
         case 'horizontal':
-          return ['is-8', 'is-4']
+          cols = ['is-8', 'is-4']
+          break
         case 'horizontal-mini':
-          return ['is-4', 'is-8']
+          cols = ['is-4', 'is-8']
+          break
       } 
+      return {
+        cols: responsiveness ? cols.map(col => `${col}-${responsiveness} is-12`) : cols,
+        name: type
+      }
     }
   },
   methods: {

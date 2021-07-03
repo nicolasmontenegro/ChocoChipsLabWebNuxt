@@ -1,9 +1,9 @@
 <template lang="pug">
-.container(:class='containerClass')
+.container.px-2(:class='containerClass')
   .columns.is-desktop.is-gapless.is-justify-content-space-between
     //- .column.is-3-desktop
     //-   SectionBar
-    .column.is-12-desktop.content.main
+    .column.is-12.content.main
       template(v-if='navegation !== null')
         h1.title.is-1.mb-1.mt-4(v-if='navegation.section.name')
           strong {{ $t(`sections.${navegation.section.name}`) }}
@@ -29,9 +29,9 @@ export default {
 </script>
 
 <style lang="sass">
-.container 
-  .content.main
-    @media screen and (max-width: $desktop)
-      padding-top: 4rem !important
+// .container 
+//   .content.main
+//     @media screen and (max-width: $desktop)
+//       padding-top: 4rem !important
 
 </style>

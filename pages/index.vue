@@ -2,20 +2,24 @@
 .main-space
   .home-section.is-flex.is-align-content-center.py-6(intersection-style="home")
     #bg-animation
-    .columns.is-variable.is-6.is-centered.is-flex-grow-1
-      .column.is-3.is-flex.is-flex-direction-column.is-align-self-center
+    .columns.is-centered.is-flex-grow-1
+      .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
         Logo
-      .column.is-6.is-flex.is-flex-direction-column.is-align-self-center
-        h1.title.is-1 ChocoChipsLab
+      .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
+        h1.title.is-1 
+          span Choco
+          span Chips
+          span Lab
         p Dev + UI/UX + Gamer + Fotografía
   .about.is-flex.is-align-content-center.py-6(intersection-style="about")
-    .columns.is-variable.is-6.is-centered.is-flex-grow-1
-      .column.is-3.is-flex.is-flex-direction-column.is-align-self-center
-        Logo
-      .column.is-6.is-flex.is-flex-direction-column.is-align-self-center
+    .columns.is-centered.is-flex-grow-1
+      .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
+        img#img-me(src="https://images.prismic.io/chocochips-lab-blog/35d5e037-29e0-4faa-b83f-fdec4da1b5b3_IMG_4957_crop2.jpg?auto=compress,format")
+      .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
         h3.title.is-3 ¡Hola! Este es mi espacio
         p Me gusta trabajar en proyectos que sean un aporte a la sociedad, y que me permitan aprender tanto de tecnologías nuevas como de experiencias enriquecedoras con mis compañeros.
-        p He participado tanto de proyectos pequeños como de empresas importantes, con diversos grupos de trabajo.Apasionado en la fotografía, realización audiovisual, y los videojuegos.
+        p He participado tanto de proyectos pequeños como de empresas importantes, con diversos grupos de trabajo.
+        p Apasionado en la fotografía, realización audiovisual, y los videojuegos.
         p Mi ideal es hacer la informática algo más útil y amigable para la gente.
         .columns
           .column.is-6
@@ -27,25 +31,25 @@
                 font-awesome-icon.mr-2(:icon="['fas', 'file-pdf']" size="lg" ) 
                 | Descarga mi cv &#8599;
   .portfolio.py-6(intersection-style="portfolio")
-    .portfolio-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
+    .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
-      .column.is-flex-grow-0
+      .column.is-flex-grow-0.my-2
         nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
     .portfolio-content
       .columns
         .column.is-12
           portfolio-entry-header(:key='portfolioEntries[0].id' :entry='portfolioEntries[0]' :mini="true")
   .blog.py-6(intersection-style="blog")
-    .blog-header.columns.is-variable.is-justify-content-space-between.is-align-items-center
+    .blog-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.blog`) }}
-      .column.is-flex-grow-0
+      .column.is-flex-grow-0.my-2
         nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
     .blog-content
       .columns
         .column.is-12
-          blog-entry-header(:key='blogEntries[0].id' :entry='blogEntries[0]' stylo="horizontal")
+          blog-entry-header(:key='blogEntries[0].id' :entry='blogEntries[0]' :stylo="{type: 'horizontal', responsiveness: 'desktop'}")
       .columns
         .column.is-6
           blog-entry-header(:key='blogEntries[1].id' :entry='blogEntries[1]' stylo="vertical-mini")
@@ -271,6 +275,13 @@ export default {
 <style lang="sass" scoped>
 @import '~/assets/css/content.sass'
 
+@mixin max-size-cookie
+  max-width: 430px
+
+  @media screen and (max-width: $tablet - 1px)
+    max-width: 260px
+
+
 .main-space
   // display: flex
   // flex-direction: column
@@ -286,14 +297,24 @@ export default {
       pointer-events: none
 
   .home-section
-    min-height: 95vh
+    min-height: 100vh
+
+    & > .columns
+      margin-top: auto !important
+      margin-bottom: auto !important
 
     ::v-deep .logo
       width: 100%
       height: auto
+      
+      @include max-size-cookie
 
     .title
-      font-size: 4rem
+      font-size: 4.3rem
+
+      @media screen and (max-width: $desktop - 1px)
+        display: flex
+        flex-direction: column
     
     #bg-animation
       z-index: -1
@@ -320,6 +341,13 @@ export default {
 
   .about
     min-height: 95vh
+
+    #img-me
+      mask: url('~assets/images/chocolate chip cookie shape.svg')
+      mask-position: center
+      mask-size: cover
+
+      @include max-size-cookie
     
     ::v-deep .logo
       width: 100%
