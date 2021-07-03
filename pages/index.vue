@@ -17,6 +17,7 @@
         img#img-me(src="https://images.prismic.io/chocochips-lab-blog/35d5e037-29e0-4faa-b83f-fdec4da1b5b3_IMG_4957_crop2.jpg?auto=compress,format")
       .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
         h3.title.is-3 ¡Hola! Este es mi espacio
+        p Soy Nicolás Montenegro, y soy de Santiago de Chile.
         p Me gusta trabajar en proyectos que sean un aporte a la sociedad, y que me permitan aprender tanto de tecnologías nuevas como de experiencias enriquecedoras con mis compañeros.
         p He participado tanto de proyectos pequeños como de empresas importantes, con diversos grupos de trabajo.
         p Apasionado en la fotografía, realización audiovisual, y los videojuegos.
@@ -72,7 +73,7 @@
           
       .columns.connections-content-twitch.pb-4
         .column.is-12
-          h3.is-12 ¡Encuéntrame en el ciberespacio!
+          h3.title.is-12 ¡Encuéntrame en el ciberespacio!
         .column.is-3
           a.outlined.button.is-ghost.is-fullwidth(href="https://github.com/nicolasmontenegro?tab=repositories")
             strong
@@ -92,7 +93,12 @@
           a.outlined.button.is-ghost.is-fullwidth(href="https://twitter.com/NicoChocoChips")
             strong
               font-awesome-icon.mr-2(:icon="['fab', 'twitter']" size="lg" )
-              | Twitter &#8599;
+              | Twitter 
+        .column.is-3
+          a.outlined.button.is-ghost.is-fullwidth(href="https://www.linkedin.com/in/nmontenegrov/")
+            strong
+              font-awesome-icon.mr-2(:icon="['fab', 'linkedin']" size="lg" )
+              | LinkedIn 
 
   
   //- For posterity... an beyond
