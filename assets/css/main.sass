@@ -7,7 +7,7 @@ html, body
 
   @media screen and (min-width: $tablet)
     font-size: 1.1em
-  
+
   #__layout
     overflow: hidden
 
@@ -22,8 +22,7 @@ html, body
     top: 0
     z-index: -10
 
-
-h1, h2, h3, h4, h5, h6
+h1, h2, h3, h4, h5, h6, .title
   font-family: 'Palanquin Dark', sans-serif
   line-height: 100% !important
 
@@ -34,15 +33,19 @@ a:not(.simple)
     position: relative
     z-index: 3
 
+  &.outlined
+    border-width: 1px
+
   &::before
     content: ''
     transition: width 333ms ease-out
     background-color: #fff
     position: absolute
     border-radius: 5px
-    height: 105%
+    height: 102%
     width: 0%
-    top: 0
+    top: 0px
+    bottom: 0px
     right: -5px
     z-index: -1
 
@@ -65,9 +68,13 @@ a:not(.simple)
 .columns
   flex-wrap: wrap
 
-  @media screen and (max-width: $desktop)
-    padding-left: $padding-mobile
-    padding-right: $padding-mobile
+.white-space-nowrap
+  &, *
+    white-space: nowrap
+
+  // @media screen and (max-width: $desktop)
+  //   padding-left: $padding-mobile
+  //   padding-right: $padding-mobile
 
 @import '~/assets/css/content.sass'
 @import '~/assets/css/entry-header.sass'

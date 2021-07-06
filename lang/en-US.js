@@ -4,7 +4,8 @@ export default {
     index: 'Home',
     blog: 'Blog',
     portfolio: 'Porfolio',
-    about_me: 'About me'
+    about_me: 'About me',
+    connections: 'Connections'
   },
   entries: {
     blog_entry: 'Blog',

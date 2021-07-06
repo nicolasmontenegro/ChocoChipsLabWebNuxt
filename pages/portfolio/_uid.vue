@@ -10,9 +10,9 @@
 
   slices-block(:slices='entry.data.body')
 
-  .columns.is-centered
-    .column.is-1
-      logo
+  //- .columns.is-centered
+  //-   .column.is-1
+  //-     logo
 </template>
 
 <style lang="sass">

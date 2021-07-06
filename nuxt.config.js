@@ -24,7 +24,9 @@ export default {
   ** Global CSS
   */
   css: [
-    '@/assets/css/main.sass'
+    '@/assets/css/main.sass',
+    // https://github.com/FortAwesome/vue-fontawesome#nuxtjs
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   /*
   ** components in nested directories 
@@ -35,10 +37,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~/plugins/lingallery.js', mode:'client'},
-    {src: '~/plugins/vue-carousel.js', mode:'client'},
-    {src: '~/plugins/helpers.js'},
-    {src: '~/plugins/postscribe.js', mode:'client'}
+    { src: '~/plugins/lingallery.js', mode: 'client' },    
+    { src: '~/plugins/vue-carousel.js', mode: 'client' },    
+    { src: '~/plugins/helpers.js' },    
+    { src: '~/plugins/postscribe.js', mode: 'client' },    
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/lottie.js', mode: 'client' }
+    
   ],
   /*
   ** Nuxt.js dev-modules
@@ -57,8 +62,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
-    '@nuxtjs/bulma',
+    // Doc: https://github.com/buefy/nuxt-buefy
+    'nuxt-buefy',
     // https://i18n.nuxtjs.org
     'nuxt-i18n',
     // https://github.com/pimlie/nuxt-rfg-icon
@@ -71,7 +76,7 @@ export default {
     // your settings here
     sass: [
       'assets/css/utils/*.sass',
-      'bulma/sass/utilities/_all.sass'
+      'bulma/sass/utilities/_all.sass',
     ]
   },
   /*
@@ -122,7 +127,7 @@ export default {
   googleFonts: {
     families: {
       'Roboto': true,
-      'Palanquin+Dark': true,
+      'Palanquin+Dark': [400, 500, 600, 700],
       'Hind': [300, 400, 600],
     },
     display: 'swap'
