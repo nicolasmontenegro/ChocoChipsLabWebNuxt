@@ -1,10 +1,12 @@
 <template lang="pug">
 .blog
-  .columns
-    .column.mb-2
+  .columns.is-centered
+    .column.is-11-widescreen.is-12-desktop.mb-2
       blog-entry-header(:entry='entry' :linkable='false')
 
-  LazySlicesBlock(:slices='entry.data.body')
+  .columns.is-centered
+    .column.is-8-widescreen.is-10-desktop.is-11-tablet
+      LazySlicesBlock(:slices='entry.data.body')
 
   //- .columns.is-centered
   //-   .column.is-1

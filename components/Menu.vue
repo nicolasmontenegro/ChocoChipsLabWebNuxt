@@ -1,8 +1,8 @@
 <template lang="pug">
 .menu
   transition(name="menu-button-fade")
-    .button.is-ghost.is-flex.is-flex-direction-column.is-align-items-center.mt-2(@click="isOpen = true" v-if="!isOpen && showButton")
-      Jar.mb-1
+    .button.is-ghost.is-flex.is-align-items-center.mt-2.py-1.px-2(@click="isOpen = true" v-if="!isOpen && showButton")
+      Jar.m-2
       p.title Menú
   transition(name="menu-container-fade")
     .container(v-if="isOpen")
@@ -11,10 +11,11 @@
           .menu-head.columns.is-mobile.is-justify-content-space-between
             .menu-head-logo.column
               LogoTitle
-            .menu-head-logo-close.column.is-flex.is-flex-grow-0.is-flex-direction-column.is-align-items-center(@click="isOpen = false")
-              h2.is-2 x
-              p
-                small cerrar
+            .menu-head-logo-close.column.is-flex-grow-0
+              .button.is-ghost.is-flex.is-flex-grow-0.is-flex-direction-column.is-align-items-end.px-3(@click="isOpen = false")
+                p.close.has-text-weight-bold &times;
+                p
+                  small cerrar
           .menu-content.columns.mb-6
             .column.is-12
               .my-2
@@ -79,22 +80,18 @@ export default {
 .menu
   & > .button
     position: fixed
-    z-index: 1000
+    z-index: 998
     height: auto
     margin-left: -40px
     text-decoration: none
     transition: all 800ms ease-out
+    border-width: 1px
+
+    flex-direction: row
     
     @media screen and (max-width: $desktop - 1px)
       margin-left: 0px
-
-    &::before
-      content: ''
-      position: absolute
-      height: 100%
-      width: 100%
-      filter: blur(3px)
-      z-index: -1
+      flex-direction: column
 
     &:hover, &:focus
       transform: scale(1.15)
@@ -105,7 +102,7 @@ export default {
       color: inhere
 
     ::v-deep .logo.jar
-      height: 70px
+      height: 50px
       width: auto
   
   
@@ -140,6 +137,23 @@ export default {
 
     & > .columns
         height: 100vh
+
+    .menu-head
+      &-logo-close .button
+        height: auto
+        text-decoration: none
+        color: inherit
+        transition: transform 300ms
+
+        &:hover, &:focus
+          transform: scale(1.15)
+
+        .close
+          line-height: 1.2rem
+          font-size: 3rem
+
+        small
+          line-height: 1rem
 
     .menu-column
       height: 100%

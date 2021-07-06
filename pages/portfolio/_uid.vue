@@ -1,14 +1,16 @@
 <template lang="pug">
 .portfolio
-  .columns
-    .column
+  .columns.is-centered
+    .column.is-11-widescreen.is-12-desktop.mb-2
       portfolio-entry-header(:entry='entry' :linkable='false')
   
   section
     .description
       prismic-rich-text(:field='entry.data.description')
 
-  slices-block(:slices='entry.data.body')
+  .columns.is-centered
+    .column.is-8-widescreen.is-10-desktop.is-11-tablet
+      slices-block(:slices='entry.data.body')
 
   //- .columns.is-centered
   //-   .column.is-1
