@@ -93,12 +93,12 @@
           a.outlined.button.is-ghost.is-fullwidth(href="https://twitter.com/NicoChocoChips")
             strong
               font-awesome-icon.mr-2(:icon="['fab', 'twitter']" size="lg" )
-              | Twitter 
+              | Twitter &#8599;
         .column.is-3
           a.outlined.button.is-ghost.is-fullwidth(href="https://www.linkedin.com/in/nmontenegrov/")
             strong
               font-awesome-icon.mr-2(:icon="['fab', 'linkedin']" size="lg" )
-              | LinkedIn 
+              | LinkedIn &#8599;
 
   
   //- For posterity... an beyond
