@@ -80,7 +80,7 @@ export default {
 .menu
   & > .button
     position: fixed
-    z-index: 1000
+    z-index: 998
     height: auto
     margin-left: -40px
     text-decoration: none

@@ -28,13 +28,6 @@ export default {
       current_id: null
     }
   },
-  mounted () {
-    this.$nextTick(() =>  {
-      var el_lin = this.$el.getElementsByClassName("lingallery_caption")[0]
-      el_lin.style = ""
-      el_lin.classList.add(/*"mx-3",*/ "my-1", "px-4", "py-3", "has-text-left")
-    })
-  },
   computed: {
     name_of_gallery () {
       var name = PrismicDOM.RichText.asText(this.slice.primary.name_of_the_gallery)
@@ -66,6 +59,15 @@ export default {
       myUrl.searchParams.append('width', width)
       return myUrl.toString()
     }
+  },
+  mounted () {
+    this.$nextTick(() =>  {
+      const el_lin = this.$el.querySelector(".lingallery_caption")
+      if (el_lin) {
+        el_lin.style = ""
+        el_lin.classList.add("my-1", "px-4", "py-3", "has-text-left")
+      }
+    })
   },
   /*,
   computed: {
