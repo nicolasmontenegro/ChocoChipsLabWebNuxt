@@ -14,7 +14,7 @@
     y="0px"
     x="0px"
     version="1.1"
-    class="logo"
+    class="logo cookie"
   ><metadata
     id="metadata30"
   ><rdf:RDF><cc:Work

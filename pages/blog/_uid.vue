@@ -1,14 +1,14 @@
 <template lang="pug">
 .blog
   .columns
-    .column.mb-5
+    .column.mb-2
       blog-entry-header(:entry='entry' :linkable='false')
 
   LazySlicesBlock(:slices='entry.data.body')
 
-  .columns.is-centered
-    .column.is-1
-      logo
+  //- .columns.is-centered
+  //-   .column.is-1
+  //-     logo
 </template>
 
 <style lang="sass">
