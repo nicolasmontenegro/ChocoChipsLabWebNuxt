@@ -32,7 +32,7 @@
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
       .column.is-flex-grow-0.my-2
-        nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
+        nuxt-link.has-text-weight-bold.white-space-nowrap(:to="localePath({name: 'portfolio'})") {{ $t('navigation.view_all') }}
     .portfolio-content
       .columns
         .column.is-12(v-if="homePageData.portfolio_main_related.id")
@@ -42,7 +42,7 @@
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.blog`) }}
       .column.is-flex-grow-0.mt-2
-        nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
+        nuxt-link.has-text-weight-bold.white-space-nowrap(:to="localePath({name: 'blog'})") {{ $t('navigation.view_all') }}
     .blog-content
       .columns
         .column.is-12(v-if="homePageData.blog_main_related.id")
@@ -117,7 +117,7 @@ export default {
           page: 1
         }
       )
-      
+
       const idRelated = Object
         .keys(page_data.results[0].data)
         .filter(key => key.match(/_related$/g))
@@ -146,7 +146,7 @@ export default {
 	  },
     arrayIcon: (iconString) => {
       return iconString.split(/-(.*)/).splice(0, 2)
-	  }
+    }
   },
   created () {
     this.$store.commit(
@@ -154,7 +154,7 @@ export default {
       { section: { name: null, style: 'home' }, back: null }
     )
   },
-  mounted () {
+  mounted () {      
     this.intersectionObserver.scroll = new IntersectionObserver(
       // callback
       (entries, observer) => {

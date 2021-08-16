@@ -17,7 +17,8 @@ export default {
     prev: 'Anterior',
     back: 'Volver',
     menu: 'Menú',
-    read_more: 'Leer más'
+    read_more: 'Leer más',
+    view_all: 'Ver todo'
   },
   blog:{
     related: 'Publicación relacionada',
