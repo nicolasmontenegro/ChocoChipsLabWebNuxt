@@ -35,8 +35,8 @@
         nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
     .portfolio-content
       .columns
-        .column.is-12
-          portfolio-entry-header(:key='portfolioEntries[0].id' :entry='portfolioEntries[0]' :mini="true")
+        .column.is-12(v-if="homePageData.portfolio_main_related.id")
+          portfolio-entry-header(:key='homePageData.portfolio_main_related.id' :entry='homePageData.portfolio_main_related' :mini="true")
   .blog.py-6(intersection-style="blog")
     .blog-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
@@ -45,13 +45,13 @@
         nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
     .blog-content
       .columns
-        .column.is-12
-          blog-entry-header(:key='blogEntries[0].id' :entry='blogEntries[0]' :stylo="{type: 'horizontal', responsiveness: 'desktop'}")
+        .column.is-12(v-if="homePageData.blog_main_related.id")
+          blog-entry-header(:key='homePageData.blog_main_related.id' :entry='homePageData.blog_main_related' :stylo="{type: 'horizontal', responsiveness: 'desktop'}")
       .columns
-        .column.is-6
-          blog-entry-header(:key='blogEntries[1].id' :entry='blogEntries[1]' stylo="vertical-mini")
-        .column.is-6
-          blog-entry-header(:key='blogEntries[2].id' :entry='blogEntries[2]' stylo="vertical-mini")
+        .column.is-6(v-if="homePageData.blog_secondary_first_related.id")
+          blog-entry-header(:key='homePageData.blog_secondary_first_related.id' :entry='homePageData.blog_secondary_first_related' stylo="vertical-mini")
+        .column.is-6(v-if="homePageData.blog_secondary_second_related.id")
+          blog-entry-header(:key='homePageData.blog_secondary_second_related.id' :entry='homePageData.blog_secondary_second_related' stylo="vertical-mini")
   .connections.py-6(intersection-style="home")
     .connections-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
@@ -119,43 +119,31 @@ export default {
   },
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
     try {
-      // Query to get blog home content
-      const page_data = await $prismic.api.getSingle('homepage')
-      // var entries = []
-
-      // if (page_data.data) {
-      //   await Promise
-      //     .all(page_data.data.body.map((element) => $entryData(element.primary.entry)))
-      //     .then((values) => {entries = values})
-      // }
-
-      // // Returns data to be used in template
-
-
-      const blogEntries = await $prismic.api.query(
-        Prismic.Predicates.at('document.type', 'blog_entry'),
+      const page_data = await $prismic.api.query(
+        Prismic.Predicates.at('document.type', 'homepage'),
         {
           lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
-          orderings: '[document.first_publication_date desc]',
-          pageSize: 3,
-          page: 1
-        }
-      )
-      const portfolioEntries = await $prismic.api.query(
-        Prismic.Predicates.at('document.type', 'portfolio_entry'),
-        {
-          lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
-          orderings: '[document.first_publication_date desc]',
           pageSize: 1,
           page: 1
         }
       )
       
-      // Returns data to be used in template
+      const idRelated = Object
+        .keys(page_data.results[0].data)
+        .filter(key => key.match(/_related$/g))
+        .reduce((accumulator, currentKey) => {
+          const id =  page_data.results[0].data[currentKey]?.id
+          return (typeof id === 'string') ? [...accumulator, {keyName: currentKey, id: id}] : accumulator
+        }, [])
+      await $prismic.api.getByIDs(idRelated.map(i => i.id)).then(response => {
+        response.results.forEach(entry => {
+          const keyName = idRelated.find(i => i.id === entry.id).keyName
+          Object.assign(page_data.results[0].data[keyName], entry)
+        })
+      })
+
       return {
-        blogEntries: blogEntries.results,
-        portfolioEntries: portfolioEntries.results,
-        homePageData: page_data.data
+        homePageData: page_data.results[0].data
       }
     } catch (e) {
       // Returns error page
