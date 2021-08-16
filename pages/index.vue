@@ -62,7 +62,7 @@
           prismic-rich-text.mb-5(:field="homePageData.conection_embed_title")
           prismic-rich-text(:field="homePageData.conection_embed_body")
         .column.is-8
-          iframe(src=`https://player.twitch.tv/?channel=nicochocochips&parent=chocochipslab.com` frameborder="0" allowfullscreen="true" scrolling="no")
+          iframe(:src="homePageData.conection_embed_frame.embed_url" frameborder="0" allowfullscreen="true" scrolling="no")
           
       .columns.connections-content-twitch.pb-4
         .column.is-12
