@@ -25,7 +25,7 @@
           .column.is-6.is-12-mobile
             prismic-link(:field="homePageData.about_me_link_url")
               strong 
-                font-awesome-icon.mr-2(:icon="homePageData.about_me_link_icon.split(/-(.*)/).splice(0, 2)" size="lg" ) 
+                font-awesome-icon.mr-2(:icon="arrayIcon(homePageData.about_me_link_icon)" size="lg" ) 
                 | {{ homePageData.about_me_link_label }} &#8599;
   .portfolio.py-6(intersection-style="portfolio")
     .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
@@ -70,18 +70,8 @@
         .column.is-3(v-for="external_link in homePageData.external_links")
           prismic-link.outlined.button.is-ghost.is-fullwidth(:field="external_link.external_link_url")
             strong
-              font-awesome-icon.mr-2(:icon="external_link.external_link_icon.split(/-(.*)/).splice(0, 2)" size="lg" )
+              font-awesome-icon.mr-2(:icon="arrayIcon(external_link.external_link_icon)" size="lg" )
               | {{external_link.external_link_site}} &#8599;
-
-  
-  //- For posterity... an beyond
-  //- .columns.is-centered
-  //-   .column.is-6
-  //-     img(src='https://i.kym-cdn.com/entries/icons/facebook/000/021/033/Screenshot_236.jpg')
-  //- carousel(v-bind="carousel_config")
-    //- slide(v-for="(entry, index) in entries" :key="`slide_${index}`")
-      //- entry-header-generic.pt-5.pb-0.px-2(:entry='entry')
-      // - prismic-rich-text(class='entry-title' :field='element.data.title')
 </template>
 
 <script>
@@ -153,6 +143,9 @@ export default {
   methods: {
     bgAnimationResizeMethod: function () {
 	    this.bg_animation.resize();
+	  },
+    arrayIcon: (iconString) => {
+      return iconString.split(/-(.*)/).splice(0, 2)
 	  }
   },
   created () {
@@ -162,8 +155,6 @@ export default {
     )
   },
   mounted () {
-    console.log(this.homePageData)
-      
     this.intersectionObserver.scroll = new IntersectionObserver(
       // callback
       (entries, observer) => {
@@ -246,13 +237,7 @@ export default {
   @media screen and (max-width: $tablet - 1px)
     max-width: 260px
 
-
 .main-space
-  // display: flex
-  // flex-direction: column
-  // justify-content: space-between
-  // min-height: 95vh !important
-
   & > div
     opacity: 1
     @include transition-fade(opacity)
