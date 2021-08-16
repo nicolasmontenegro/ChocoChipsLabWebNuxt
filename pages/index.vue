@@ -10,52 +10,48 @@
           span Choco
           span Chips
           span Lab
-        p Dev + UI/UX + Gamer + Fotografía
+        p {{ homePageData.subtitle }}
   .about.is-flex.is-align-content-center.py-6(intersection-style="about")
     .columns.is-centered.is-flex-grow-1
       .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        img#img-me(src="https://images.prismic.io/chocochips-lab-blog/35d5e037-29e0-4faa-b83f-fdec4da1b5b3_IMG_4957_crop2.jpg?auto=compress,format")
+        img#img-me(:src="homePageData.about_me_image.url")
       .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        h3.title.is-3 ¡Hola! Este es mi espacio
-        p Soy Nicolás Montenegro, y soy de Santiago de Chile.
-        p Me gusta trabajar en proyectos que sean un aporte a la sociedad, y que me permitan aprender tanto de tecnologías nuevas como de experiencias enriquecedoras con mis compañeros.
-        p He participado tanto de proyectos pequeños como de empresas importantes, con diversos grupos de trabajo.
-        p Apasionado en la fotografía, realización audiovisual, y los videojuegos.
-        p Mi ideal es hacer la informática algo más útil y amigable para la gente.
+        prismic-rich-text.mb-5(:field="homePageData.about_me_title")
+        prismic-rich-text.mb-5(:field="homePageData.about_me_body")
         .columns
           .column.is-6.is-12-mobile
             nuxt-link(:to="localePath({name: 'about-me'})")
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
           .column.is-6.is-12-mobile
-            a(href="https://1drv.ms/b/s!AhJPmXJoFuMAouBQqtgwAhk5hXDhEQ" target="_blank")
+            prismic-link(:field="homePageData.about_me_link_url")
               strong 
-                font-awesome-icon.mr-2(:icon="['fas', 'file-pdf']" size="lg" ) 
-                | Descarga mi cv &#8599;
+                font-awesome-icon.mr-2(:icon="arrayIcon(homePageData.about_me_link_icon)" size="lg" ) 
+                | {{ homePageData.about_me_link_label }} &#8599;
   .portfolio.py-6(intersection-style="portfolio")
     .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
       .column.is-flex-grow-0.my-2
-        nuxt-link.white-space-nowrap(:to="localePath({name: 'portfolio'})") ver todo
+        nuxt-link.has-text-weight-bold.white-space-nowrap(:to="localePath({name: 'portfolio'})") {{ $t('navigation.view_all') }}
     .portfolio-content
       .columns
-        .column.is-12
-          portfolio-entry-header(:key='portfolioEntries[0].id' :entry='portfolioEntries[0]' :mini="true")
+        .column.is-12(v-if="homePageData.portfolio_main_related.id")
+          portfolio-entry-header(:key='homePageData.portfolio_main_related.id' :entry='homePageData.portfolio_main_related' :mini="true")
   .blog.py-6(intersection-style="blog")
     .blog-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
         h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.blog`) }}
       .column.is-flex-grow-0.mt-2
-        nuxt-link.white-space-nowrap(:to="localePath({name: 'blog'})") ver todo
+        nuxt-link.has-text-weight-bold.white-space-nowrap(:to="localePath({name: 'blog'})") {{ $t('navigation.view_all') }}
     .blog-content
       .columns
-        .column.is-12
-          blog-entry-header(:key='blogEntries[0].id' :entry='blogEntries[0]' :stylo="{type: 'horizontal', responsiveness: 'desktop'}")
+        .column.is-12(v-if="homePageData.blog_main_related.id")
+          blog-entry-header(:key='homePageData.blog_main_related.id' :entry='homePageData.blog_main_related' :stylo="{type: 'horizontal', responsiveness: 'desktop'}")
       .columns
-        .column.is-6
-          blog-entry-header(:key='blogEntries[1].id' :entry='blogEntries[1]' stylo="vertical-mini")
-        .column.is-6
-          blog-entry-header(:key='blogEntries[2].id' :entry='blogEntries[2]' stylo="vertical-mini")
+        .column.is-6(v-if="homePageData.blog_secondary_first_related.id")
+          blog-entry-header(:key='homePageData.blog_secondary_first_related.id' :entry='homePageData.blog_secondary_first_related' stylo="vertical-mini")
+        .column.is-6(v-if="homePageData.blog_secondary_second_related.id")
+          blog-entry-header(:key='homePageData.blog_secondary_second_related.id' :entry='homePageData.blog_secondary_second_related' stylo="vertical-mini")
   .connections.py-6(intersection-style="home")
     .connections-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
@@ -63,57 +59,23 @@
     .connections-content
       .columns.connections-content-twitch.pb-4
         .column.is-4
-          h3.is-3 Twitch
-          p Verás principalmente Splatoon 2, pero de tanto en tanto me atrevo con otros títulos e ideas.
-          p ¡Sígueme y juegemos un rato! 
-          a(href="https://www.twitch.tv/nicochocochips" target="_blank")
-            strong 📺 Ir al canal &#8599;
+          prismic-rich-text.mb-5(:field="homePageData.conection_embed_title")
+          prismic-rich-text(:field="homePageData.conection_embed_body")
         .column.is-8
-          iframe(src=`https://player.twitch.tv/?channel=nicochocochips&parent=chocochipslab.com` frameborder="0" allowfullscreen="true" scrolling="no")
+          iframe(:src="homePageData.conection_embed_frame.embed_url" frameborder="0" allowfullscreen="true" scrolling="no")
           
       .columns.connections-content-twitch.pb-4
         .column.is-12
           h3.title.is-12 ¡Encuéntrame en el ciberespacio!
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://github.com/nicolasmontenegro?tab=repositories")
+        .column.is-3(v-for="external_link in homePageData.external_links")
+          prismic-link.outlined.button.is-ghost.is-fullwidth(:field="external_link.external_link_url")
             strong
-              font-awesome-icon.mr-2(:icon="['fab', 'github']" size="lg" )
-              | Github &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://www.twitch.tv/nicochocochips")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'twitch']" size="lg" )
-              | Twitch &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://www.instagram.com/nicochocochips")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'instagram']" size="lg" )
-              | Instagram &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://twitter.com/NicoChocoChips")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'twitter']" size="lg" )
-              | Twitter &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://www.linkedin.com/in/nmontenegrov/")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'linkedin']" size="lg" )
-              | LinkedIn &#8599;
-
-  
-  //- For posterity... an beyond
-  //- .columns.is-centered
-  //-   .column.is-6
-  //-     img(src='https://i.kym-cdn.com/entries/icons/facebook/000/021/033/Screenshot_236.jpg')
-  //- carousel(v-bind="carousel_config")
-    //- slide(v-for="(entry, index) in entries" :key="`slide_${index}`")
-      //- entry-header-generic.pt-5.pb-0.px-2(:entry='entry')
-      // - prismic-rich-text(class='entry-title' :field='element.data.title')
+              font-awesome-icon.mr-2(:icon="arrayIcon(external_link.external_link_icon)" size="lg" )
+              | {{external_link.external_link_site}} &#8599;
 </template>
 
 <script>
 import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 
 import EntryHeaderGeneric from '~/components/EntryHeader/Generic.vue'
 import Logo from '~/components/vectors/Logo.vue'
@@ -147,44 +109,31 @@ export default {
   },
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
     try {
-      // Query to get blog home content
-      // const page_data = await $prismic.api.getSingle('homepage')
-      // var entries = []
-
-      // if (page_data.data) {
-      //   await Promise
-      //     .all(page_data.data.body.map((element) => $entryData(element.primary.entry)))
-      //     .then((values) => {entries = values})
-      // }
-
-      // // Returns data to be used in template
-      // return {
-      //   page_data,
-      //   entries
-      // }
-      const blogEntries = await $prismic.api.query(
-        Prismic.Predicates.at('document.type', 'blog_entry'),
+      const page_data = await $prismic.api.query(
+        Prismic.Predicates.at('document.type', 'homepage'),
         {
           lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
-          orderings: '[document.first_publication_date desc]',
-          pageSize: 3,
-          page: 1
-        }
-      )
-      const portfolioEntries = await $prismic.api.query(
-        Prismic.Predicates.at('document.type', 'portfolio_entry'),
-        {
-          lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
-          orderings: '[document.first_publication_date desc]',
           pageSize: 1,
           page: 1
         }
       )
-      
-      // Returns data to be used in template
+
+      const idRelated = Object
+        .keys(page_data.results[0].data)
+        .filter(key => key.match(/_related$/g))
+        .reduce((accumulator, currentKey) => {
+          const id =  page_data.results[0].data[currentKey]?.id
+          return (typeof id === 'string') ? [...accumulator, {keyName: currentKey, id: id}] : accumulator
+        }, [])
+      await $prismic.api.getByIDs(idRelated.map(i => i.id)).then(response => {
+        response.results.forEach(entry => {
+          const keyName = idRelated.find(i => i.id === entry.id).keyName
+          Object.assign(page_data.results[0].data[keyName], entry)
+        })
+      })
+
       return {
-        blogEntries: blogEntries.results,
-        portfolioEntries: portfolioEntries.results
+        homePageData: page_data.results[0].data
       }
     } catch (e) {
       // Returns error page
@@ -194,7 +143,10 @@ export default {
   methods: {
     bgAnimationResizeMethod: function () {
 	    this.bg_animation.resize();
-	  }
+	  },
+    arrayIcon: (iconString) => {
+      return iconString.split(/-(.*)/).splice(0, 2)
+    }
   },
   created () {
     this.$store.commit(
@@ -202,7 +154,7 @@ export default {
       { section: { name: null, style: 'home' }, back: null }
     )
   },
-  mounted () {
+  mounted () {      
     this.intersectionObserver.scroll = new IntersectionObserver(
       // callback
       (entries, observer) => {
@@ -285,13 +237,7 @@ export default {
   @media screen and (max-width: $tablet - 1px)
     max-width: 260px
 
-
 .main-space
-  // display: flex
-  // flex-direction: column
-  // justify-content: space-between
-  // min-height: 95vh !important
-
   & > div
     opacity: 1
     @include transition-fade(opacity)

@@ -17,7 +17,8 @@ export default {
     prev: 'Previous',
     back: 'Back',
     menu: 'Menu',
-    read_more: 'Read more'
+    read_more: 'Read more',
+    view_all: 'View all'
   },
   blog:{
     related: 'Go to the blog post to read more',
