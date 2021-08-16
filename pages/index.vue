@@ -14,23 +14,19 @@
   .about.is-flex.is-align-content-center.py-6(intersection-style="about")
     .columns.is-centered.is-flex-grow-1
       .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        img#img-me(src="https://images.prismic.io/chocochips-lab-blog/35d5e037-29e0-4faa-b83f-fdec4da1b5b3_IMG_4957_crop2.jpg?auto=compress,format")
+        img#img-me(:src="homePageData.about_me_image.url")
       .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        h3.title.is-3 ¡Hola! Este es mi espacio
-        p Soy Nicolás Montenegro, y soy de Santiago de Chile.
-        p Me gusta trabajar en proyectos que sean un aporte a la sociedad, y que me permitan aprender tanto de tecnologías nuevas como de experiencias enriquecedoras con mis compañeros.
-        p He participado tanto de proyectos pequeños como de empresas importantes, con diversos grupos de trabajo.
-        p Apasionado en la fotografía, realización audiovisual, y los videojuegos.
-        p Mi ideal es hacer la informática algo más útil y amigable para la gente.
+        prismic-rich-text.mb-5(:field="homePageData.about_me_title")
+        prismic-rich-text.mb-5(:field="homePageData.about_me_body")
         .columns
           .column.is-6.is-12-mobile
             nuxt-link(:to="localePath({name: 'about-me'})")
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
           .column.is-6.is-12-mobile
-            a(href="https://1drv.ms/b/s!AhJPmXJoFuMAouBQqtgwAhk5hXDhEQ" target="_blank")
+            prismic-link(:field="homePageData.about_me_link_url")
               strong 
-                font-awesome-icon.mr-2(:icon="['fas', 'file-pdf']" size="lg" ) 
-                | Descarga mi cv &#8599;
+                font-awesome-icon.mr-2(:icon="homePageData.about_me_link_icon.split(/-(.*)/).splice(0, 2)" size="lg" ) 
+                | {{ homePageData.about_me_link_label }} &#8599;
   .portfolio.py-6(intersection-style="portfolio")
     .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
       .column.is-flex-grow-0
@@ -63,7 +59,7 @@
     .connections-content
       .columns.connections-content-twitch.pb-4
         .column.is-4
-          prismic-rich-text.is-3.mb-5(:field="homePageData.conection_embed_title")
+          prismic-rich-text.mb-5(:field="homePageData.conection_embed_title")
           prismic-rich-text(:field="homePageData.conection_embed_body")
         .column.is-8
           iframe(src=`https://player.twitch.tv/?channel=nicochocochips&parent=chocochipslab.com` frameborder="0" allowfullscreen="true" scrolling="no")
