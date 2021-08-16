@@ -10,7 +10,7 @@
           span Choco
           span Chips
           span Lab
-        p Dev + UI/UX + Gamer + Fotografía
+        p {{ homePageData.subtitle }}
   .about.is-flex.is-align-content-center.py-6(intersection-style="about")
     .columns.is-centered.is-flex-grow-1
       .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
