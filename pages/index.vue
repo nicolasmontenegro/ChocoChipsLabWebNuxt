@@ -63,42 +63,19 @@
     .connections-content
       .columns.connections-content-twitch.pb-4
         .column.is-4
-          h3.is-3 Twitch
-          p Verás principalmente Splatoon 2, pero de tanto en tanto me atrevo con otros títulos e ideas.
-          p ¡Sígueme y juegemos un rato! 
-          a(href="https://www.twitch.tv/nicochocochips" target="_blank")
-            strong 📺 Ir al canal &#8599;
+          prismic-rich-text.is-3.mb-5(:field="homePageData.conection_embed_title")
+          prismic-rich-text(:field="homePageData.conection_embed_body")
         .column.is-8
           iframe(src=`https://player.twitch.tv/?channel=nicochocochips&parent=chocochipslab.com` frameborder="0" allowfullscreen="true" scrolling="no")
           
       .columns.connections-content-twitch.pb-4
         .column.is-12
           h3.title.is-12 ¡Encuéntrame en el ciberespacio!
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://github.com/nicolasmontenegro?tab=repositories")
+        .column.is-3(v-for="external_link in homePageData.external_links")
+          prismic-link.outlined.button.is-ghost.is-fullwidth(:field="external_link.external_link_url")
             strong
-              font-awesome-icon.mr-2(:icon="['fab', 'github']" size="lg" )
-              | Github &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://www.twitch.tv/nicochocochips")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'twitch']" size="lg" )
-              | Twitch &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://www.instagram.com/nicochocochips")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'instagram']" size="lg" )
-              | Instagram &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://twitter.com/NicoChocoChips")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'twitter']" size="lg" )
-              | Twitter &#8599;
-        .column.is-3
-          a.outlined.button.is-ghost.is-fullwidth(href="https://www.linkedin.com/in/nmontenegrov/")
-            strong
-              font-awesome-icon.mr-2(:icon="['fab', 'linkedin']" size="lg" )
-              | LinkedIn &#8599;
+              font-awesome-icon.mr-2(:icon="external_link.external_link_icon.split(/-(.*)/).splice(0, 2)" size="lg" )
+              | {{external_link.external_link_site}} &#8599;
 
   
   //- For posterity... an beyond
@@ -113,7 +90,6 @@
 
 <script>
 import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 
 import EntryHeaderGeneric from '~/components/EntryHeader/Generic.vue'
 import Logo from '~/components/vectors/Logo.vue'
@@ -148,7 +124,7 @@ export default {
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
     try {
       // Query to get blog home content
-      // const page_data = await $prismic.api.getSingle('homepage')
+      const page_data = await $prismic.api.getSingle('homepage')
       // var entries = []
 
       // if (page_data.data) {
@@ -158,10 +134,8 @@ export default {
       // }
 
       // // Returns data to be used in template
-      // return {
-      //   page_data,
-      //   entries
-      // }
+
+
       const blogEntries = await $prismic.api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
@@ -184,7 +158,8 @@ export default {
       // Returns data to be used in template
       return {
         blogEntries: blogEntries.results,
-        portfolioEntries: portfolioEntries.results
+        portfolioEntries: portfolioEntries.results,
+        homePageData: page_data.data
       }
     } catch (e) {
       // Returns error page
@@ -203,6 +178,8 @@ export default {
     )
   },
   mounted () {
+    console.log(this.homePageData)
+      
     this.intersectionObserver.scroll = new IntersectionObserver(
       // callback
       (entries, observer) => {
