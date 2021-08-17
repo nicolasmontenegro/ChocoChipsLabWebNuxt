@@ -1,5 +1,10 @@
 export default {
   welcome: 'Bienvenido',
+  meta: {
+    title: 'ChocoChipsLab',
+    description: 'El sitio web de NicoChocoChips: Blog + Portafolio + y mas!',
+    img_alt: 'Logo de ChocoChips'
+  },
   sections: {
     index: 'Inicio',
     blog: 'Blog',

@@ -26,7 +26,20 @@ export default {
     containerClass () { return this.$store.state.navegation.section.style }
   },
   head () {
-    return this.$nuxtI18nHead({ addSeoAttributes: true })
+    const headI18nDefault = this.$nuxtI18nHead({ addSeoAttributes: true })
+    const openGraphDefault = this.$openGraph({
+      title: this.$i18n.t('meta.title'),
+      description: this.$i18n.t('meta.description'),
+      image: {
+        imgURL: require('~/static/icon.png'),
+        imgType: 'image/png',
+        imgwidth: '1024',
+        imgHeight: '1024',
+        imgAlt: this.$t('meta.img_alt')
+      }
+    })
+    headI18nDefault.meta = [...headI18nDefault.meta, ...openGraphDefault]
+    return headI18nDefault
   }
 }
 </script>
