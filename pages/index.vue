@@ -4,7 +4,7 @@
     #bg-animation
     .columns.is-centered.is-flex-grow-1
       .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        Logo
+        VectorsLogo
       .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
         h1.title.is-1
           span Choco
@@ -78,13 +78,11 @@
 import Prismic from 'prismic-javascript'
 
 import EntryHeaderGeneric from '~/components/EntryHeader/Generic.vue'
-import Logo from '~/components/vectors/Logo.vue'
 
 export default {
   name: 'Home',
   components: {
-    EntryHeaderGeneric,
-    Logo
+    EntryHeaderGeneric
   },
   async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
     try {

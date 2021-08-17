@@ -2,7 +2,7 @@
   .footer
     .columns.is-centered
       .column.is-4.is-flex.is-flex-direction-column.is-align-items-center
-        logo.mb-2
+        VectorsLogo.mb-2
         .footer-line.is-flex.is-flex-direction-row.is-flex-wrap-nowrap.mb-1
           p With 🍫 from Santiago, Chile
         .footer-line.is-flex.is-flex-direction-row.is-flex-wrap-nowrap.mb-1
