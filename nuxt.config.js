@@ -147,6 +147,6 @@ export default {
   */
   robots: {
     UserAgent: '*',
-    Disallow: '/'
+    Allow: '/'
   }
 }
