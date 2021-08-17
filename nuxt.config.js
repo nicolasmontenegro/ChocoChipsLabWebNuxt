@@ -65,7 +65,7 @@ export default {
     // Doc: https://github.com/buefy/nuxt-buefy
     'nuxt-buefy',
     // https://i18n.nuxtjs.org
-    'nuxt-i18n',
+    '@nuxtjs/i18n',
     // https://github.com/pimlie/nuxt-rfg-icon
     'nuxt-rfg-icon',
     '@nuxtjs/manifest',
