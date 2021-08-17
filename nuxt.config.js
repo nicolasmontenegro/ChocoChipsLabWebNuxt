@@ -42,7 +42,8 @@ export default {
     { src: '~/plugins/helpers.js' },
     { src: '~/plugins/postscribe.js', mode: 'client' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~/plugins/lottie.js', mode: 'client' }
+    { src: '~/plugins/lottie.js', mode: 'client' },
+    { src: '~/plugins/open-graph.js' }
 
   ],
   /*

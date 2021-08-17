@@ -63,53 +63,22 @@ export default {
   head () {
     return {
       title: this.title,
-      meta: [
-        {
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: this.title
+      meta: [...this.$openGraph({
+        title: this.title,
+        description: PrismicDOM.RichText.asText(this.entry.data.lead),
+        image: {
+          imgURL: this.entry.data.header_image.url,
+          imgwidth: this.entry.data.header_image.dimensions.width,
+          imgHeight: this.entry.data.header_image.dimensions.height,
+          imgAlt: this.entry.data.header_image.alt
         },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: PrismicDOM.RichText.asText(this.entry.data.lead)
-        },
-        {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: this.entry.data.header_image.url
-        },
-        {
-          hid: 'twitter:image:alt',
-          name: 'twitter:image:alt',
-          content: this.title
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: this.title
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: PrismicDOM.RichText.asText(this.entry.data.lead)
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: this.entry.data.header_image.url
-        },
-        {
-          hid: 'og:image:secure_url',
-          property: 'og:image:secure_url',
-          content: this.entry.data.header_image.url
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: this.title
+        article: {
+          publishedTime: this.entry.first_publication_date,
+          modifiedTime: this.entry.last_publication_date,
+          tags: this.entry.tags,
+          section: this.$t('sections.blog')
         }
-      ]
+      })]
     }
   }
 }
