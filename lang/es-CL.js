@@ -1,5 +1,10 @@
 export default {
   welcome: 'Bienvenido',
+  meta: {
+    title: 'ChocoChipsLab',
+    description: 'El sitio web de NicoChocoChips: Blog + Portafolio + y mas!',
+    img_alt: 'Logo de ChocoChips'
+  },
   sections: {
     index: 'Inicio',
     blog: 'Blog',
@@ -20,7 +25,7 @@ export default {
     read_more: 'Leer más',
     view_all: 'Ver todo'
   },
-  blog:{
+  blog: {
     related: 'Publicación relacionada',
     published: 'Publicado {date}',
     updated: 'Actualizado {date}',
@@ -28,8 +33,8 @@ export default {
   },
   portfolio: {
     origin_type: {
-      Employee: "Empresa",
-      Freelance: "Cliente"
+      Employee: 'Empresa',
+      Freelance: 'Cliente'
     }
   },
   slices: {

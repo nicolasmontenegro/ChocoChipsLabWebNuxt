@@ -96,8 +96,7 @@ export default function (type, element, content, children) {
       `)
 
     case Elements.label:
-      const label = element.data.label ? ` class="${element.data.label}"` : ''
-      return `<span ${label}>${children.join('')}</span>`
+      return `<span ${element.data.label ? ` class="${element.data.label}"` : ''}>${children.join('')}</span>`
 
     case Elements.span:
       return content ? content.replace(/\n/g, '<br />') : ''

@@ -15,7 +15,6 @@ export default function (doc) {
     return '/blog/' + doc.uid
   }
 
-
   if (doc.type === 'portfolio_entry') {
     return '/portfolio/' + doc.uid
   }

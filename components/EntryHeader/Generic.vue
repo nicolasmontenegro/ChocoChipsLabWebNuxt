@@ -82,18 +82,13 @@ export default {
       right: -2px
       z-index: -1
       border-width: 2px
-      border-style: solid  
+      border-style: solid
       border-radius: 10px
 
-
-    
-
-    
   /*.blog
     & > *
       .entry-picture-head
         &::after
           @include bg-entry-header($background-color-blog)*/
-
 
 </style>

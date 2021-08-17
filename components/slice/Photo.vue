@@ -18,9 +18,9 @@
 <script>
 import PrismicDOM from 'prismic-dom'
 
-/*lif (process.client) {
+/* lif (process.client) {
   require('lingallery')
-}*/
+} */
 
 export default {
   props: {
@@ -41,31 +41,31 @@ export default {
       current_id: null
     }
   },
-  created () {
-  },
   computed: {
     source () { return (this.slice.primary.source === undefined ? undefined : PrismicDOM.RichText.asText(this.slice.primary.source)) },
     source_link () { return (this.slice.primary.source_link === undefined ? undefined : this.slice.primary.source_link) },
     image_item () {
       return {
-        id: `img_${this.index}`, 
+        id: `img_${this.index}`,
         src: this.image_thumbnail_url(this.slice.primary.image.url, 800),
         thumbnail: this.image_thumbnail_url(this.slice.primary.image.url, 100),
-        largeViewSrc: this.slice.primary.image.url, 
+        largeViewSrc: this.slice.primary.image.url,
         alt: this.slice.primary.image.alt
       }
     },
     image_item_list () {
-      return [this.image_item] 
+      return [this.image_item]
     }
   },
+  created () {
+  },
   methods: {
-    image_thumbnail_url (img_url, width = '100') {
-      var myUrl = new URL(img_url);
+    image_thumbnail_url (imgUrl, width = '100') {
+      const myUrl = new URL(imgUrl)
       myUrl.searchParams.append('width', width)
       return myUrl.toString()
     }
-  },
+  }
 }
 </script>
 
@@ -83,15 +83,15 @@ $max-height: 400px
     flex-direction: row
     justify-content: center
     max-height: $max-height
-    
+
     > img
       max-height: $max-height
 
       &:hover
         cursor: pointer
-    
+
     ::v-deep
-      .largeViewContainer 
+      .largeViewContainer
         a
           @media screen and (max-width: $desktop)
             top: 92px

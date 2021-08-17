@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
-import Lingallery from 'lingallery';
-Vue.component('lingallery', Lingallery);
+import Lingallery from 'lingallery'
+Vue.component('lingallery', Lingallery)

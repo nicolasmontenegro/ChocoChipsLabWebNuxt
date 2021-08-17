@@ -45,26 +45,19 @@ export default {
     Jar: () => import('~/components/vectors/Jar.vue'),
     LogoTitle: () => import('~/components/vectors/LogoTitle.vue')
   },
-  data() {
+  data () {
     return {
       isOpen: false,
       showButton: false
     }
   },
-  methods: {
-    toggleShowButton: function (e) {
-      // console.log(e)
-      // console.log(document.documentElement.scrollTop )
-	    this.showButton = document.documentElement.scrollTop > 200
-	  }
-  },
   watch: {
-    '$route.path': function () {
+    '$route.path' () {
       this.isOpen = false
     },
-    isOpen: function (new_value) {
-      document.querySelector('#template.container .container-content').classList.toggle('is-menu-open', new_value)
-      document.querySelector('html').classList.toggle('block-scroll', new_value)
+    isOpen (newValue) {
+      document.querySelector('#template.container .container-content').classList.toggle('is-menu-open', newValue)
+      document.querySelector('html').classList.toggle('block-scroll', newValue)
     }
   },
   mounted () {
@@ -72,6 +65,11 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.toggleShowButton)
+  },
+  methods: {
+    toggleShowButton (e) {
+      this.showButton = document.documentElement.scrollTop > 200
+    }
   }
 }
 </script>
@@ -88,7 +86,7 @@ export default {
     border-width: 1px
 
     flex-direction: row
-    
+
     @media screen and (max-width: $desktop - 1px)
       margin-left: 0px
       flex-direction: column
@@ -104,17 +102,16 @@ export default {
     ::v-deep .logo.jar
       height: 50px
       width: auto
-  
-  
+
   &-button-fade
-    &-enter-active, &-leave-active 
+    &-enter-active, &-leave-active
       transition: all 500ms ease
 
     &-enter, &-leave-to
       opacity: 0
 
   &-container-fade
-    &-enter-active, &-leave-active 
+    &-enter-active, &-leave-active
       transition: all 800ms ease
 
     &-enter, &-leave-to
@@ -127,13 +124,13 @@ export default {
     width: 100%
     height: auto
     top: 0
-    
+
     @media screen and (max-width: $tablet - 1px)
       left: 0
 
     .columns
       .title
-        display: inline-block 
+        display: inline-block
 
     & > .columns
         height: 100vh
@@ -167,7 +164,7 @@ export default {
         width: 50vw
         top: 0px
         right: 0
-      
+
         @media screen and (max-width: $tablet - 1px)
           width: 100%
 
@@ -177,8 +174,6 @@ export default {
     .menu-content
       overflow-y: auto
 
-
-    
 </style>
 
 <style lang="sass">
@@ -186,7 +181,7 @@ export default {
   .container-content
     & > div > div > div > *
       transition: filter 800ms ease-out
-    
+
     &.is-menu-open > div > div > div > *
       filter: blur(5px)
 

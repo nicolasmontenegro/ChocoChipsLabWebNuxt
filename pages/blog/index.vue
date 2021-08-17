@@ -12,7 +12,6 @@
 
 <script>
 import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 import Pagination from '~/components/Pagination.vue'
 
@@ -23,22 +22,19 @@ export default {
     Pagination
   },
   watchQuery: ['page'],
-  head () {
-    return { title: 'Blog' }
-  },
   async asyncData ({ app, $prismic, params, error, req, query }) {
     try {
       // Query to get posts content to preview
       const blogPosts = await $prismic.api.query(
         Prismic.Predicates.at('document.type', 'blog_entry'),
         {
-          lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
+          lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso,
           orderings: '[document.first_publication_date desc]',
           pageSize: 10,
           page: (query.page || 1)
         }
       )
-      
+
       // Returns data to be used in template
       return {
         blogPosts: blogPosts.results,
@@ -57,6 +53,9 @@ export default {
       'navegation/setNavegation',
       { section: { name: 'blog', style: 'blog' }, back: { name: 'index' } }
     )
+  },
+  head () {
+    return { title: 'Blog' }
   }
 }
 </script>

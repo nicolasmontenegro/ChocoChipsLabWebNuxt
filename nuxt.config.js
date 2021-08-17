@@ -11,8 +11,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      /*{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Palanquin+Dark&display=swap' }*/
+      /* { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Palanquin+Dark&display=swap' } */
     ],
     __dangerouslyDisableSanitizers: ['script']
   },
@@ -29,7 +29,7 @@ export default {
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   /*
-  ** components in nested directories 
+  ** components in nested directories
   ** https://nuxtjs.org/docs/2.x/directory-structure/components/
   */
   components: true,
@@ -37,13 +37,14 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/lingallery.js', mode: 'client' },    
-    { src: '~/plugins/vue-carousel.js', mode: 'client' },    
-    { src: '~/plugins/helpers.js' },    
-    { src: '~/plugins/postscribe.js', mode: 'client' },    
+    { src: '~/plugins/lingallery.js', mode: 'client' },
+    { src: '~/plugins/vue-carousel.js', mode: 'client' },
+    { src: '~/plugins/helpers.js' },
+    { src: '~/plugins/postscribe.js', mode: 'client' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~/plugins/lottie.js', mode: 'client' }
-    
+    { src: '~/plugins/lottie.js', mode: 'client' },
+    { src: '~/plugins/open-graph.js' }
+
   ],
   /*
   ** Nuxt.js dev-modules
@@ -52,7 +53,7 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // https://prismic.nuxtjs.org/
-    '@nuxtjs/prismic', 
+    '@nuxtjs/prismic',
     // https://www.npmjs.com/package/@nuxtjs/google-fonts
     '@nuxtjs/google-fonts',
     // https://github.com/nuxt-community/style-resources-module#readme
@@ -70,13 +71,13 @@ export default {
     'nuxt-rfg-icon',
     '@nuxtjs/manifest',
     // https://github.com/nuxt-community/robots-module
-    '@nuxtjs/robots',
+    '@nuxtjs/robots'
   ],
   styleResources: {
     // your settings here
     sass: [
       'assets/css/utils/*.sass',
-      'bulma/sass/utilities/_all.sass',
+      'bulma/sass/utilities/_all.sass'
     ]
   },
   /*
@@ -116,9 +117,9 @@ export default {
   ** CMS Config
   */
   prismic: {
-    endpoint: 'https://chocochips-lab-blog.cdn.prismic.io/api/v2'	,
+    endpoint: 'https://chocochips-lab-blog.cdn.prismic.io/api/v2',
     linkResolver: '@/plugins/link-resolver',
-    htmlSerializer: '@/plugins/html-serializer',
+    htmlSerializer: '@/plugins/html-serializer'
     /* see configuration for more */
   },
   /*
@@ -126,9 +127,9 @@ export default {
   */
   googleFonts: {
     families: {
-      'Roboto': true,
+      Roboto: true,
       'Palanquin+Dark': [400, 500, 600, 700],
-      'Hind': [300, 400, 600],
+      Hind: [300, 400, 600]
     },
     display: 'swap'
   },
@@ -147,5 +148,5 @@ export default {
   robots: {
     UserAgent: '*',
     Disallow: '/'
-  },
+  }
 }

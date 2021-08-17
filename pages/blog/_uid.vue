@@ -23,8 +23,6 @@
 
 <script>
 import PrismicDOM from 'prismic-dom'
-import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 import Logo from '~/components/vectors/Logo.vue'
 
@@ -34,65 +32,13 @@ export default {
     BlogEntryHeader,
     Logo
   },
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: this.title
-        },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: PrismicDOM.RichText.asText(this.entry.data.lead)
-        },
-        {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: this.entry.data.header_image.url
-        },
-        {
-          hid: 'twitter:image:alt',
-          name: 'twitter:image:alt',
-          content: this.title
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: this.title
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: PrismicDOM.RichText.asText(this.entry.data.lead)
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: this.entry.data.header_image.url
-        },
-        {
-          hid: 'og:image:secure_url',
-          property: 'og:image:secure_url',
-          content: this.entry.data.header_image.url
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: this.title
-        }
-      ]
-    }
-  },
   async asyncData ({ app, $prismic, params, error }) {
     try {
       // Query to get entry
       const entry = await $prismic.api.getByUID(
-        'blog_entry', 
+        'blog_entry',
         params.uid,
-        {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
+        { lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso })
 
       // Returns data to be used in template
       return {
@@ -103,15 +49,36 @@ export default {
       error({ statusCode: 404, message: 'Page not found :(' })
     }
   },
+  computed: {
+    title () {
+      return this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog')
+    }
+  },
   mounted () {
     this.$store.commit(
       'navegation/setNavegation',
       { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
     )
   },
-  computed: {
-    title () {
-      return this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog');
+  head () {
+    return {
+      title: this.title,
+      meta: [...this.$openGraph({
+        title: this.title,
+        description: PrismicDOM.RichText.asText(this.entry.data.lead),
+        image: {
+          imgURL: this.entry.data.header_image.url,
+          imgwidth: this.entry.data.header_image.dimensions.width,
+          imgHeight: this.entry.data.header_image.dimensions.height,
+          imgAlt: this.entry.data.header_image.alt
+        },
+        article: {
+          publishedTime: this.entry.first_publication_date,
+          modifiedTime: this.entry.last_publication_date,
+          tags: this.entry.tags,
+          section: this.$t('sections.blog')
+        }
+      })]
     }
   }
 }

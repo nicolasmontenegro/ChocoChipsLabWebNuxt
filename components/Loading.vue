@@ -2,17 +2,12 @@
 //-(v-if="loading")
 transition(name="loading")
   .loading-page.is-spaced(v-if="loading")
-    logo
+    VectorsLogo
     //- h1.title.is-1 Cargando
 </template>
 
 <script>
-import Logo from '~/components/vectors/Logo.vue'
-
 export default {
-  components: {
-    Logo
-  },
   data: () => ({
     loading: false
   }),
@@ -59,7 +54,7 @@ export default {
       color: #bababa
 
   @keyframes loading-fade
-    0% 
+    0%
       opacity: 0
     5%
       opacity: 0.7

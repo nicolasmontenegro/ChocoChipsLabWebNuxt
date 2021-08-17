@@ -4,9 +4,9 @@
     #bg-animation
     .columns.is-centered.is-flex-grow-1
       .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        Logo
+        VectorsLogo
       .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        h1.title.is-1 
+        h1.title.is-1
           span Choco
           span Chips
           span Lab
@@ -24,8 +24,8 @@
               strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
           .column.is-6.is-12-mobile
             prismic-link(:field="homePageData.about_me_link_url")
-              strong 
-                font-awesome-icon.mr-2(:icon="arrayIcon(homePageData.about_me_link_icon)" size="lg" ) 
+              strong
+                font-awesome-icon.mr-2(:icon="arrayIcon(homePageData.about_me_link_icon)" size="lg" )
                 | {{ homePageData.about_me_link_label }} &#8599;
   .portfolio.py-6(intersection-style="portfolio")
     .portfolio-header.columns.is-gapless.is-justify-content-space-between.is-align-items-center.pb-3
@@ -63,7 +63,7 @@
           prismic-rich-text(:field="homePageData.conection_embed_body")
         .column.is-8
           iframe(:src="homePageData.conection_embed_frame.embed_url" frameborder="0" allowfullscreen="true" scrolling="no")
-          
+
       .columns.connections-content-twitch.pb-4
         .column.is-12
           h3.title.is-12 ¡Encuéntrame en el ciberespacio!
@@ -78,16 +78,44 @@
 import Prismic from 'prismic-javascript'
 
 import EntryHeaderGeneric from '~/components/EntryHeader/Generic.vue'
-import Logo from '~/components/vectors/Logo.vue'
 
 export default {
   name: 'Home',
-  head () {
-    return { title: 'Inicio' }
-  },
   components: {
-    EntryHeaderGeneric,
-    Logo
+    EntryHeaderGeneric
+  },
+  async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
+    try {
+      const pageData = await $prismic.api.query(
+        Prismic.Predicates.at('document.type', 'homepage'),
+        {
+          lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso,
+          pageSize: 1,
+          page: 1
+        }
+      )
+
+      const idRelated = Object
+        .keys(pageData.results[0].data)
+        .filter(key => key.endsWith('_related'))
+        .reduce((accumulator, currentKey) => {
+          const id = pageData.results[0].data[currentKey]?.id
+          return (typeof id === 'string') ? [...accumulator, { keyName: currentKey, id }] : accumulator
+        }, [])
+      await $prismic.api.getByIDs(idRelated.map(i => i.id)).then((response) => {
+        response.results.forEach((entry) => {
+          const keyName = idRelated.find(i => i.id === entry.id).keyName
+          Object.assign(pageData.results[0].data[keyName], entry)
+        })
+      })
+
+      return {
+        homePageData: pageData.results[0].data
+      }
+    } catch (e) {
+      // Returns error page
+      error({ statusCode: 404, message: 'Page not found' })
+    }
   },
   data () {
     return {
@@ -103,49 +131,8 @@ export default {
       },
       intersectionObserver: {
         scroll: null,
-        bg: null,
-      },
-    }
-  },
-  async asyncData ({ app, $entryData, $prismic, params, error, req, query }) {
-    try {
-      const page_data = await $prismic.api.query(
-        Prismic.Predicates.at('document.type', 'homepage'),
-        {
-          lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso,
-          pageSize: 1,
-          page: 1
-        }
-      )
-
-      const idRelated = Object
-        .keys(page_data.results[0].data)
-        .filter(key => key.match(/_related$/g))
-        .reduce((accumulator, currentKey) => {
-          const id =  page_data.results[0].data[currentKey]?.id
-          return (typeof id === 'string') ? [...accumulator, {keyName: currentKey, id: id}] : accumulator
-        }, [])
-      await $prismic.api.getByIDs(idRelated.map(i => i.id)).then(response => {
-        response.results.forEach(entry => {
-          const keyName = idRelated.find(i => i.id === entry.id).keyName
-          Object.assign(page_data.results[0].data[keyName], entry)
-        })
-      })
-
-      return {
-        homePageData: page_data.results[0].data
+        bg: null
       }
-    } catch (e) {
-      // Returns error page
-      error({ statusCode: 404, message: 'Page not found' })
-    }
-  },
-  methods: {
-    bgAnimationResizeMethod: function () {
-	    this.bg_animation.resize();
-	  },
-    arrayIcon: (iconString) => {
-      return iconString.split(/-(.*)/).splice(0, 2)
     }
   },
   created () {
@@ -154,56 +141,57 @@ export default {
       { section: { name: null, style: 'home' }, back: null }
     )
   },
-  mounted () {      
+  mounted () {
     this.intersectionObserver.scroll = new IntersectionObserver(
       // callback
       (entries, observer) => {
-        entries.forEach(entry => {          
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.remove('is-off-focus')
             this.$store.commit(
               'navegation/setNavegation',
-              { section: { 
-                name: null, 
-                style: entry.target.getAttribute('intersection-style')
-              }, back: null }
+              {
+                section: {
+                  name: null,
+                  style: entry.target.getAttribute('intersection-style')
+                },
+                back: null
+              }
             )
           } else {
             entry.target.classList.add('is-off-focus')
           }
-
-        });
-      }, 
+        })
+      },
       // options
       {
         root: null,
         rootMargin: '-50% 0px -50% 0px',
         threshold: 0
       })
-    document.querySelectorAll('.main-space > *').forEach(node => {
-      this.intersectionObserver.scroll.observe(node);
-    });
+    document.querySelectorAll('.main-space > *').forEach((node) => {
+      this.intersectionObserver.scroll.observe(node)
+    })
 
-    
     this.$lottie.setQuality('low')
     this.bg_animation = this.$lottie.loadAnimation({
       container: document.querySelector('#bg-animation'),
       renderer: 'canvas',
       loop: true,
       autoplay: true,
-      animationData: require(`~/assets/lottie/bg-mosaic.json`),
+      animationData: require('~/assets/lottie/bg-mosaic.json'),
       rendererSettings: {
-        preserveAspectRatio: 'xMinYMin slice', 
-        clearCanvas: true,
+        preserveAspectRatio: 'xMinYMin slice',
+        clearCanvas: true
       }
-    });
+    })
 
-    window.addEventListener('resize', this.bgAnimationResizeMethod);	
+    window.addEventListener('resize', this.bgAnimationResizeMethod)
 
     this.intersectionObserver.bg = new IntersectionObserver(
-      //callback
+      // callback
       (entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           document
             .querySelector('#bg-animation canvas')
             .style.opacity = entry.intersectionRatio / 0.4
@@ -214,16 +202,27 @@ export default {
       {
         root: null,
         rootMargin: '-50% 0px 0px 0px',
-        threshold: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
+        threshold: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4]
       }
     )
 
-    this.intersectionObserver.bg.observe(document.querySelector('.home-section'));
+    this.intersectionObserver.bg.observe(document.querySelector('.home-section'))
   },
-  beforeDestroy() {
-    this.intersectionObserver.scroll ? this.intersectionObserver.scroll.disconnect() : null
-    this.intersectionObserver.bg ? this.intersectionObserver.bg.disconnect() : null
-    window.removeEventListener('resize', this.bgAnimationResizeMethod);	
+  beforeDestroy () {
+    if (this.intersectionObserver.scroll) { this.intersectionObserver.scroll.disconnect() }
+    if (this.intersectionObserver.bg) { this.intersectionObserver.bg.disconnect() }
+    window.removeEventListener('resize', this.bgAnimationResizeMethod)
+  },
+  methods: {
+    bgAnimationResizeMethod () {
+      this.bg_animation.resize()
+    },
+    arrayIcon: (iconString) => {
+      return iconString.split(/-(.*)/).splice(0, 2)
+    }
+  },
+  head () {
+    return { title: 'Inicio' }
   }
 }
 </script>
@@ -256,7 +255,7 @@ export default {
     ::v-deep .logo
       width: 100%
       height: auto
-      
+
       @include max-size-cookie
 
     .title
@@ -265,7 +264,7 @@ export default {
       @media screen and (max-width: $desktop - 1px)
         display: flex
         flex-direction: column
-    
+
     #bg-animation
       z-index: -1
       position: fixed
@@ -287,7 +286,6 @@ export default {
         width: 100%
         height: auto !important
         transform-origin: unset !important
-    
 
   .about
     min-height: 95vh
@@ -298,7 +296,7 @@ export default {
       mask-size: cover
 
       @include max-size-cookie
-    
+
     ::v-deep .logo
       width: 100%
       height: 100%
