@@ -2,13 +2,13 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,18 +26,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Set system path 
+      # Set system path
       - name: Set system path
         run: echo "${{github.workspace}}/.nuxt/" >> $GITHUB_PATH
-        
+
       # https://github.com/marketplace/actions/setup-node-js-environment
       - uses: actions/setup-node@v2
         with:
-          node-version: '13'
+          node-version: "14"
 
       - name: Install dependences
         run: npm install --quiet
-      
+
       - name: Build dist
         run: npm run build
 
@@ -61,4 +61,3 @@ jobs:
           gcloud auth activate-service-account ${{ secrets.SA_EMAIL }} --key-file=client-secret.json
           gcloud config set project ${{ secrets.PROJECT_ID }}
           gcloud -q app deploy app.yaml --promote
-        
