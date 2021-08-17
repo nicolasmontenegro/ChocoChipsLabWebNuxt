@@ -5,7 +5,6 @@
       .entry-picture-head(:style='picture_head' :class='stylo')
     .entry-picture-head(v-else :style='picture_head' :class='stylo')
 
-  
   .column.content(:class='stylo_class.cols[1]')
     .pb-2
       nuxt-link(:to='localePath(link)' v-if='linkable')
@@ -64,10 +63,10 @@ export default {
     title () {
       return PrismicDOM.RichText.asText(this.entry.data.title)
     },
-    stylo_class () {      
-      const {type = '', responsiveness = ''} = typeof(this.stylo) == 'string' ? {type: this.stylo} : this.stylo 
+    stylo_class () {
+      const { type = '', responsiveness = '' } = typeof (this.stylo) === 'string' ? { type: this.stylo } : this.stylo
       let cols = []
-      switch(type) {
+      switch (type) {
         case 'vertical':
           cols = ['is-12', 'is-12']
           break
@@ -80,7 +79,7 @@ export default {
         case 'horizontal-mini':
           cols = ['is-4', 'is-8']
           break
-      } 
+      }
       return {
         cols: responsiveness ? cols.map(col => `${col}-${responsiveness} is-12`) : cols,
         name: type

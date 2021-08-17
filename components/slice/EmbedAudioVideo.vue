@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() =>  {
+    this.$nextTick(() => {
       this.$postscribe(this.$el, this.$prismic.asText(this.slice.primary.content))
     })
   }

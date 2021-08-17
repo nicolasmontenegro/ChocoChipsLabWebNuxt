@@ -10,11 +10,11 @@
     prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
 
   p.m-0
-    span 
+    span
       | {{ $t(`portfolio.origin_type.${entry.data.origin_type}`) }}
       | &emsp;
     span.has-text-weight-semibold {{ entry.data.company_name }}
-    
+
   p.m-0
     nuxt-link(v-if='linkable' :to='localePath(link)')
       .is-medium
@@ -46,12 +46,12 @@ export default {
     link () {
       return LinkResolver(this.entry)
     }
-  },
-  /*methods: {
+  }
+  /* methods: {
     toLocalDate (strDate) {
       return new Date(strDate).toLocaleDateString(this.$i18n.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     }
-  }*/
+  } */
 }
 </script>
 

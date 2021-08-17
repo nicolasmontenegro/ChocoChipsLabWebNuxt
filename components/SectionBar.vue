@@ -54,7 +54,7 @@ export default {
 <style scoped lang="sass">
 .sectionbar
   .title-site
-    
+
     .col-logo, .col-arrow
       display: flex
       align-items: center
@@ -67,7 +67,7 @@ export default {
 
   .navegation-site
     font-family: 'Palanquin Dark', sans-serif
-    
+
     .link_back
       margin-bottom: 1rem
 
@@ -90,13 +90,13 @@ export default {
 
     .navegation-site
       padding: .5rem 1rem 1rem
-      
+
       transition: max-height 333ms ease-in, transform 333ms ease-in, padding 333ms ease-in, opacity 333ms ease-in
       max-height: 15rem
       overflow-y: hidden
       opacity: 1
       overflow-y: auto
-    
+
     &:not(.is-expanded) .navegation-site
       transform: translate(-20px, .5rem)
       max-height: 0
@@ -110,7 +110,7 @@ export default {
 
       .button-expand
         display: flex
-        
+
         /deep/ .arrow
           transition: transform 200ms ease-in-out
 

@@ -9,7 +9,7 @@
           img.mx-2(src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="height: 25px;")
           p
             small ChocoChipsLab 2021
-    
+
 </template>
 
 <style lang="sass" scoped>

@@ -20,7 +20,7 @@ export default {
     read_more: 'Leer más',
     view_all: 'Ver todo'
   },
-  blog:{
+  blog: {
     related: 'Publicación relacionada',
     published: 'Publicado {date}',
     updated: 'Actualizado {date}',
@@ -28,8 +28,8 @@ export default {
   },
   portfolio: {
     origin_type: {
-      Employee: "Empresa",
-      Freelance: "Cliente"
+      Employee: 'Empresa',
+      Freelance: 'Cliente'
     }
   },
   slices: {

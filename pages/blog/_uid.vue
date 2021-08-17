@@ -23,8 +23,6 @@
 
 <script>
 import PrismicDOM from 'prismic-dom'
-import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 import Logo from '~/components/vectors/Logo.vue'
 
@@ -33,6 +31,34 @@ export default {
   components: {
     BlogEntryHeader,
     Logo
+  },
+  async asyncData ({ app, $prismic, params, error }) {
+    try {
+      // Query to get entry
+      const entry = await $prismic.api.getByUID(
+        'blog_entry',
+        params.uid,
+        { lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso })
+
+      // Returns data to be used in template
+      return {
+        entry
+      }
+    } catch (e) {
+      // Returns error page
+      error({ statusCode: 404, message: 'Page not found :(' })
+    }
+  },
+  computed: {
+    title () {
+      return this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog')
+    }
+  },
+  mounted () {
+    this.$store.commit(
+      'navegation/setNavegation',
+      { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
+    )
   },
   head () {
     return {
@@ -84,34 +110,6 @@ export default {
           content: this.title
         }
       ]
-    }
-  },
-  async asyncData ({ app, $prismic, params, error }) {
-    try {
-      // Query to get entry
-      const entry = await $prismic.api.getByUID(
-        'blog_entry', 
-        params.uid,
-        {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
-
-      // Returns data to be used in template
-      return {
-        entry
-      }
-    } catch (e) {
-      // Returns error page
-      error({ statusCode: 404, message: 'Page not found :(' })
-    }
-  },
-  mounted () {
-    this.$store.commit(
-      'navegation/setNavegation',
-      { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
-    )
-  },
-  computed: {
-    title () {
-      return this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog');
     }
   }
 }

@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 import SlicesBlock from '~/components/SlicesBlock.vue'
 
 export default {
@@ -14,18 +12,13 @@ export default {
   components: {
     SlicesBlock
   },
-  head () {
-    return {
-      title: this.$t('sections.about_me')
-    }
-  },
   async asyncData ({ app, $prismic, context, error }) {
     try {
       // Query to get object
       const page = await $prismic.api.getByUID(
-        'page', 
+        'page',
         'about_me',
-        {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
+        { lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso })
 
       // Returns data to be used in template
       return {
@@ -41,6 +34,11 @@ export default {
       'navegation/setNavegation',
       { section: { name: 'about_me', style: 'about' }, back: { name: 'index' } }
     )
+  },
+  head () {
+    return {
+      title: this.$t('sections.about_me')
+    }
   }
 }
 </script>

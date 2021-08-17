@@ -3,7 +3,7 @@
   .columns.is-centered
     .column.is-11-widescreen.is-12-desktop.mb-2
       portfolio-entry-header(:entry='entry' :linkable='false')
-  
+
   section
     .description
       prismic-rich-text(:field='entry.data.description')
@@ -29,8 +29,6 @@
 
 <script>
 import PrismicDOM from 'prismic-dom'
-import Prismic from 'prismic-javascript'
-import PrismicConfig from '~/prismic.config.js'
 import LinkResolver from '~/plugins/link-resolver.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 import PortfolioEntryHeader from '~/components/PortfolioEntryHeader.vue'
@@ -45,19 +43,14 @@ export default {
     SlicesBlock,
     Logo
   },
-  head () {
-    return {
-      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog')),
-    }
-  },
   async asyncData ({ app, $prismic, params, error }) {
     try {
       // Query to get entry
       const entry = await $prismic.api.getByUID(
-        'portfolio_entry', 
+        'portfolio_entry',
         params.uid,
-        {lang: app.i18n.locales.find(e => e.code == app.i18n.locale).iso})
-        
+        { lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso })
+
       // Returns data to be used in template
       return {
         entry
@@ -74,9 +67,14 @@ export default {
     )
   },
   methods: {
-    link (link_to) {
-      return LinkResolver(link_to)
+    link (linkTo) {
+      return LinkResolver(linkTo)
     }
   },
+  head () {
+    return {
+      title: (this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.blog'))
+    }
+  }
 }
 </script>

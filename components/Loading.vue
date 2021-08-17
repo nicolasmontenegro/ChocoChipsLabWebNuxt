@@ -59,7 +59,7 @@ export default {
       color: #bababa
 
   @keyframes loading-fade
-    0% 
+    0%
       opacity: 0
     5%
       opacity: 0.7
