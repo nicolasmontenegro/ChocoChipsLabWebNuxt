@@ -14,7 +14,8 @@
   .about.is-flex.is-align-content-center.py-6(intersection-style="about")
     .columns.is-centered.is-flex-grow-1
       .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
-        img#img-me(:src="homePageData.about_me_image.url")
+        figure#img-me.image.is-1by1
+          img(:src="homePageData.about_me_image.url")
       .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
         prismic-rich-text.mb-5(:field="homePageData.about_me_title")
         prismic-rich-text.mb-5(:field="homePageData.about_me_body")
@@ -291,11 +292,12 @@ export default {
     min-height: 95vh
 
     #img-me
-      mask: url('~assets/images/chocolate chip cookie shape.svg')
-      mask-position: center
-      mask-size: cover
+      margin: 0
 
-      @include max-size-cookie
+      img
+        mask: url('~assets/images/chocolate chip cookie shape.svg')
+        mask-position: center
+        mask-size: cover
 
     ::v-deep .logo
       width: 100%
