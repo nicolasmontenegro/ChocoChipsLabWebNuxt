@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.photo-gallery-slice
+.photo-gallery-slice ::v-deep
   .lingalleryContainer .lingallery
     .lingallery_caption
       position: relative
@@ -89,7 +89,7 @@ export default {
     .control
       display: block !important
 
-    > img
+    figure > img
       max-height: 600px
 
     @media screen and (max-width: $desktop)
