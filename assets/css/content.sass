@@ -13,8 +13,7 @@
     &, > *
       color: $text-color
 
-  .container.#{$selector}
-
+  #template.#{$selector}
     .menu
       &-column
         &::before
@@ -44,7 +43,7 @@
       .arrow path
         stroke: $text-color !important
 
-    &, h1, h2, h3, h4, h5, h6, a, strong
+    &, h1, h2, h3, h4, h5, h6, a, strong, p
       color: $text-color
       @include transition-fade(color)
 

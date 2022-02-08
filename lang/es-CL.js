@@ -38,6 +38,20 @@ export default {
       Freelance: 'Cliente'
     }
   },
+  photography: {
+    details: {
+      metadata: {
+        title: 'Información & metadatos',
+        exposure: 'Tiempo de exposición',
+        focal_length: 'Distancia focal',
+        aperture: 'Apertura',
+        iso: 'ISO',
+        date: 'Fecha de captura',
+        model: 'Modelo de cámara',
+        software: 'Software de edición'
+      }
+    }
+  },
   slices: {
     photo: {
       source: 'Fuente'
