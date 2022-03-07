@@ -1,15 +1,17 @@
 <template lang="pug">
 .photography-entry
-  .show-space.is-relative(:class="{open: panelIsOpen}")
+  .show-space.is-relative(:class="{'panel-is-open': panelIsOpen}")
     b-loading(:is-full-page="false" v-model="isLoading" :can-cancel="false")
     .photo-space.is-flex.is-flex-direction-column.is-relative
-      nuxt-link.back-button.px-2.py3(:to="localePath({name: 'photography'})")
+      nuxt-link.back-button.p-2(:to="localePath({name: 'photography'})")
         span {{ $t('navigation.back') }}
-      a.simple.toggle-panel-button.px-5.py3(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen" v-if="!panelIsOpen")
+      a.simple.toggle-panel-button.px-3.py-2(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen" v-if="!panelIsOpen")
         font-awesome-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
-        span {{ $t(panelIsOpen ? 'photography.details.panel.close' : 'photography.details.panel.open') }}
+        span
+          | {{ $t('photography.details.panel.open') }}
+          font-awesome-icon.ml-2(icon="info-circle" size="lg" )
       .visor.p-5.is-relative.is-flex.is-flex-direction-row.is-justify-content-center.is-align-content-center.has-background-black
-        img(:src="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?fit=clip&h=1200&w=1200&q=50`" @load="isLoaded.img = true")
+        img(:src="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?fit=clip&h=1600&w=1600&q=70`" @load="isLoaded.img = true")
     .details-panel.is-flex.is-flex-direction-column
       .metadata
         p.title.is-5.mx-5.mt-4
@@ -19,7 +21,7 @@
           template(v-if="currentPhotoMetadata.Exif")
             .column.is-6
               p.has-text-weight-bold {{ $t('photography.details.metadata.exposure') }}
-              p {{ currentPhotoMetadata.Exif.ExposureTime }} seg
+              p {{ exposureTime(currentPhotoMetadata.Exif.ExposureTime) }} seg
             .column.is-6
               p.has-text-weight-bold {{ $t('photography.details.metadata.focal_length') }}
               p {{ currentPhotoMetadata.Exif.FocalLength }} mm
@@ -39,12 +41,12 @@
             .column.is-12
               p.has-text-weight-bold {{ $t('photography.details.metadata.software') }}
               p {{ currentPhotoMetadata.TIFF.Software }}
-      a.simple.toggle-panel-button.px-5.py3(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen")
+      a.simple.toggle-panel-button.px-5.py-2.is-relative(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen")
         font-awesome-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
         span {{ $t(panelIsOpen ? 'photography.details.panel.close' : 'photography.details.panel.open') }}
   .columns.thumbnails.is-gapless
     .column.is-12
-      .thumbnails-list.p-2.is-flex.is-flex-direction-row.is-justify-content-center.is-align-content-center
+      .thumbnails-list.p-2.is-flex.is-flex-direction-row.is-justify-content-flex-start.is-align-content-center
         img.is-clickable.mx-2(v-for="(picture, index) in entry.data.body[0].items" :src="`${picture.gallery_image.url}?ar=1:1&fit=crop&h=100&w=100&q=30`" @click="currentPhoto = index")
 </template>
 
@@ -114,20 +116,22 @@ export default {
       this.$fetch()
     }
   },
-  mounted () {
-    this.$store.commit(
-      'navegation/setNavegation',
-      { section: { name: 'photography', style: 'photography' }, back: { name: 'photography' } }
-    )
-    document.querySelector('html').style.overflow = 'hidden'
+  methods: {
+    exposureTime (time) {
+      return time > 0.25 ? `${time}`.toFixed(1).replace('.', '"') : `1/${1 / time}`
+    }
   },
-  beforeDestroy () {
-    document.querySelector('html').style.removeProperty('overflow')
+  head () {
+    return {
+      title: this.title
+    }
   }
 }
 </script>
 
 <style lang="sass" scoped>
+@use "sass:color"
+
 html
   overflow: hidden
 
@@ -141,12 +145,12 @@ html
   .show-space
     display: grid
     grid-auto-flow: column
-    grid-template-columns: auto 0
+    grid-template-columns: 100% 25%
     row-gap: 0
     transition: grid-template-columns 300ms ease-in-out
 
-    &.open
-      grid-template-columns: auto 25%
+    &.panel-is-open
+      grid-template-columns: 75% 25%
 
     @media screen and (max-width: $tablet)
       grid-auto-flow: row
@@ -154,7 +158,7 @@ html
       grid-template-columns: none !important
       transition: grid-template-rows 150ms ease-in-out
 
-      &.open
+      &.panel-is-open
         grid-template-rows: auto 40%
 
     ::v-deep
@@ -194,11 +198,27 @@ html
         overflow-y: auto
         height: 0
         flex: 1 1 auto
+      .toggle-panel-button
+        $toggle-panel-button-bg-color: lighten($background-color-photography, 10%)
 
+        background-color: $toggle-panel-button-bg-color
+        &::before
+          content: ''
+          position: absolute
+          top: -20px
+          height: 20px
+          left: 0
+          right: 0
+          background: linear-gradient(0deg, $toggle-panel-button-bg-color 10%, rgba(0,0,0,0) 100%)
+          pointer-events: none
   .thumbnails
     min-height: 50px
     max-height: 70px
     overflow-x: auto
+
+    .thumbnails-list
+      width: fit-content
+      margin: 0 auto
 
     img
       width: auto !important

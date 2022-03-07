@@ -89,7 +89,7 @@ export default {
     left: 0
     top: 0
     box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.40)
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px
 
     .navegation-site
       padding: .5rem 1rem 1rem
@@ -114,7 +114,7 @@ export default {
       .button-expand
         display: flex
 
-        /deep/ .arrow
+        ::v-deep .arrow
           transition: transform 200ms ease-in-out
 
           &.is-expanded
