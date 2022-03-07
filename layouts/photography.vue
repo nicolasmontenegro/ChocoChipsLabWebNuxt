@@ -9,6 +9,16 @@ export default {
     navegation () { return this.$store.state.navegation },
     containerClass () { return this.$store.state.navegation.section.style }
   },
+  mounted () {
+    this.$store.commit(
+      'navegation/setNavegation',
+      { section: { name: 'photography', style: 'photography' }, back: { name: 'photography' } }
+    )
+    document.querySelector('html').style.overflow = 'hidden'
+  },
+  beforeDestroy () {
+    document.querySelector('html').style.removeProperty('overflow')
+  },
   head () {
     const headI18nDefault = this.$nuxtI18nHead({ addSeoAttributes: true })
     const openGraphDefault = this.$openGraph({
