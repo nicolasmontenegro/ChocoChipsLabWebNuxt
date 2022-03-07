@@ -49,6 +49,10 @@ export default {
         date: 'Fecha de captura',
         model: 'Modelo de cámara',
         software: 'Software de edición'
+      },
+      panel: {
+        close: 'Cerrar',
+        open: 'Ver info'
       }
     }
   },
