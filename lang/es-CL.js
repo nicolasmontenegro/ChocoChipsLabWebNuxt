@@ -10,7 +10,8 @@ export default {
     blog: 'Blog',
     portfolio: 'Portafolio',
     about_me: 'Acerca de mi',
-    connections: 'Conexiones'
+    connections: 'Conexiones',
+    photography: 'Fotografía'
   },
   entries: {
     blog_entry: 'Blog',
@@ -35,6 +36,24 @@ export default {
     origin_type: {
       Employee: 'Empresa',
       Freelance: 'Cliente'
+    }
+  },
+  photography: {
+    details: {
+      metadata: {
+        title: 'Información & metadatos',
+        exposure: 'Tiempo de exposición',
+        focal_length: 'Distancia focal',
+        aperture: 'Apertura',
+        iso: 'ISO',
+        date: 'Fecha de captura',
+        model: 'Modelo de cámara',
+        software: 'Software de edición'
+      },
+      panel: {
+        close: 'Ocultar info',
+        open: 'Ver info'
+      }
     }
   },
   slices: {

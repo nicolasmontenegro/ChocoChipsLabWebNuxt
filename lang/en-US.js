@@ -10,7 +10,8 @@ export default {
     blog: 'Blog',
     portfolio: 'Porfolio',
     about_me: 'About me',
-    connections: 'Connections'
+    connections: 'Connections',
+    photography: 'Photography'
   },
   entries: {
     blog_entry: 'Blog',

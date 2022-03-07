@@ -20,22 +20,26 @@
             .column.is-12
               .my-2
                 nuxt-link(:to="localePath({name: 'index'})")
-                  h1.title.is-1
+                  span.title.is-1
                     strong(@click="is_expanded = false") {{ $t('sections.index') }}
             .column.is-12
               .my-4
                 p secciones
               .my-4
                 nuxt-link.is-flex-grow-1(:to="localePath({name: 'portfolio'})")
-                  h1.title.is-1
+                  span.title.is-1
                     strong(@click="is_expanded = false") {{ $t('sections.portfolio') }}
               .my-4
                 nuxt-link.is-flex-grow-1(:to="localePath({name: 'blog'})")
-                  h1.title.is-1
+                  span.title.is-1
                     strong(@click="is_expanded = false") {{ $t('sections.blog') }}
               .my-4
+                nuxt-link.is-flex-grow-1(:to="localePath({name: 'photography'})")
+                  span.title.is-1
+                    strong(@click="is_expanded = false") {{ $t('sections.photography') }}
+              .my-4
                 nuxt-link.is-flex-grow-1(:to="localePath({name: 'about-me'})")
-                  h1.title.is-1
+                  span.title.is-1
                     strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
 </template>
 

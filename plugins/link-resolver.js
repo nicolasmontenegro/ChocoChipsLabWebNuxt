@@ -19,5 +19,9 @@ export default function (doc) {
     return '/portfolio/' + doc.uid
   }
 
+  if (doc.type === 'photography_entry') {
+    return '/photography/' + doc.uid
+  }
+
   return '/not-found'
 }
