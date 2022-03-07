@@ -130,8 +130,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@use "sass:color"
-
 html
   overflow: hidden
 

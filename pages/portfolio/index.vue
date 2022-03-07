@@ -59,8 +59,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-.portfolio .entry-header
-
-</style>
