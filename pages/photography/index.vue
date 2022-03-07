@@ -2,8 +2,10 @@
 .photography
   .columns
     .column.is-12-tablet.is-12-desktop.is-6-widescreen(v-for='entry in photographyPosts')
-        PhotographyStack.mb-3(:photos="entry.data.body[0].items.slice(0, 4)")
-        prismic-rich-text.mb-3(:field='entry.data.title')
+        nuxt-link.simple(v-for='entry in photographyPosts' :to='localePath(link(entry))' :key="entry.id")
+          PhotographyStack.mb-3(:photos="entry.data.body[0].items.slice(0, 4)")
+        nuxt-link(v-for='entry in photographyPosts' :to='localePath(link(entry))' :key="entry.id")
+          prismic-rich-text.mb-3(:field='entry.data.title')
         prismic-rich-text(:field='entry.data.description')
 
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
@@ -14,6 +16,7 @@
 
 <script>
 import Prismic from 'prismic-javascript'
+import LinkResolver from '~/plugins/link-resolver.js'
 
 export default {
   name: 'Fotography',
@@ -49,6 +52,11 @@ export default {
       'navegation/setNavegation',
       { section: { name: 'photography', style: 'photography' }, back: { name: 'index' } }
     )
+  },
+  methods: {
+    link (entry) {
+      return LinkResolver(entry)
+    }
   },
   head () {
     return { title: 'Fotography' }
