@@ -13,8 +13,7 @@
     &, > *
       color: $text-color
 
-  .container.#{$selector}
-
+  #template.#{$selector}
     .menu
       &-column
         &::before
@@ -44,7 +43,7 @@
       .arrow path
         stroke: $text-color !important
 
-    &, h1, h2, h3, h4, h5, h6, a, strong
+    &, h1, h2, h3, h4, h5, h6, a, strong, p
       color: $text-color
       @include transition-fade(color)
 
@@ -97,3 +96,4 @@
 @include container("home", $text-color-home, $background-color-home, $link-hover-color-home)
 @include container("about", $text-color-about, $background-color-about, $link-hover-color-about)
 @include container("portfolio", $text-color-portfolio, $background-color-portfolio, $link-hover-color-portfolio)
+@include container("photography", $text-color-photography, $background-color-photography, $link-hover-color-photography)
