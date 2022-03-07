@@ -3,13 +3,13 @@
   .show-space.is-relative(:class="{open: panelIsOpen}")
     b-loading(:is-full-page="false" v-model="isLoading" :can-cancel="false")
     .photo-space.is-flex.is-flex-direction-column.is-relative
-      nuxt-link.simple.back-button.px-5.py3(:to="localePath({name: 'photography'})")
+      nuxt-link.back-button.px-2.py3(:to="localePath({name: 'photography'})")
         span {{ $t('navigation.back') }}
       a.simple.toggle-panel-button.px-5.py3(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen" v-if="!panelIsOpen")
         font-awesome-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
         span {{ $t(panelIsOpen ? 'photography.details.panel.close' : 'photography.details.panel.open') }}
       .visor.p-5.is-relative.is-flex.is-flex-direction-row.is-justify-content-center.is-align-content-center.has-background-black
-        img(:src="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?fit=clip&h=500`" @load="isLoaded.img = true")
+        img(:src="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?fit=clip&h=1200&w=1200&q=50`" @load="isLoaded.img = true")
     .details-panel.is-flex.is-flex-direction-column
       .metadata
         p.title.is-5.mx-5.mt-4
@@ -45,7 +45,7 @@
   .columns.thumbnails.is-gapless
     .column.is-12
       .thumbnails-list.p-2.is-flex.is-flex-direction-row.is-justify-content-center.is-align-content-center
-        img.is-clickable.mx-2(v-for="(picture, index) in entry.data.body[0].items" :src="`${picture.gallery_image.url}?fit=clip&h=50`" @click="currentPhoto = index")
+        img.is-clickable.mx-2(v-for="(picture, index) in entry.data.body[0].items" :src="`${picture.gallery_image.url}?ar=1:1&fit=crop&h=100&w=100&q=30`" @click="currentPhoto = index")
 </template>
 
 <script>
@@ -163,9 +163,9 @@ html
 
     .photo-space
       .back-button
-        position: absolute
+        position: absolute !important
         top: 10px
-        left: 0
+        left: 10px
         z-index: 1
 
       .toggle-panel-button
@@ -199,4 +199,15 @@ html
     min-height: 50px
     max-height: 70px
     overflow-x: auto
+
+    img
+      width: auto !important
+      outline: 0px solid #FFFFFF
+      transition: outline-width 50ms ease-in
+
+      &:hover
+        outline-width: 3px
+
+    &, *
+      height: 100% !important
 </style>

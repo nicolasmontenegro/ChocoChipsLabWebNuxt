@@ -51,7 +51,7 @@ export default {
         software: 'Software de edición'
       },
       panel: {
-        close: 'Cerrar',
+        close: 'Ocultar info',
         open: 'Ver info'
       }
     }
