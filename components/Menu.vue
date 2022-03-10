@@ -1,5 +1,5 @@
 <template lang="pug">
-.menu
+.menu.container
   transition(name="menu-button-fade")
     .button.is-ghost.is-flex.is-align-items-center.mt-2.py-1.px-2(@click="isOpen = true" v-if="!isOpen && showButton")
       Jar.m-2
@@ -52,7 +52,7 @@ export default {
   data () {
     return {
       isOpen: false,
-      showButton: false
+      showButton: true
     }
   },
   watch: {
@@ -65,10 +65,10 @@ export default {
     }
   },
   mounted () {
-    window.addEventListener('scroll', this.toggleShowButton)
+    // window.addEventListener('scroll', this.toggleShowButton)
   },
   beforeDestroy () {
-    window.removeEventListener('scroll', this.toggleShowButton)
+    // window.removeEventListener('scroll', this.toggleShowButton)
   },
   methods: {
     toggleShowButton (e) {
@@ -80,20 +80,32 @@ export default {
 
 <style lang="sass" scoped>
 .menu
+  position: fixed
+  width: 100%
+  z-index: 999
+
   & > .button
-    position: fixed
+    position: absolute
     z-index: 998
     height: auto
-    margin-left: -40px
+    margin-right: -40px
     text-decoration: none
     transition: all 800ms ease-out
     border-width: 1px
-
+    top: 0
+    right: 0
     flex-direction: row
 
     @media screen and (max-width: $desktop - 1px)
-      margin-left: 0px
+      margin-right: 15px
       flex-direction: column
+
+    @media screen and (max-width: $tablet)
+      p
+        font-size: 1rem !important
+
+      ::v-deep .logo.jar
+        height: 30px !important
 
     &:hover, &:focus
       transform: scale(1.15)
