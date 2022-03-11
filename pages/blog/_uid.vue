@@ -61,15 +61,19 @@ export default {
     )
   },
   head () {
+    const urlImage = new URL(this.entry.data.header_image.url)
+    urlImage.searchParams.set('ar', '1.91:1')
+    urlImage.searchParams.set('fit', 'crop')
+
     return {
       title: this.title,
       meta: [...this.$openGraph({
         title: this.title,
         description: PrismicDOM.RichText.asText(this.entry.data.lead),
         image: {
-          imgURL: this.entry.data.header_image.url,
-          imgwidth: this.entry.data.header_image.dimensions.width,
-          imgHeight: this.entry.data.header_image.dimensions.height,
+          imgURL: urlImage.toString(),
+          // imgwidth: this.entry.data.header_image.dimensions.width,
+          // imgHeight: this.entry.data.header_image.dimensions.height,
           imgAlt: this.entry.data.header_image.alt
         },
         article: {

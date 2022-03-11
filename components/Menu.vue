@@ -1,13 +1,13 @@
 <template lang="pug">
 .menu.container
   transition(name="menu-button-fade")
-    .button.is-ghost.is-flex.is-align-items-center.mt-2.py-1.px-2(@click="isOpen = true" v-if="!isOpen && showButton")
+    .button.is-ghost.is-flex.is-align-items-center.mt-2.py-1.px-2(@click="isOpen = true" v-if="!isOpen")
       Jar.m-2
       p.title Menú
-  transition(name="menu-container-fade")
+  transition(name="menu-container-fade" v-on:after-enter="isCompleteEnter = true" v-on:leave="isCompleteEnter = false")
     .container(v-if="isOpen")
       .columns.is-flex-grow-1
-        .menu-column.column.is-6.is-relative.is-flex.is-flex-direction-column.mx-2
+        .menu-column.column.is-6.is-relative.is-flex.is-flex-direction-column.mx-2(v-click-outside="clickOutside")
           .menu-head.columns.is-mobile.is-justify-content-space-between
             .menu-head-logo.column
               LogoTitle
@@ -44,7 +44,12 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
+
 export default {
+  directives: {
+    ClickOutside
+  },
   components: {
     Jar: () => import('~/components/vectors/Jar.vue'),
     LogoTitle: () => import('~/components/vectors/LogoTitle.vue')
@@ -52,7 +57,7 @@ export default {
   data () {
     return {
       isOpen: false,
-      showButton: true
+      isCompleteEnter: false
     }
   },
   watch: {
@@ -64,15 +69,11 @@ export default {
       document.querySelector('html').classList.toggle('block-scroll', newValue)
     }
   },
-  mounted () {
-    // window.addEventListener('scroll', this.toggleShowButton)
-  },
-  beforeDestroy () {
-    // window.removeEventListener('scroll', this.toggleShowButton)
-  },
   methods: {
-    toggleShowButton (e) {
-      this.showButton = document.documentElement.scrollTop > 200
+    clickOutside () {
+      if (this.isCompleteEnter) {
+        this.isOpen = false
+      }
     }
   }
 }
