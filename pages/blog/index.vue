@@ -55,7 +55,7 @@ export default {
     )
   },
   head () {
-    return { title: 'Blog' }
+    return { title: this.$t('sections.blog') }
   }
 }
 </script>

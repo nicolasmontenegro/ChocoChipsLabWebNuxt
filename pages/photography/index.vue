@@ -59,7 +59,7 @@ export default {
     }
   },
   head () {
-    return { title: 'Fotography' }
+    return { title: this.$t('sections.photography') }
   }
 }
 </script>
