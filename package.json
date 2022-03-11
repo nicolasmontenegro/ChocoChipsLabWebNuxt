@@ -30,7 +30,8 @@
     "nuxt-rfg-icon": "^0.6.4",
     "postscribe": "^2.0.8",
     "prismic-javascript": "^3.0.2",
-    "vue-carousel": "^0.18.0"
+    "vue-carousel": "^0.18.0",
+    "vue-click-outside": "^1.1.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
