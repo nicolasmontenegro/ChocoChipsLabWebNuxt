@@ -38,12 +38,13 @@ export default {
   */
   plugins: [
     { src: '~/plugins/lingallery.js', mode: 'client' },
-    { src: '~/plugins/vue-carousel.js', mode: 'client' },
     { src: '~/plugins/helpers.js' },
     { src: '~/plugins/postscribe.js', mode: 'client' },
     { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/lottie.js', mode: 'client' },
-    { src: '~/plugins/open-graph.js' }
+    { src: '~/plugins/open-graph.js' },
+    { src: '~/plugins/vue-carousel.js', mode: 'client' },
+    { src: '~/plugins/image-zoom.js', mode: 'client' }
 
   ],
   /*

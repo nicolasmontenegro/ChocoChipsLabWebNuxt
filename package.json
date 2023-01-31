@@ -31,7 +31,8 @@
     "postscribe": "^2.0.8",
     "prismic-javascript": "^3.0.2",
     "vue-carousel": "^0.18.0",
-    "vue-click-outside": "^1.1.0"
+    "vue-click-outside": "^1.1.0",
+    "vue-image-zoomer": "1.5.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
