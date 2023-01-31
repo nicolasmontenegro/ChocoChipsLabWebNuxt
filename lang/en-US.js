@@ -42,5 +42,17 @@ export default {
     photo: {
       source: 'Source'
     }
+  },
+  connections: {
+    punch: 'Catch me on the cyberspace!'
+  },
+  menu: {
+    title: 'Menu',
+    close: 'close',
+    sections: 'sections'
+  },
+  footer: {
+    love: 'With 🍫 from Santiago, Chile',
+    date: 'ChocoChipsLab 2023'
   }
 }

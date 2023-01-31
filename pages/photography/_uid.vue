@@ -47,7 +47,11 @@
   .columns.thumbnails.is-gapless
     .column.is-12
       .thumbnails-list.p-2.is-flex.is-flex-direction-row.is-justify-content-flex-start.is-align-content-center
-        img.is-clickable.mx-2(v-for="(picture, index) in entry.data.body[0].items" :src="`${picture.gallery_image.url}?ar=1:1&fit=crop&h=100&w=100&q=30`" @click="currentPhoto = index")
+        img.is-clickable.mx-2(
+          v-for="(picture, index) in entry.data.body[0].items"
+          :src="`${picture.gallery_image.url}?ar=1:1&fit=crop&h=100&w=100&q=30`"
+          @click="currentPhoto = index"
+          :class="{'selected': currentPhoto === index}")
 </template>
 
 <script>
@@ -197,7 +201,7 @@ html
         height: 0
         flex: 1 1 auto
       .toggle-panel-button
-        $toggle-panel-button-bg-color: lighten($background-color-photography, 10%)
+        $toggle-panel-button-bg-color: $background-color-photography
 
         background-color: $toggle-panel-button-bg-color
         &::before
@@ -223,7 +227,7 @@ html
       outline: 0px solid #FFFFFF
       transition: outline-width 50ms ease-in
 
-      &:hover
+      &:hover, &:focus-visible, &.selected
         outline-width: 3px
 
     &, *

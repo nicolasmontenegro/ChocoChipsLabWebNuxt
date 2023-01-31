@@ -26,6 +26,11 @@ export default {
     read_more: 'Leer más',
     view_all: 'Ver todo'
   },
+  menu: {
+    title: 'Menú',
+    close: 'cerrar',
+    sections: 'seccione'
+  },
   blog: {
     related: 'Publicación relacionada',
     published: 'Publicado {date}',
@@ -60,5 +65,12 @@ export default {
     photo: {
       source: 'Fuente'
     }
+  },
+  connections: {
+    punch: '¡Encuéntrame en el ciberespacio!'
+  },
+  footer: {
+    love: 'Con 🍫 desde Santiago, Chile',
+    date: 'ChocoChipsLab 2023'
   }
 }

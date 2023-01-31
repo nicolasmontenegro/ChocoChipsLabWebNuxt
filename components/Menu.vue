@@ -2,20 +2,20 @@
 .menu.container
   transition(name="menu-button-fade")
     .button.is-ghost.is-flex.is-align-items-center.mt-2.py-1.px-2(@click="isOpen = true" v-if="!isOpen")
-      Jar.m-2
-      p.title Menú
+      VectorJar.m-2
+      p.title {{ $t(`menu.title`) }}
   transition(name="menu-container-fade" v-on:after-enter="isCompleteEnter = true" v-on:leave="isCompleteEnter = false")
     .container(v-if="isOpen")
       .columns.is-flex-grow-1
         .menu-column.column.is-6.is-relative.is-flex.is-flex-direction-column.mx-2(v-click-outside="clickOutside")
           .menu-head.columns.is-mobile.is-justify-content-space-between
             .menu-head-logo.column
-              LogoTitle
+              VectorLogoTitle
             .menu-head-logo-close.column.is-flex-grow-0
               .button.is-ghost.is-flex.is-flex-grow-0.is-flex-direction-column.is-align-items-end.px-3(@click="isOpen = false")
                 p.close.has-text-weight-bold &times;
                 p
-                  small cerrar
+                  small {{ $t(`menu.close`) }}
           .menu-content.columns.mb-6
             .column.is-12
               .my-2
@@ -24,7 +24,7 @@
                     strong(@click="is_expanded = false") {{ $t('sections.index') }}
             .column.is-12
               .my-4
-                p secciones
+                p {{ $t(`menu.sections`) }}
               .my-4
                 nuxt-link.is-flex-grow-1(:to="localePath({name: 'portfolio'})")
                   span.title.is-1
@@ -49,10 +49,6 @@ import ClickOutside from 'vue-click-outside'
 export default {
   directives: {
     ClickOutside
-  },
-  components: {
-    Jar: () => import('~/components/vectors/Jar.vue'),
-    LogoTitle: () => import('~/components/vectors/LogoTitle.vue')
   },
   data () {
     return {
@@ -108,8 +104,8 @@ export default {
       ::v-deep .logo.jar
         height: 30px !important
 
-    &:hover, &:focus
-      transform: scale(1.15)
+    // &:hover, &:focus
+    //   transform: scale(1.15)
 
     p
       font-size: 1.25rem
@@ -159,8 +155,8 @@ export default {
         color: inherit
         transition: transform 300ms
 
-        &:hover, &:focus
-          transform: scale(1.15)
+        // &:hover, &:focus
+        //   transform: scale(1.15)
 
         .close
           line-height: 1.2rem

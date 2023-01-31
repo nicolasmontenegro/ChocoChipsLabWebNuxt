@@ -2,7 +2,7 @@
 .blog
   .columns.is-centered
     .column.is-11-widescreen.is-12-desktop.mb-2
-      blog-entry-header(:entry='entry' :linkable='false')
+      BlogEntryHeader(:entry='entry' :linkable='false')
 
   .columns.is-centered
     .column.is-8-widescreen.is-10-desktop.is-11-tablet
@@ -23,15 +23,8 @@
 
 <script>
 import PrismicDOM from 'prismic-dom'
-import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
-import Logo from '~/components/vectors/Logo.vue'
-
 export default {
   name: 'BlogEntry',
-  components: {
-    BlogEntryHeader,
-    Logo
-  },
   async asyncData ({ app, $prismic, params, error }) {
     try {
       // Query to get entry

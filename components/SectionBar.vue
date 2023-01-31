@@ -8,7 +8,7 @@
       span.is-3
         strong  {{ $t('navigation.menu')}}
       .button-expand.p-2
-        arrow(:class="{'is-expanded': is_expanded}")
+        VectorArrow(:class="{'is-expanded': is_expanded}")
   .navegation-site
     ul.links
       li
@@ -33,15 +33,8 @@
 </template>
 
 <script>
-import LogoTitle from '~/components/vectors/LogoTitle.vue'
-import Arrow from '~/components/vectors/Arrow.vue'
-
 export default {
   name: 'SectionBar',
-  components: {
-    LogoTitle,
-    Arrow
-  },
   data () {
     return {
       is_expanded: false

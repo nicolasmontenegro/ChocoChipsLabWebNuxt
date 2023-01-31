@@ -1,9 +1,7 @@
 <template lang="pug">
-//-(v-if="loading")
 transition(name="loading")
   .loading-page.is-spaced(v-if="loading")
-    VectorsLogo
-    //- h1.title.is-1 Cargando
+    VectorLogo
 </template>
 
 <script>

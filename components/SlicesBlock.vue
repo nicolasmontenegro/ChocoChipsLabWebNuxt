@@ -2,36 +2,21 @@
 .slide
   section(v-for="(slice, index) in slices" :key="'slice-' + index")
     template(v-if='["paragraph","text"].includes(slice.slice_type)')
-      TextField(:slice='slice', :index='index')
+      SliceTextField(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "subtitle"')
-      Subtitle(:slice='slice', :index='index')
+      SliceSubtitle(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "embed_video_audio"')
-      EmbedAudioVideo(:slice='slice', :index='index')
+      SliceEmbedAudioVideo(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "photo"')
-      Photo(:slice='slice', :index='index')
+      Shotoslice(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "image_gallery"')
-      ImageGallery(:slice='slice', :index='index')
+      SliceImageGallery(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "entry_related"')
-      EntryRelated(:slice='slice', :index='index')
+      SliceEntryRelated(:slice='slice', :index='index')
 </template>
 
 <script>
-import TextField from './slice/TextField.vue'
-import Subtitle from './slice/Subtitle.vue'
-import EmbedAudioVideo from './slice/EmbedAudioVideo.vue'
-import Photo from './slice/Photo.vue'
-import ImageGallery from './slice/ImageGallery.vue'
-import EntryRelated from './slice/EntryRelated.vue'
-
 export default {
-  components: {
-    TextField,
-    Subtitle,
-    EmbedAudioVideo,
-    Photo,
-    ImageGallery,
-    EntryRelated
-  },
   props: {
     slices: {
       type: Array,

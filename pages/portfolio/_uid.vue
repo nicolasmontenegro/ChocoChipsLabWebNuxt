@@ -23,8 +23,6 @@
     font-size: 120%
   .slide
     padding-bottom: 0rem
-  .logo
-    width: 100%
 </style>
 
 <script>
@@ -33,15 +31,13 @@ import LinkResolver from '~/plugins/link-resolver.js'
 import BlogEntryHeader from '~/components/BlogEntryHeader.vue'
 import PortfolioEntryHeader from '~/components/PortfolioEntryHeader.vue'
 import SlicesBlock from '~/components/SlicesBlock.vue'
-import Logo from '~/components/vectors/Logo.vue'
 
 export default {
   name: 'PortfolioEntry',
   components: {
     PortfolioEntryHeader,
     BlogEntryHeader,
-    SlicesBlock,
-    Logo
+    SlicesBlock
   },
   async asyncData ({ app, $prismic, params, error }) {
     try {
