@@ -18,10 +18,6 @@
 <script>
 import PrismicDOM from 'prismic-dom'
 
-/* lif (process.client) {
-  require('lingallery')
-} */
-
 export default {
   props: {
     slice: {
