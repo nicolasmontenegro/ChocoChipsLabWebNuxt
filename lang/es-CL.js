@@ -59,6 +59,11 @@ export default {
         close: 'Ocultar info',
         open: 'Ver info'
       }
+    },
+    zoom: {
+      hoverMessage: 'Pasa el mouse para acercar zoom',
+      touchMessage: 'Toca para acercar',
+      clickMessage: 'Haz click para acercar'
     }
   },
   slices: {
