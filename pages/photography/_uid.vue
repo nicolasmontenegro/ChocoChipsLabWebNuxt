@@ -11,11 +11,14 @@
           | {{ $t('photography.details.panel.open') }}
           font-awesome-icon.ml-2(icon="info-circle" size="lg" )
       .visor.p-2.is-relative.has-background-black
-        imageZoom.image-zoom(
+        ImgZoom.image-zoom(
           :regular="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?fit=clip&h=800&w=800&q=70`"
           :zoom="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?q=70`"
           :zoom-amount="3"
           :click-zoom="true"
+          :hoverMessage="$t('photography.zoom.hoverMessage')"
+          :touchMessage="$t('photography.zoom.touchMessage')"
+          :clickMessage="$t('photography.zoom.clickMessage')"
           @regular-loaded="isLoaded.img = true")
     .details-panel.is-flex.is-flex-direction-column
       .metadata
@@ -198,18 +201,6 @@ html
           width: 100%
           object-fit: contain
 
-          ::v-deep
-            // .vh--holder
-            //   min-height: 100%
-            // picture
-            //   position: relative
-            //   display: flex
-            //   justify-content: center
-            //   align-content: center
-            img
-              height: inherit
-              max-width: inherit
-
     .details-panel
       // height: 100%
       background-color: rgba(0, 0, 0, 0.32)
@@ -219,8 +210,7 @@ html
         height: 0
         flex: 1 1 auto
       .toggle-panel-button
-        $toggle-panel-button-bg-color: $background-color-photography
-
+        $toggle-panel-button-bg-color: rgba(0, 0, 0, 0.32)
         background-color: $toggle-panel-button-bg-color
         &::before
           content: ''
