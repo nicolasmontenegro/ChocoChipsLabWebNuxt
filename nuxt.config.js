@@ -1,5 +1,10 @@
 export default {
   /*
+  ** Page generated mode
+  */
+  target: 'static',
+  ssr: false,
+  /*
   ** Headers of the page
   */
   head: {
@@ -120,7 +125,26 @@ export default {
   prismic: {
     endpoint: 'https://chocochips-lab-blog.cdn.prismic.io/api/v2',
     linkResolver: '@/plugins/link-resolver',
-    htmlSerializer: '@/plugins/html-serializer'
+    htmlSerializer: '@/plugins/html-serializer',
+    apiOptions: {
+      routes: [
+        {
+          type: "blog_entry",
+          lang: "es-cl",
+          path: "/es/blog/:uid",
+        },
+        {
+          type: "portfolio_entry",
+          lang: "es-cl",
+          path: "/es/portfolio/:uid",
+        },
+        {
+          type: "photography_entry",
+          lang: "es-cl",
+          path: "/es/photography/:uid",
+        },
+      ],
+    },
     /* see configuration for more */
   },
   /*

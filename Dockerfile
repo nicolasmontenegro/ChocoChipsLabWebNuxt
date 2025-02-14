@@ -1,9 +1,9 @@
-FROM node:14.17.5-alpine3.11
+FROM node:16-alpine
 WORKDIR /home/node/app
 RUN apk update && apk add git
 
 # Install packages
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install --quiet
 
 # Give owner rights to the current user
