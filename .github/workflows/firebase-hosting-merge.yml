@@ -5,13 +5,25 @@ name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: npm run generate
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # https://github.com/marketplace/actions/setup-node-js-environment
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install dependences
+        run: npm install --quiet
+
+      - name: Build dist
+        run: npm run generate
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
