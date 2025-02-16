@@ -1,7 +1,7 @@
 export default {
   welcome: 'Bienvenido',
   meta: {
-    title: 'ChocoChipsLab',
+    title: 'NicoChocoChips',
     description: 'El sitio web de NicoChocoChips: Blog + Portafolio + y mas!',
     img_alt: 'Logo de ChocoChips'
   },
@@ -76,6 +76,6 @@ export default {
   },
   footer: {
     love: 'Con 🍫 desde Santiago, Chile',
-    date: 'ChocoChipsLab 2023'
+    date: 'NicoChocoChips 2025'
   }
 }

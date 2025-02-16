@@ -12,7 +12,7 @@ export default {
   */
   head: {
     mode: 'universal',
-    titleTemplate: '%s - Choco Chips Lab',
+    titleTemplate: '%s - NicoChocoChips',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -1,7 +1,7 @@
 {
-  "name": "ChocoChipsLabWebNuxt",
+  "name": "NicoChocoChipsWebNuxt",
   "version": "1.0.0",
-  "description": "Choco Chips Lab's blog",
+  "description": "Nico ChocoChips web",
   "author": "Nicolás Montenegro",
   "private": true,
   "scripts": {

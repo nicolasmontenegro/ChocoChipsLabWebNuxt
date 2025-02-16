@@ -1,4 +1,4 @@
-# ChocoChipsLabWebNuxt
+# NicoChocoChipsWebNuxt
 
 > My astonishing Nuxt.js project
 

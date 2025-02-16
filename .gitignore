@@ -92,3 +92,6 @@ sw.*
 
 # Static icons
 /static/_favicons
+
+# Firebase
+.firebase
