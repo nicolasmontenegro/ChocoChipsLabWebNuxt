@@ -4,6 +4,9 @@ export default {
   */
   target: 'static',
   ssr: false,
+  generate: {
+    crawler: true,
+  },
   /*
   ** Headers of the page
   */
