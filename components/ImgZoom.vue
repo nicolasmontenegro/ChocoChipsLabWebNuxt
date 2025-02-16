@@ -3,7 +3,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <!-- eslint-disable vue/require-v-for-key -->
 <!-- https://github.com/samjonesigd/vue-image-zoomer -->
-<style lang="css">
+<style lang="scss">
 .VueHoverfade-enter-active,
 .VueHoverfade-leave-active {
   transition: opacity .5s
@@ -53,12 +53,6 @@
   height: inherit;
   justify-content: center;
   align-items: center;
-}
-
-.vh--image {
-  top: 0;
-  left: 0;
-  pointer-events: none
 }
 
 .vh--message {
@@ -166,15 +160,21 @@
   object-fit: contain;
 }
 
-.vh--picture-zoomed > * {
-  height: fit-content;
-  max-width: inherit;
-  margin: auto;
-  transform-origin: center center;
-  top: -100%;
-  left: -100%;
-  bottom: -100%;
-  right: -100%;
+.vh--picture-zoomed {
+  position: relative;
+  display: block;
+  width: auto;
+  height: inherit;
+
+  .vh--image {
+    height: fit-content;
+    max-width: inherit;
+    transform-origin: center center;
+    top: -100%;
+    left: -100%;
+    bottom: -100%;
+    right: -100%;
+  }
 }
 
 @keyframes vuehoverzoomspin {
@@ -197,14 +197,14 @@
     <div
       v-show="!showSlot || lazyload"
       ref="vue-hover-zs"
-      class="vh--holder vh--rel vh--flex vh--jc"
+      class="vh--holder vh--rel vh--jc"
       @mouseenter="isZoom(true, 'hover')"
       @mouseleave="isZoom(false, 'hover')"
       @mousemove="mousePos"
       @click="isZoom(!zoomed, 'click')"
     >
       <picture class="vh--picture-original" :class="{'vh--none': zoomed}">
-        <template v-for="breakpoint in breakpoints">
+        <template v-for="(breakpoint) in breakpoints">
           <source
             v-if="breakpoint.regularWebp"
             :srcset="breakpoint.regularWebp"
