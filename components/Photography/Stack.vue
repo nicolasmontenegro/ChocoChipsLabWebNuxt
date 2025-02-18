@@ -1,6 +1,6 @@
 <template lang="pug">
 .photography-stack
-  .photo-item(v-for="(photo, index) in photos" :style="{backgroundImage: `url(\"${urlWithParams(photo.gallery_image.url)}\")`}" :class="`item-${(index+1)}`")
+  .photo-item(v-for="(photo, index) in photos" :style="{backgroundImage: `url(\"${photo}\")`}" :class="`item-${(index+1)}`")
 </template>
 
 <script>
