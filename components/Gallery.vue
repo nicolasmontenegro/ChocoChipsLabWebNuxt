@@ -10,8 +10,8 @@
 defineProps({
   items: {
     type: Array,
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 
 const openIndex = ref(null)
@@ -40,5 +40,4 @@ figure.gallery-item
 
   .gallery-caption
     padding: 0.5rem
-    text-align: left
-</style>
+    text-align: left</style>

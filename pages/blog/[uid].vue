@@ -13,14 +13,6 @@
   //-     logo
 </template>
 
-<style lang="sass">
-.main .blog
-  .slide
-    padding-bottom: 0rem
-  .logo
-    width: 100%
-</style>
-
 <script setup>
 import { asText } from '@prismicio/client'
 
@@ -42,7 +34,7 @@ const title = computed(() => entry.value ? asText(entry.value.data.title) : t('s
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } }
+    { section: { name: 'blog', style: 'blog' }, back: { name: 'blog' } },
   )
 })
 
@@ -57,14 +49,22 @@ useHead({
     description: asText(entry.value.data.lead),
     image: {
       imgURL: urlImage.toString(),
-      imgAlt: entry.value.data.header_image.alt
+      imgAlt: entry.value.data.header_image.alt,
     },
     article: {
       publishedTime: entry.value.first_publication_date,
       modifiedTime: entry.value.last_publication_date,
       tags: entry.value.tags,
-      section: t('sections.blog')
-    }
-  })
+      section: t('sections.blog'),
+    },
+  }),
 })
 </script>
+
+<style lang="sass">
+.main .blog
+  .slide
+    padding-bottom: 0
+
+  .logo
+    width: 100%</style>

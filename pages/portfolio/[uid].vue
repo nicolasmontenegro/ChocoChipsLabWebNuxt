@@ -17,14 +17,6 @@
   //-     logo
 </template>
 
-<style lang="sass">
-.main .portfolio
-  .description
-    font-size: 120%
-  .slide
-    padding-bottom: 0rem
-</style>
-
 <script setup>
 import { asText } from '@prismicio/client'
 
@@ -44,11 +36,19 @@ if (fetchError.value) {
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'portfolio', style: 'portfolio' }, back: { name: 'portfolio' } }
+    { section: { name: 'portfolio', style: 'portfolio' }, back: { name: 'portfolio' } },
   )
 })
 
 useHead({
-  title: entry.value ? asText(entry.value.data.title) : t('sections.blog')
+  title: entry.value ? asText(entry.value.data.title) : t('sections.blog'),
 })
 </script>
+
+<style lang="sass">
+.main .portfolio
+  .description
+    font-size: 120%
+
+  .slide
+    padding-bottom: 0</style>

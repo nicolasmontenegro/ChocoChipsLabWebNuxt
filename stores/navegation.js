@@ -4,16 +4,16 @@ export const useNavegationStore = defineStore('navegation', {
   state: () => ({
     section: {
       name: null,
-      style: null
+      style: null,
     },
     back: {
       url: null,
-      name: null
-    }
+      name: null,
+    },
   }),
   actions: {
-    setNavegation (statuses) {
+    setNavegation(statuses) {
       Object.assign(this, statuses)
-    }
-  }
+    },
+  },
 })

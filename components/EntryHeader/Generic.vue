@@ -35,38 +35,37 @@ export default {
     entry: {
       type: Object,
       default: () => {},
-      required: true
+      required: true,
     },
     linkable: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     mini: {
       type: Boolean,
       default: false,
-      required: false
-    }
+      required: false,
+    },
   },
   computed: {
-    picture_head () {
+    picture_head() {
       const imgUrl = (this.entry && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : cookieBg
       return { background: `url('${imgUrl}')` }
     },
-    link () {
+    link() {
       return LinkResolver(this.entry)
-    }
+    },
   },
   methods: {
-    toLocalDate (strDate) {
+    toLocalDate(strDate) {
       return new Date(strDate).toLocaleDateString(this.$i18n.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="sass">
-@use '~/assets/css/utils/colors.sass' as *
 .entry-header
   .entry_type > .subtitle
     display: inline-block
@@ -76,7 +75,6 @@ export default {
     &::before
       content: ''
       position: absolute
-      border-radius: 5px
       height: 115%
       width: calc(100% + 4px)
       top: 0
@@ -90,6 +88,4 @@ export default {
     & > *
       .entry-picture-head
         &::after
-          @include bg-entry-header($background-color-blog)*/
-
-</style>
+          @include bg-entry-header($background-color-blog)*/</style>

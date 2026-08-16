@@ -7,9 +7,6 @@
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
 </template>
 
-<style lang="sass">
-</style>
-
 <script setup>
 const { $prismic } = useNuxtApp()
 const { t } = useI18n()
@@ -24,7 +21,7 @@ const { data: blogQuery, error: fetchError } = await useAsyncData('blog-index', 
     lang: iso.value,
     orderings: { field: 'document.first_publication_date', direction: 'desc' },
     pageSize: 10,
-    page: page.value
+    page: page.value,
   })
 }, { watch: [page] })
 
@@ -35,14 +32,17 @@ if (fetchError.value) {
 const blogPosts = computed(() => blogQuery.value.results)
 const pagination = computed(() => ({
   currentPage: blogQuery.value.page,
-  totalPageCount: blogQuery.value.total_pages
+  totalPageCount: blogQuery.value.total_pages,
 }))
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'blog', style: 'blog' }, back: { name: 'index' } }
+    { section: { name: 'blog', style: 'blog' }, back: { name: 'index' } },
   )
 })
 
 useHead({ title: t('sections.blog') })
 </script>
+
+<style lang="sass">
+</style>

@@ -31,23 +31,23 @@ export default {
     entry: {
       type: Object,
       default: () => {},
-      required: true
+      required: true,
     },
     linkable: {
       type: Boolean,
       default: true,
-      required: false
-    }
+      required: false,
+    },
   },
   computed: {
-    picture_head () {
+    picture_head() {
       const imgUrl = (this.entry.data.header_image && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : cookieBg
       return { background: `url('${imgUrl}')` }
     },
-    link () {
+    link() {
       return LinkResolver(this.entry)
-    }
-  }
+    },
+  },
   /* methods: {
     toLocalDate (strDate) {
       return new Date(strDate).toLocaleDateString(this.$i18n.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
@@ -57,10 +57,4 @@ export default {
 </script>
 
 <style lang="sass">
-@use '~/assets/css/entry-header.sass' as *
-.entry-header.portfolio
-  & > *
-    .entry-picture-head
-      &::after
-        @include bg-entry-header($background-color-portfolio)
 </style>

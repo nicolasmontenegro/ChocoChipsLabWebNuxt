@@ -1,0 +1,21 @@
+{
+  "extends": "stylelint-config-standard",
+  "overrides": [
+    {
+      "files": ["**/*.scss"],
+      "customSyntax": "postcss-scss"
+    }
+  ],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "no-descending-specificity": null,
+    "selector-class-pattern": null
+  },
+  "ignoreFiles": [
+    "node_modules/**",
+    ".nuxt/**",
+    ".output/**",
+    "dist/**",
+    "public/**"
+  ]
+}

@@ -36,7 +36,7 @@
       <path
         id="path826"
         d="M 10.584173,10.58433 70.668675,75.663006 130.66868,10.662996"
-        style="fill:none;stroke:#000000;stroke-width:21.1667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+        style="fill:none;stroke:#000;stroke-width:21.1667;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
       />
     </g>
   </svg>

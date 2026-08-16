@@ -12,12 +12,12 @@ Teleport(to="body")
 const props = defineProps({
   items: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   modelValue: {
     type: Number,
-    default: null
-  }
+    default: null,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -40,16 +40,13 @@ watch(() => props.modelValue, async (value) => {
 <style scoped lang="sass">
 .lightbox
   position: fixed
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
+  inset: 0
   z-index: 2000
   display: flex
   flex-direction: column
   align-items: center
   justify-content: center
-  background-color: rgba(0, 0, 0, 0.9)
+  background-color: rgb(0 0 0 / 90%)
   outline: none
 
   &-image
@@ -85,5 +82,4 @@ watch(() => props.modelValue, async (value) => {
     left: 0.5rem
 
   &-next
-    right: 0.5rem
-</style>
+    right: 0.5rem</style>

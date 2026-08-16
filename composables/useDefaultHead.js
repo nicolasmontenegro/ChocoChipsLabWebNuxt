@@ -9,13 +9,13 @@ export const useDefaultHead = () => {
       imgURL: '/icon.png',
       imgwidth: '1024',
       imgHeight: '1024',
-      imgAlt: t('meta.img_alt')
-    }
+      imgAlt: t('meta.img_alt'),
+    },
   })
 
   return computed(() => ({
     htmlAttrs: localeHead.value.htmlAttrs,
     link: localeHead.value.link,
-    meta: [...(localeHead.value.meta || []), ...openGraphMeta]
+    meta: [...(localeHead.value.meta || []), ...openGraphMeta],
   }))
 }

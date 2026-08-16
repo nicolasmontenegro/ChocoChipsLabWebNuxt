@@ -9,18 +9,15 @@ transition(name="loading-overlay-fade")
 defineProps({
   active: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 </script>
 
 <style scoped lang="sass">
 .loading-overlay
   position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
+  inset: 0
   z-index: 10
   display: flex
   align-items: center
@@ -28,17 +25,14 @@ defineProps({
 
   .loading-background
     position: absolute
-    top: 0
-    left: 0
-    right: 0
-    bottom: 0
+    inset: 0
 
   .loading-icon
     position: relative
     width: 2.5rem
     height: 2.5rem
     border-radius: 50%
-    border: 3px solid rgba(255, 255, 255, 0.25)
+    border: 3px solid rgb(255 255 255 / 25%)
     border-top-color: #fff
     animation: loading-overlay-spin 700ms linear infinite
 
@@ -46,11 +40,4 @@ defineProps({
     transition: opacity 200ms ease
 
   &-fade-enter-from, &-fade-leave-to
-    opacity: 0
-
-@keyframes loading-overlay-spin
-  from
-    transform: rotate(0deg)
-  to
-    transform: rotate(360deg)
-</style>
+    opacity: 0</style>

@@ -23,14 +23,14 @@ export default {
   props: {
     homePageData: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     arrayIcon: (iconString) => {
       return iconString.split(/-(.*)/).splice(0, 2)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -48,5 +48,4 @@ export default {
 
   :deep(.logo)
     width: 100%
-    height: 100%
-</style>
+    height: 100%</style>

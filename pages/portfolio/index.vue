@@ -7,9 +7,6 @@
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
 </template>
 
-<style lang="sass">
-</style>
-
 <script setup>
 const { $prismic } = useNuxtApp()
 const { t } = useI18n()
@@ -24,7 +21,7 @@ const { data: portfolioQuery, error: fetchError } = await useAsyncData('portfoli
     lang: iso.value,
     orderings: { field: 'document.first_publication_date', direction: 'desc' },
     pageSize: 10,
-    page: page.value
+    page: page.value,
   })
 }, { watch: [page] })
 
@@ -35,14 +32,17 @@ if (fetchError.value) {
 const portfolioEntry = computed(() => portfolioQuery.value.results)
 const pagination = computed(() => ({
   currentPage: portfolioQuery.value.page,
-  totalPageCount: portfolioQuery.value.total_pages
+  totalPageCount: portfolioQuery.value.total_pages,
 }))
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'portfolio', style: 'portfolio' }, back: { name: 'index' } }
+    { section: { name: 'portfolio', style: 'portfolio' }, back: { name: 'index' } },
   )
 })
 
 useHead({ title: t('sections.portfolio') })
 </script>
+
+<style lang="sass">
+</style>

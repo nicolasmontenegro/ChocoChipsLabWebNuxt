@@ -9,17 +9,17 @@ export default {
     slice: {
       type: Object,
       default: () => {},
-      required: true
+      required: true,
     },
     index: {
       type: Number,
       default: 0,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
-    text_key (index, pIndex) { return `p_${index}_${pIndex}` }
-  }
+    text_key(index, pIndex) { return `p_${index}_${pIndex}` },
+  },
 }
 </script>
 
@@ -32,5 +32,4 @@ export default {
     font-weight: bold
 
   :deep(ol), :deep(ul)
-    margin-top: 0 !important
-</style>
+    margin-top: 0 !important</style>

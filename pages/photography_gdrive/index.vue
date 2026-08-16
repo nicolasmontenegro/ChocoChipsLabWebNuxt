@@ -11,9 +11,6 @@
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
 </template>
 
-<style lang="sass">
-</style>
-
 <script setup>
 import linkResolver from '~/prismic/linkResolver'
 
@@ -31,7 +28,7 @@ const { data: photographyQuery, error: fetchError } = await useAsyncData('photog
     lang: iso.value,
     orderings: { field: 'document.first_publication_date', direction: 'desc' },
     pageSize: 10,
-    page: page.value
+    page: page.value,
   })
 }, { watch: [page] })
 
@@ -42,20 +39,20 @@ if (fetchError.value) {
 const photographyPosts = computed(() => photographyQuery.value.results)
 const pagination = computed(() => ({
   currentPage: photographyQuery.value.page,
-  totalPageCount: photographyQuery.value.total_pages
+  totalPageCount: photographyQuery.value.total_pages,
 }))
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'photography', style: 'photography' }, back: { name: 'index' } }
+    { section: { name: 'photography', style: 'photography' }, back: { name: 'index' } },
   )
 })
 
-function link (entry) {
+function link(entry) {
   return linkResolver(entry)
 }
 
-function photosSlice (entry) {
+function photosSlice(entry) {
   return entry
     .data
     .photo_ids
@@ -66,3 +63,6 @@ function photosSlice (entry) {
 
 useHead({ title: t('sections.photography') })
 </script>
+
+<style lang="sass">
+</style>

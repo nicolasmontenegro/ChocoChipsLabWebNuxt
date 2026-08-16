@@ -20,13 +20,13 @@ const props = defineProps({
   slice: {
     type: Object,
     default: () => {},
-    required: true
+    required: true,
   },
   index: {
     type: Number,
     default: 0,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const openIndex = ref(null)
@@ -38,10 +38,10 @@ const imageItem = computed(() => ({
   src: imageThumbnailUrl(props.slice.primary.image.url, 800),
   thumbnail: imageThumbnailUrl(props.slice.primary.image.url, 100),
   largeViewSrc: props.slice.primary.image.url,
-  alt: props.slice.primary.image.alt
+  alt: props.slice.primary.image.alt,
 }))
 
-function imageThumbnailUrl (imgUrl, width = '100') {
+function imageThumbnailUrl(imgUrl, width = '100') {
   const myUrl = new URL(imgUrl)
   myUrl.searchParams.append('width', width)
   return myUrl.toString()
@@ -74,6 +74,4 @@ $max-height: 400px
 
     > p
       width: 100%
-      display: block
-
-</style>
+      display: block</style>

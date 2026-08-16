@@ -5,11 +5,16 @@
   "author": "Nicolás Montenegro",
   "private": true,
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint . && stylelint \"**/*.{css,scss}\" --allow-empty-input && node scripts/lint-sass.mjs",
+    "lint:fix": "eslint . --fix && stylelint \"**/*.{css,scss}\" --allow-empty-input --fix",
+    "lint:style": "stylelint \"**/*.{css,scss}\" --allow-empty-input",
+    "lint:style:fix": "stylelint \"**/*.{css,scss}\" --allow-empty-input --fix",
+    "lint:sass": "node scripts/lint-sass.mjs",
     "dev": "cross-env NUXT_HOST=0.0.0.0 NUXT_PORT=3333 nuxt dev",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -32,7 +37,18 @@
   "devDependencies": {
     "@nuxt/eslint": "^0.6.1",
     "eslint": "^9.13.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "postcss-scss": "^4.0.9",
     "pug": "^3.0.2",
-    "sass": "^1.79.5"
+    "sass": "^1.79.5",
+    "source-map": "^0.7.4",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,vue}": "eslint --fix",
+    "*.{css,scss}": "stylelint",
+    "*.{sass,vue}": "node scripts/lint-sass.mjs"
   }
 }

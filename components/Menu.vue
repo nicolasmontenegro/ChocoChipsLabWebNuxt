@@ -178,7 +178,6 @@ onClickOutside(menuColumn, () => {
 
     .menu-content
       overflow-y: auto
-
 </style>
 
 <style lang="sass">

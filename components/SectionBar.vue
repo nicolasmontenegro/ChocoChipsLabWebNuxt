@@ -29,21 +29,20 @@
 
     p.links.mt-5
       nuxt-link(v-for="locale in availableLocales" :key="locale.code" :to="$switchLocalePath(locale.code)") {{ locale.name }}
-
 </template>
 
 <script>
 export default {
   name: 'SectionBar',
-  data () {
+  data() {
     return {
-      is_expanded: false
+      is_expanded: false,
     }
   },
   computed: {
-    isExpanded () { return (this.is_expanded ? 'is-expanded' : '') },
-    availableLocales () { return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale) }
-  }
+    isExpanded() { return (this.is_expanded ? 'is-expanded' : '') },
+    availableLocales() { return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale) },
+  },
 }
 </script>
 

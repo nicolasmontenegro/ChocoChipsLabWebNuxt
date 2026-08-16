@@ -18,5 +18,4 @@
 
   .logo
     height: auto
-    width: 90px
-</style>
+    width: 90px</style>

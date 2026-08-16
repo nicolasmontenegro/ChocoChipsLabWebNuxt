@@ -26,14 +26,14 @@ export default {
   props: {
     homePageData: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     arrayIcon: (iconString) => {
       return iconString.split(/-(.*)/).splice(0, 2)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -42,5 +42,4 @@ export default {
   &-content
     &-twitch iframe
       height: 400px
-      width: 100%
-</style>
+      width: 100%</style>

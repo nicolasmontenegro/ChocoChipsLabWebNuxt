@@ -9,9 +9,9 @@ export default {
   props: {
     loading: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 
@@ -25,7 +25,6 @@ export default {
     z-index: 3000
     overflow: hidden
     opacity: 1
-
     display: flex
     align-items: center
     justify-content: center
@@ -43,18 +42,9 @@ export default {
     &, > *
       color: #bababa
 
-  @keyframes loading-fade
-    0%
-      opacity: 0
-    5%
-      opacity: 0.7
-    70%
-      opacity: 1
-    100%
-      opacity: 1
-
+  
   &-enter-active
     animation: loading-fade 800ms
+
   &-leave-active
-    animation: loading-fade 800ms reverse
-</style>
+    animation: loading-fade 800ms reverse</style>

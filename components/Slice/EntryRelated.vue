@@ -11,8 +11,8 @@ const props = defineProps({
   slice: {
     type: Object,
     default: () => {},
-    required: true
-  }
+    required: true,
+  },
 })
 
 const entry = ref({})
@@ -29,6 +29,4 @@ onMounted(async () => {
   border-radius: 10px
 
   &
-    font-size: 0.9rem
-
-</style>
+    font-size: 0.9rem</style>

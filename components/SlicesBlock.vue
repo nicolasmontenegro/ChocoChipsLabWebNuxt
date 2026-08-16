@@ -21,13 +21,12 @@ export default {
     slices: {
       type: Array,
       default: () => [],
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 
 <style scoped lang="sass">
 .slide
-  padding-bottom: 5rem
-</style>
+  padding-bottom: 5rem</style>

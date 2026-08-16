@@ -21,8 +21,8 @@ export default {
   props: {
     homePageData: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

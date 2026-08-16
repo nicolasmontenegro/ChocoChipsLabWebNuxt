@@ -20,7 +20,7 @@ if (fetchError.value) {
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'about_me', style: 'about' }, back: { name: 'index' } }
+    { section: { name: 'about_me', style: 'about' }, back: { name: 'index' } },
   )
 })
 

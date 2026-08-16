@@ -18,18 +18,18 @@ export default {
   props: {
     homePageData: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       intersectionObserverBg: null,
       bg_animation: null,
       resizeTimeout: null,
-      isIntersectingBg: false
+      isIntersectingBg: false,
     }
   },
-  mounted () {
+  mounted() {
     this.$lottie.setQuality('low')
     this.$lottie.setSubframeRendering(false)
     this.bg_animation = this.$lottie.loadAnimation({
@@ -40,8 +40,8 @@ export default {
       path: '/lottie/bg-mosaic.json',
       rendererSettings: {
         preserveAspectRatio: 'xMinYMin slice',
-        clearCanvas: true
-      }
+        clearCanvas: true,
+      },
     })
 
     window.addEventListener('resize', this.bgAnimationResizeMethod)
@@ -62,33 +62,34 @@ export default {
       {
         root: null,
         rootMargin: '-50% 0px 0px 0px',
-        threshold: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4]
-      }
+        threshold: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
+      },
     )
 
     this.intersectionObserverBg.observe(document.querySelector('.home-section'))
   },
-  beforeUnmount () {
+  beforeUnmount() {
     if (this.intersectionObserverBg) { this.intersectionObserverBg.disconnect() }
     if (this.resizeTimeout) { clearTimeout(this.resizeTimeout) }
     window.removeEventListener('resize', this.bgAnimationResizeMethod)
     document.removeEventListener('visibilitychange', this.bgAnimationVisibilityMethod)
   },
   methods: {
-    bgAnimationResizeMethod () {
+    bgAnimationResizeMethod() {
       clearTimeout(this.resizeTimeout)
       this.resizeTimeout = setTimeout(() => {
         this.bg_animation.resize()
       }, 150)
     },
-    bgAnimationVisibilityMethod () {
+    bgAnimationVisibilityMethod() {
       if (document.hidden) {
         this.bg_animation.pause()
-      } else if (this.isIntersectingBg) {
+      }
+      else if (this.isIntersectingBg) {
         this.bg_animation.play()
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -11,7 +11,8 @@ export default function (type, node, text, children, _key) {
   if (type === 'hyperlink') {
     if (node.data.link_type === 'Document') {
       return `<nuxt-link to="${asLink(node.data, { linkResolver })}">${children}</nuxt-link>`
-    } else {
+    }
+    else {
       const target = node.data.target ? `target="${node.data.target}" rel="noopener"` : ''
       return `<a href="${node.data.url}" ${target}>${children}</a>`
     }
@@ -24,7 +25,8 @@ export default function (type, node, text, children, _key) {
     if (node.linkTo) {
       if (node.linkTo.link_type === 'Document') {
         result = `<nuxt-link to="${asLink(node.linkTo, { linkResolver })}">${result}</nuxt-link>`
-      } else {
+      }
+      else {
         const target = node.linkTo.target ? `target="${node.linkTo.target}" rel="noopener"` : ''
         result = `<a href="${node.linkTo.url}" ${target}>${result}</a>`
       }

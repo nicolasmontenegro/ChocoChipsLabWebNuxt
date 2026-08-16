@@ -89,7 +89,7 @@ const isLoaded = reactive({ img: false, meta: false })
 const title = computed(() => entry.value ? asText(entry.value.data.title) : t('sections.photography'))
 const isLoading = computed(() => !(isLoaded.img && isLoaded.meta))
 
-async function loadMetadata () {
+async function loadMetadata() {
   isLoaded.img = false
   isLoaded.meta = false
 
@@ -110,7 +110,7 @@ async function loadMetadata () {
 
 watch(currentPhoto, loadMetadata, { immediate: true })
 
-function exposureTime (time) {
+function exposureTime(time) {
   return time > 0.25 ? `${time}`.toFixed(1).replace('.', '"') : `1/${1 / time}`
 }
 

@@ -9,7 +9,7 @@ const containerClass = computed(() => navegationStore.section.style)
 
 onMounted(() => {
   navegationStore.setNavegation(
-    { section: { name: 'photography', style: 'photography' }, back: { name: 'photography' } }
+    { section: { name: 'photography', style: 'photography' }, back: { name: 'photography' } },
   )
   document.querySelector('html').style.overflow = 'hidden'
 })
@@ -24,5 +24,4 @@ useHead(head)
 
 <style lang="sass" scoped>
 #template
-  height: 100vh
-</style>
+  height: 100vh</style>

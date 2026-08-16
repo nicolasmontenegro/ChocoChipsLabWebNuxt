@@ -9,8 +9,8 @@ const props = defineProps({
   slice: {
     type: Object,
     default: () => {},
-    required: true
-  }
+    required: true,
+  },
 })
 
 const { $postscribe } = useNuxtApp()
@@ -37,6 +37,4 @@ onMounted(() => {
       width: unset
 
       td.hljs-ln-code
-        width: 100%
-
-</style>
+        width: 100%</style>

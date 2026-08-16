@@ -24,27 +24,27 @@ export default {
     currentPage: {
       type: Number,
       default: 1,
-      required: true
+      required: true,
     },
     totalPageCount: {
       type: Number,
       default: 1,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       prevPage: null,
       nextPage: null,
       pageNumberCount: 0,
-      pageNumbers: []
+      pageNumbers: [],
     }
   },
-  mounted () {
+  mounted() {
     this.setPageNumbers()
   },
   methods: {
-    setPageNumbers () {
+    setPageNumbers() {
       this.prevPage = this.currentPage > 1 ? (this.currentPage - 1) : null
       this.nextPage = this.currentPage < this.totalPageCount ? (parseInt(this.currentPage) + 1) : null
 
@@ -53,21 +53,21 @@ export default {
         if (_p > 0 && _p <= this.totalPageCount) {
           this.pageNumbers.push(_p)
           this.pageNumberCount++
-        } else { this.pageNumbers.push(null) }
+        }
+        else { this.pageNumbers.push(null) }
       }
     },
-    routePage (num) {
+    routePage(num) {
       return {
         path: this.$route.path,
         query: { page: num },
-        force: true
+        force: true,
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="sass">
 nav.pagination > ul.pagination-list
-  list-style: none
-</style>
+  list-style: none</style>

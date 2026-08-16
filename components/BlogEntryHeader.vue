@@ -35,36 +35,36 @@ export default {
     entry: {
       type: Object,
       default: () => {},
-      required: true
+      required: true,
     },
     linkable: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     stylo: {
       type: [String, Object],
       default: 'vertical',
-      required: false
+      required: false,
     },
     mini: {
       type: Boolean,
       default: false,
-      required: false
-    }
+      required: false,
+    },
   },
   computed: {
-    picture_head () {
+    picture_head() {
       const imgUrl = (this.entry && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : cookieBg
       return { background: `url('${imgUrl}')` }
     },
-    link () {
+    link() {
       return LinkResolver(this.entry)
     },
-    title () {
+    title() {
       return asText(this.entry.data.title)
     },
-    stylo_class () {
+    stylo_class() {
       const { type = '', responsiveness = '' } = typeof (this.stylo) === 'string' ? { type: this.stylo } : this.stylo
       let cols = []
       switch (type) {
@@ -83,23 +83,17 @@ export default {
       }
       return {
         cols: responsiveness ? cols.map(col => `${col}-${responsiveness} is-12`) : cols,
-        name: type
+        name: type,
       }
-    }
+    },
   },
   methods: {
-    toLocalDate (strDate) {
+    toLocalDate(strDate) {
       return new Date(strDate).toLocaleDateString(this.$i18n.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="sass">
-@use '~/assets/css/entry-header.sass' as *
-.entry-header.blog
-  & > *
-    .entry-picture-head
-      &::after
-        @include bg-entry-header($background-color-blog)
 </style>

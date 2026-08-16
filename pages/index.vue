@@ -17,7 +17,7 @@ const { data: homePageData, error: fetchError } = await useAsyncData('homepage',
     filters: [$prismic.filter.at('document.type', 'homepage')],
     lang: iso.value,
     pageSize: 1,
-    page: 1
+    page: 1,
   })
 
   const idRelated = Object
@@ -44,7 +44,7 @@ if (fetchError.value) {
 }
 
 navegationStore.setNavegation(
-  { section: { name: null, style: 'home' }, back: null }
+  { section: { name: null, style: 'home' }, back: null },
 )
 
 let scrollObserver = null
@@ -60,12 +60,13 @@ onMounted(() => {
             {
               section: {
                 name: null,
-                style: entry.target.getAttribute('intersection-style')
+                style: entry.target.getAttribute('intersection-style'),
               },
-              back: null
-            }
+              back: null,
+            },
           )
-        } else {
+        }
+        else {
           entry.target.classList.add('is-off-focus')
         }
       })
@@ -74,7 +75,7 @@ onMounted(() => {
     {
       root: null,
       rootMargin: '-50% 0px -50% 0px',
-      threshold: 0
+      threshold: 0,
     })
   document.querySelectorAll('.main-space > *').forEach((node) => {
     scrollObserver.observe(node)
@@ -89,18 +90,11 @@ useHead({ title: 'Inicio' })
 </script>
 
 <style lang="sass" scoped>
-@use '~/assets/css/content.sass' as *
-
-@mixin max-size-cookie
-  max-width: 430px
-
-  @media screen and (max-width: $tablet - 1px)
-    max-width: 260px
 
 .main-space
   & > div
     opacity: 1
-    @include transition-fade(opacity)
+    
 
     &.is-off-focus
       opacity: 0.2
@@ -111,8 +105,4 @@ useHead({ title: 'Inicio' })
 
     :deep(.logo)
       width: 100%
-      height: auto
-
-      @include max-size-cookie
-
-</style>
+      height: auto</style>
