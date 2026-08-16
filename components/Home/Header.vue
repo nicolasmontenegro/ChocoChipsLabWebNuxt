@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import bgMosaicAnimation from '~/assets/lottie/bg-mosaic.json'
+
 export default {
   name: 'EntryHeaderGeneric',
   props: {
@@ -34,7 +36,7 @@ export default {
       renderer: 'canvas',
       loop: true,
       autoplay: true,
-      animationData: require('~/assets/lottie/bg-mosaic.json'),
+      animationData: bgMosaicAnimation,
       rendererSettings: {
         preserveAspectRatio: 'xMinYMin slice',
         clearCanvas: true
@@ -63,7 +65,7 @@ export default {
 
     this.intersectionObserverBg.observe(document.querySelector('.home-section'))
   },
-  beforeDestroy () {
+  beforeUnmount () {
     if (this.intersectionObserverBg) { this.intersectionObserverBg.disconnect() }
     window.removeEventListener('resize', this.bgAnimationResizeMethod)
   },

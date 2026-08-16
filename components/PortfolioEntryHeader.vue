@@ -1,11 +1,11 @@
 <template lang="pug">
 .entry-header.portfolio
-  nuxt-link.simple(v-if='linkable' :to='localePath(link)')
+  nuxt-link.simple(v-if='linkable' :to='$localePath(link)')
     .entry-picture-head(:style='picture_head')
   .entry-picture-head(v-else :style='picture_head')
 
   p.m-0
-    nuxt-link(v-if='linkable' :to='localePath(link)')
+    nuxt-link(v-if='linkable' :to='$localePath(link)')
       prismic-rich-text(class='entry-title' :field='entry.data.title')
     prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
 
@@ -16,14 +16,15 @@
     span.has-text-weight-semibold {{ entry.data.company_name }}
 
   p.m-0
-    nuxt-link(v-if='linkable' :to='localePath(link)')
+    nuxt-link(v-if='linkable' :to='$localePath(link)')
       .is-medium
         strong
           i {{ $t('blog.read_more') }}
 </template>
 
 <script>
-import LinkResolver from '~/plugins/link-resolver.js'
+import LinkResolver from '~/prismic/linkResolver.js'
+import cookieBg from '~/assets/images/chocolate chip cookie bg.svg'
 
 export default {
   props: {
@@ -40,7 +41,7 @@ export default {
   },
   computed: {
     picture_head () {
-      const imgUrl = (this.entry.data.header_image && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : require('~/assets/images/chocolate chip cookie bg.svg')
+      const imgUrl = (this.entry.data.header_image && this.entry.data.header_image.url) !== undefined ? this.entry.data.header_image.url : cookieBg
       return { background: `url('${imgUrl}')` }
     },
     link () {

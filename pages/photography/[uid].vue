@@ -1,7 +1,7 @@
 <template lang="pug">
 .photography-entry
   .show-space.is-relative(:class="{'panel-is-open': panelIsOpen}")
-    b-loading(:is-full-page="false" v-model="isLoading" :can-cancel="false")
+    LoadingOverlay(:active="isLoading")
     .photo-space.is-flex.is-flex-direction-column.is-relative
       nuxt-link.back-button.p-2(:to="localePath({name: 'photography'})")
         span {{ $t('navigation.back') }}
@@ -62,83 +62,59 @@
           :class="{'selected': currentPhoto === index}")
 </template>
 
-<script>
-import PrismicDOM from 'prismic-dom'
+<script setup>
+import { asText } from '@prismicio/client'
 
-export default {
-  name: 'PhotographyEntry',
-  layout: 'photography',
-  async fetch () {
-    this.isLoaded.img = false
-    this.isLoaded.meta = false
+definePageMeta({ layout: 'photography' })
 
-    if (this.entry) {
-      const url = new URL(this.entry.data.body[0].items[this.currentPhoto].gallery_image.url)
-      for (const key of url.searchParams.keys()) {
-        url.searchParams.delete(key)
-      }
-      url.searchParams.set('fm', 'json')
-      await fetch(url)
-        .then(res => res.json())
-        .then((resJson) => {
-          this.currentPhotoMetadata = resJson
-        })
-    }
-    this.isLoaded.meta = true
-  },
-  fetchOnServer: false,
-  async asyncData ({ app, $prismic, params, error }) {
-    try {
-      // Query to get entry
-      const entry = await $prismic.api.getByUID(
-        'photography_entry',
-        params.uid,
-        { lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso })
+const { $prismic } = useNuxtApp()
+const { t } = useI18n()
+const iso = usePrismicLocale()
+const route = useRoute()
+const localePath = useLocalePath()
 
-      // Returns data to be used in template
-      return {
-        entry
-      }
-    } catch (e) {
-      // Returns error page
-      error({ statusCode: 404, message: 'Page not found :(' })
-    }
-  },
-  data () {
-    return {
-      currentPhoto: 0,
-      currentPhotoMetadata: {},
-      panelIsOpen: true,
-      isLoaded: {
-        img: false,
-        meta: false
-      }
-    }
-  },
-  computed: {
-    title () {
-      return this.entry ? PrismicDOM.RichText.asText(this.entry.data.title) : this.$t('sections.photography')
-    },
-    isLoading () {
-      return !(this.isLoaded.img && this.isLoaded.meta)
-    }
-  },
-  watch: {
-    currentPhoto () {
-      this.$fetch()
-    }
-  },
-  methods: {
-    exposureTime (time) {
-      return time > 0.25 ? `${time}`.toFixed(1).replace('.', '"') : `1/${1 / time}`
-    }
-  },
-  head () {
-    return {
-      title: this.title
-    }
-  }
+const { data: entry, error: fetchError } = await useAsyncData(`photography-${route.params.uid}`, () => {
+  return $prismic.client.getByUID('photography_entry', route.params.uid, { lang: iso.value })
+})
+
+if (fetchError.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found :(', fatal: true })
 }
+
+const currentPhoto = ref(0)
+const currentPhotoMetadata = ref({})
+const panelIsOpen = ref(true)
+const isLoaded = reactive({ img: false, meta: false })
+
+const title = computed(() => entry.value ? asText(entry.value.data.title) : t('sections.photography'))
+const isLoading = computed(() => !(isLoaded.img && isLoaded.meta))
+
+async function loadMetadata () {
+  isLoaded.img = false
+  isLoaded.meta = false
+
+  if (entry.value) {
+    const url = new URL(entry.value.data.body[0].items[currentPhoto.value].gallery_image.url)
+    for (const key of url.searchParams.keys()) {
+      url.searchParams.delete(key)
+    }
+    url.searchParams.set('fm', 'json')
+    await fetch(url)
+      .then(res => res.json())
+      .then((resJson) => {
+        currentPhotoMetadata.value = resJson
+      })
+  }
+  isLoaded.meta = true
+}
+
+watch(currentPhoto, loadMetadata, { immediate: true })
+
+function exposureTime (time) {
+  return time > 0.25 ? `${time}`.toFixed(1).replace('.', '"') : `1/${1 / time}`
+}
+
+useHead({ title })
 </script>
 
 <style lang="sass" scoped>

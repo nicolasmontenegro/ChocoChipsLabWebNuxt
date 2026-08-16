@@ -9,7 +9,7 @@
       prismic-rich-text.mb-5(:field="homePageData.about_me_body")
       .columns
         .column.is-6.is-12-mobile
-          nuxt-link(:to="localePath({name: 'about-me'})")
+          nuxt-link(:to="$localePath({name: 'about-me'})")
             strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
         .column.is-6.is-12-mobile
           prismic-link(:field="homePageData.about_me_link_url")
@@ -42,7 +42,7 @@ export default {
     margin: 0
 
     img
-      mask: url('~assets/images/chocolate chip cookie shape.svg')
+      mask: url('~/assets/images/chocolate chip cookie shape.svg')
       mask-position: center
       mask-size: cover
 

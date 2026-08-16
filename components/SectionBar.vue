@@ -2,7 +2,7 @@
 .sectionbar(:class="[isExpanded]")
   .columns.is-mobile.is-gapless.py-2.title-site.is-justify-content-space-between
     .column.is-narrow.col-logo
-      nuxt-link.is-inline-flex.py-2(:to="localePath({name: 'index'})")
+      nuxt-link.is-inline-flex.py-2(:to="$localePath({name: 'index'})")
         logo-title
     .column.is-narrow.is-hidden-desktop.col-arrow(@click="is_expanded = !is_expanded")
       span.is-3
@@ -12,23 +12,23 @@
   .navegation-site
     ul.links
       li
-        nuxt-link(:to="localePath({name: 'index'})")
+        nuxt-link(:to="$localePath({name: 'index'})")
           strong(@click="is_expanded = false") {{ $t('sections.index') }}
       li
-        nuxt-link(:to="localePath({name: 'portfolio'})")
+        nuxt-link(:to="$localePath({name: 'portfolio'})")
           strong(@click="is_expanded = false") {{ $t('sections.portfolio') }}
       li
-        nuxt-link(:to="localePath({name: 'blog'})")
+        nuxt-link(:to="$localePath({name: 'blog'})")
           strong(@click="is_expanded = false") {{ $t('sections.blog') }}
       li
-        nuxt-link(:to="localePath({name: 'photography'})")
+        nuxt-link(:to="$localePath({name: 'photography'})")
           strong(@click="is_expanded = false") {{ $t('sections.photography') }}
       li
-        nuxt-link(:to="localePath({name: 'about-me'})")
+        nuxt-link(:to="$localePath({name: 'about-me'})")
           strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
 
     p.links.mt-5
-      nuxt-link(v-for="locale in availableLocales" :key="locale.code" :to="switchLocalePath(locale.code)") {{ locale.name }}
+      nuxt-link(v-for="locale in availableLocales" :key="locale.code" :to="$switchLocalePath(locale.code)") {{ locale.name }}
 
 </template>
 

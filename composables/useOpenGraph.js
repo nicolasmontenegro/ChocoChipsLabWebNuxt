@@ -1,6 +1,4 @@
-import Vue from 'vue'
-
-const openGraph = ({ twitter = true, title, description, image, article }) => {
+export const useOpenGraph = ({ twitter = true, title, description, image, article } = {}) => {
   const listMeta = []
 
   // Twitter meta
@@ -10,11 +8,6 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
         hid: 'twitter:card',
         name: 'twitter:card',
         content: 'summary'
-      },
-      {
-        hid: 'twitter:creator',
-        name: 'twitter:creator',
-        content: '@NicoChocoChips'
       },
       {
         hid: 'twitter:creator',
@@ -59,13 +52,6 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
         }
       ])
     }
-    // if (imgType) {
-    //   listMeta.push({
-    //     hid: 'og:image:type',
-    //     property: 'og:image:type',
-    //     content: imgType
-    //   })
-    // }
     if (imgwidth) {
       listMeta.push({
         hid: 'og:image:width',
@@ -141,8 +127,4 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
   }
 
   return listMeta
-}
-
-export default (context, inject) => {
-  Vue.prototype.$openGraph = openGraph
 }

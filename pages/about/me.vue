@@ -4,44 +4,25 @@
     slices-block(:slices='page.data.body')
 </template>
 
-<script>
-import SlicesBlock from '~/components/SlicesBlock.vue'
+<script setup>
+const { $prismic } = useNuxtApp()
+const { t } = useI18n()
+const iso = usePrismicLocale()
+const navegationStore = useNavegationStore()
 
-export default {
-  name: 'Home',
-  components: {
-    SlicesBlock
-  },
-  async asyncData ({ app, $prismic, context, error }) {
-    try {
-      // Query to get object
-      const page = await $prismic.api.getByUID(
-        'page',
-        'about_me',
-        { lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso })
+const { data: page, error: fetchError } = await useAsyncData('about-me', () => {
+  return $prismic.client.getByUID('page', 'about_me', { lang: iso.value })
+})
 
-      // Returns data to be used in template
-      return {
-        page
-      }
-    } catch (e) {
-      // Returns error page
-      error({ statusCode: 404, message: 'Page not found' })
-    }
-  },
-  mounted () {
-    this.$store.commit(
-      'navegation/setNavegation',
-      { section: { name: 'about_me', style: 'about' }, back: { name: 'index' } }
-    )
-  },
-  head () {
-    return {
-      title: this.$t('sections.about_me')
-    }
-  }
+if (fetchError.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
-</script>
 
-<style lang="sass">
-</style>
+onMounted(() => {
+  navegationStore.setNavegation(
+    { section: { name: 'about_me', style: 'about' }, back: { name: 'index' } }
+  )
+})
+
+useHead({ title: t('sections.about_me') })
+</script>

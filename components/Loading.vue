@@ -6,18 +6,10 @@ transition(name="loading")
 
 <script>
 export default {
-  data: () => ({
-    loading: false
-  }),
-  computed: {
-    containerClass () { return this.$store.state.navegation.section.style }
-  },
-  methods: {
-    start () {
-      this.loading = true
-    },
-    finish () {
-      this.loading = false
+  props: {
+    loading: {
+      type: Boolean,
+      default: false
     }
   }
 }
