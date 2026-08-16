@@ -107,11 +107,11 @@ export default {
       .button-expand
         display: flex
 
-        ::v-deep .arrow
+        :deep(.arrow)
           transition: transform 200ms ease-in-out
 
-          &.is-expanded
-            transform: rotate(-180deg)
+        :deep(.arrow.is-expanded)
+          transform: rotate(-180deg)
 
     .title-site
       .logo

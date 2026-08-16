@@ -50,8 +50,8 @@ function imageThumbnailUrl (imgUrl, width = '100') {
 </script>
 
 <style scoped lang="sass">
-.photo-gallery-slice ::v-deep
-  .gallery-grid
+.photo-gallery-slice
+  :deep(.gallery-grid)
     figure > img
       max-height: 600px
 </style>

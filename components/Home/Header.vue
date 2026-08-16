@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '~/assets/css/content.sass'
+@use '~/assets/css/content.sass' as *
 
 #bg-animation
   z-index: -1
@@ -110,7 +110,7 @@ export default {
 
   pointer-events: none
 
-  ::v-deep canvas
+  :deep(canvas)
     transition: opacity 150ms ease-out
     opacity: 1
     width: 100%

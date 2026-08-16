@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import '~/assets/css/entry-header.sass'
+@use '~/assets/css/entry-header.sass' as *
 .entry-header.blog
   & > *
     .entry-picture-head

@@ -93,7 +93,7 @@ onClickOutside(menuColumn, () => {
       p
         font-size: 1rem !important
 
-      ::v-deep .logo.jar
+      :deep(.logo.jar)
         height: 30px !important
 
     // &:hover, &:focus
@@ -104,7 +104,7 @@ onClickOutside(menuColumn, () => {
       white-space: nowrap
       color: inhere
 
-    ::v-deep .logo.jar
+    :deep(.logo.jar)
       height: 50px
       width: auto
 

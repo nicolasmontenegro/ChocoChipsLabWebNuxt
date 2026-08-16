@@ -147,9 +147,8 @@ html
       &.panel-is-open
         grid-template-rows: auto 40%
 
-    ::v-deep
-      .loading-overlay .loading-background
-        background-color: rgba(0, 0, 0, 0.5)
+    :deep(.loading-overlay .loading-background)
+      background-color: rgba(0, 0, 0, 0.5)
 
     .photo-space
       .back-button

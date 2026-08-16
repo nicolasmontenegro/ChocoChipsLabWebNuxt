@@ -24,13 +24,13 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.text-slice ::v-deep
-  > :not(:last-child)
+.text-slice
+  :deep(> :not(:last-child))
     padding-bottom: 1.2rem
 
-  a
+  :deep(a)
     font-weight: bold
 
-  ol, ul
+  :deep(ol), :deep(ul)
     margin-top: 0 !important
 </style>

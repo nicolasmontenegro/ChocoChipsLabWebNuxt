@@ -24,15 +24,15 @@ onMounted(() => {
 </script>
 
 <style scoped lang="sass">
-.embed-slice ::v-deep
+.embed-slice
   position: relative
   display: flex
 
-  & > *
+  :deep(> *)
     width: 100%
 
   // Fix for Embed Like Gist
-  .emgithub-container
+  :deep(.emgithub-container)
     table
       width: unset
 

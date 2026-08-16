@@ -89,7 +89,7 @@ useHead({ title: 'Inicio' })
 </script>
 
 <style lang="sass" scoped>
-@import '~/assets/css/content.sass'
+@use '~/assets/css/content.sass' as *
 
 @mixin max-size-cookie
   max-width: 430px
@@ -107,10 +107,9 @@ useHead({ title: 'Inicio' })
       pointer-events: none
 
   .home-section
-    ::v-deep
-      min-height: 100vh
+    min-height: 100vh
 
-    ::v-deep .logo
+    :deep(.logo)
       width: 100%
       height: auto
 

@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import '~/assets/css/utils/colors.sass'
+@use '~/assets/css/utils/colors.sass' as *
 .entry-header
   .entry_type > .subtitle
     display: inline-block

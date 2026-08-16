@@ -46,7 +46,7 @@ export default {
       mask-position: center
       mask-size: cover
 
-  ::v-deep .logo
+  :deep(.logo)
     width: 100%
     height: 100%
 </style>

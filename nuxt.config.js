@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         sass: {
-          additionalData: '@import "assets/css/utils/colors.sass"\n@import "assets/css/utils/variables.sass"\n@import "bulma/sass/utilities/_all.sass"\n',
+          additionalData: '@use "assets/css/utils/colors.sass" as *\n@use "assets/css/utils/variables.sass" as *\n@use "bulma/sass/utilities/_all.sass" as *\n',
           loadPaths: [rootDir],
           includePaths: [rootDir],
           // Bulma 0.9.x's own Sass still uses functions Dart Sass is deprecating

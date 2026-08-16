@@ -51,13 +51,13 @@ function imageThumbnailUrl (imgUrl, width = '100') {
 <style scoped lang="sass">
 $max-height: 400px
 
-.photo-slice ::v-deep
+.photo-slice
   position: relative
   display: flex
   flex-direction: column
   align-content: center
 
-  .img-content
+  :deep(.img-content)
     display: flex
     flex-direction: row
     justify-content: center
@@ -69,7 +69,7 @@ $max-height: 400px
       &:hover
         cursor: pointer
 
-  .img-foot
+  :deep(.img-foot)
     border-radius: 0.75rem
 
     > p
