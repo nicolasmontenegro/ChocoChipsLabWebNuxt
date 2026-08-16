@@ -22,8 +22,11 @@ const openIndex = ref(null)
   display: grid
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
   gap: 0.5rem
+  padding: 1rem
+  background-color: rgba(white, 0.6)
+  border-radius: 1rem
 
-.gallery-item
+figure.gallery-item
   margin: 0
   cursor: pointer
   border-radius: 10px

@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import bgMosaicAnimation from '~/assets/lottie/bg-mosaic.json'
-
 export default {
   name: 'EntryHeaderGeneric',
   props: {
@@ -26,17 +24,20 @@ export default {
   data () {
     return {
       intersectionObserverBg: null,
-      bg_animation: null
+      bg_animation: null,
+      resizeTimeout: null,
+      isIntersectingBg: false
     }
   },
   mounted () {
     this.$lottie.setQuality('low')
+    this.$lottie.setSubframeRendering(false)
     this.bg_animation = this.$lottie.loadAnimation({
       container: document.querySelector('#bg-animation'),
       renderer: 'canvas',
       loop: true,
       autoplay: true,
-      animationData: bgMosaicAnimation,
+      path: '/lottie/bg-mosaic.json',
       rendererSettings: {
         preserveAspectRatio: 'xMinYMin slice',
         clearCanvas: true
@@ -44,6 +45,7 @@ export default {
     })
 
     window.addEventListener('resize', this.bgAnimationResizeMethod)
+    document.addEventListener('visibilitychange', this.bgAnimationVisibilityMethod)
 
     this.intersectionObserverBg = new IntersectionObserver(
       // callback
@@ -52,6 +54,7 @@ export default {
           document
             .querySelector('#bg-animation canvas')
             .style.opacity = entry.intersectionRatio / 0.4
+          this.isIntersectingBg = entry.isIntersecting
           entry.isIntersecting ? this.bg_animation.play() : this.bg_animation.pause()
         })
       },
@@ -67,11 +70,23 @@ export default {
   },
   beforeUnmount () {
     if (this.intersectionObserverBg) { this.intersectionObserverBg.disconnect() }
+    if (this.resizeTimeout) { clearTimeout(this.resizeTimeout) }
     window.removeEventListener('resize', this.bgAnimationResizeMethod)
+    document.removeEventListener('visibilitychange', this.bgAnimationVisibilityMethod)
   },
   methods: {
     bgAnimationResizeMethod () {
-      this.bg_animation.resize()
+      clearTimeout(this.resizeTimeout)
+      this.resizeTimeout = setTimeout(() => {
+        this.bg_animation.resize()
+      }, 150)
+    },
+    bgAnimationVisibilityMethod () {
+      if (document.hidden) {
+        this.bg_animation.pause()
+      } else if (this.isIntersectingBg) {
+        this.bg_animation.play()
+      }
     }
   }
 }

@@ -70,7 +70,7 @@ $max-height: 400px
         cursor: pointer
 
   .img-foot
-    border-radius: 10px
+    border-radius: 0.75rem
 
     > p
       width: 100%

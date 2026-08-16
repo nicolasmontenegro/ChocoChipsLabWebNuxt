@@ -79,7 +79,7 @@ onClickOutside(menuColumn, () => {
     height: auto
     margin-right: -40px
     text-decoration: none
-    transition: all 800ms ease-out
+    transition: all 250ms ease-out
     border-width: 1px
     top: 0
     right: 0
@@ -110,16 +110,16 @@ onClickOutside(menuColumn, () => {
 
   &-button-fade
     &-enter-active, &-leave-active
-      transition: all 500ms ease
+      transition: all 250ms ease
 
-    &-enter, &-leave-to
+    &-enter-from, &-leave-to
       opacity: 0
 
   &-container-fade
     &-enter-active, &-leave-active
-      transition: all 800ms ease
+      transition: all 300ms ease
 
-    &-enter, &-leave-to
+    &-enter-from, &-leave-to
       transform: translateX(-200px)
       opacity: 0
 
