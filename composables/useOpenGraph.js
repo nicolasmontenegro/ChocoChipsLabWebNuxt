@@ -1,6 +1,4 @@
-import Vue from 'vue'
-
-const openGraph = ({ twitter = true, title, description, image, article }) => {
+export const useOpenGraph = ({ twitter = true, title, description, image, article } = {}) => {
   const listMeta = []
 
   // Twitter meta
@@ -9,18 +7,13 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
       {
         hid: 'twitter:card',
         name: 'twitter:card',
-        content: 'summary'
+        content: 'summary',
       },
       {
         hid: 'twitter:creator',
         name: 'twitter:creator',
-        content: '@NicoChocoChips'
+        content: '@NicoChocoChips',
       },
-      {
-        hid: 'twitter:creator',
-        name: 'twitter:creator',
-        content: '@NicoChocoChips'
-      }
     ])
   }
 
@@ -29,18 +22,18 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
     {
       hid: 'og:title',
       property: 'og:title',
-      content: title
+      content: title,
     },
     {
       hid: 'og:description',
       property: 'og:description',
-      content: description
+      content: description,
     },
     {
       hid: 'og:type',
       property: 'og:type',
-      content: (article ? 'article' : 'website')
-    }
+      content: (article ? 'article' : 'website'),
+    },
   ])
 
   if (image) {
@@ -50,41 +43,34 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: imgURL
+          content: imgURL,
         },
         {
           hid: 'og:image:url',
           property: 'og:image:url',
-          content: imgURL
-        }
+          content: imgURL,
+        },
       ])
     }
-    // if (imgType) {
-    //   listMeta.push({
-    //     hid: 'og:image:type',
-    //     property: 'og:image:type',
-    //     content: imgType
-    //   })
-    // }
     if (imgwidth) {
       listMeta.push({
         hid: 'og:image:width',
         property: 'og:image:width',
-        content: imgwidth
+        content: imgwidth,
       })
     }
     if (imgHeight) {
       listMeta.push({
         hid: 'og:image:height',
         property: 'og:image:height',
-        content: imgHeight
+        content: imgHeight,
       })
     }
     if (imgAlt) {
       listMeta.push({
         hid: 'og:image:alt',
         property: 'og:image:alt',
-        content: imgAlt
+        content: imgAlt,
       })
     }
   }
@@ -94,55 +80,51 @@ const openGraph = ({ twitter = true, title, description, image, article }) => {
     listMeta.push({
       hid: 'og:type',
       property: 'og:type',
-      content: 'article'
+      content: 'article',
     })
     if (publishedTime) {
       listMeta.push({
         hid: 'article:published_time',
         property: 'article:published_time',
-        content: publishedTime
+        content: publishedTime,
       })
     }
     if (modifiedTime) {
       listMeta.push({
         hid: 'article:modified_time',
         property: 'article:modified_time',
-        content: modifiedTime
+        content: modifiedTime,
       })
     }
     if (expirationTime) {
       listMeta.push({
         hid: 'article:expiration_time',
         property: 'article:expiration_time',
-        content: expirationTime
+        content: expirationTime,
       })
     }
     if (author) {
       listMeta.push({
         hid: 'article:author',
         property: 'article:author',
-        content: author
+        content: author,
       })
     }
     if (section) {
       listMeta.push({
         hid: 'article:section',
         property: 'article:section',
-        content: section
+        content: section,
       })
     }
     if (tags) {
       listMeta.push(...tags.map(tag => ({
         hid: 'article:tag',
         property: 'article:tag',
-        content: tag
+        content: tag,
       })))
     }
   }
 
   return listMeta
-}
-
-export default (context, inject) => {
-  Vue.prototype.$openGraph = openGraph
 }

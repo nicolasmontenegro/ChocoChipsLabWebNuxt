@@ -7,7 +7,7 @@
   transition(name="menu-container-fade" v-on:after-enter="isCompleteEnter = true" v-on:leave="isCompleteEnter = false")
     .container(v-if="isOpen")
       .columns.is-flex-grow-1
-        .menu-column.column.is-6.is-relative.is-flex.is-flex-direction-column.mx-2(v-click-outside="clickOutside")
+        .menu-column.column.is-6.is-relative.is-flex.is-flex-direction-column.mx-2(ref="menuColumn")
           .menu-head.columns.is-mobile.is-justify-content-space-between
             .menu-head-logo.column
               VectorLogoTitle
@@ -43,36 +43,28 @@
                     strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
 </template>
 
-<script>
-import ClickOutside from 'vue-click-outside'
+<script setup>
+import { onClickOutside } from '@vueuse/core'
 
-export default {
-  directives: {
-    ClickOutside
-  },
-  data () {
-    return {
-      isOpen: false,
-      isCompleteEnter: false
-    }
-  },
-  watch: {
-    '$route.path' () {
-      this.isOpen = false
-    },
-    isOpen (newValue) {
-      document.querySelector('#template.container .container-content').classList.toggle('is-menu-open', newValue)
-      document.querySelector('html').classList.toggle('block-scroll', newValue)
-    }
-  },
-  methods: {
-    clickOutside () {
-      if (this.isCompleteEnter) {
-        this.isOpen = false
-      }
-    }
+const route = useRoute()
+const localePath = useLocalePath()
+
+const isOpen = ref(false)
+const isCompleteEnter = ref(false)
+const menuColumn = ref(null)
+
+watch(() => route.path, () => { isOpen.value = false })
+
+watch(isOpen, (newValue) => {
+  document.querySelector('#template.container .container-content').classList.toggle('is-menu-open', newValue)
+  document.querySelector('html').classList.toggle('block-scroll', newValue)
+})
+
+onClickOutside(menuColumn, () => {
+  if (isCompleteEnter.value) {
+    isOpen.value = false
   }
-}
+})
 </script>
 
 <style lang="sass" scoped>
@@ -87,7 +79,7 @@ export default {
     height: auto
     margin-right: -40px
     text-decoration: none
-    transition: all 800ms ease-out
+    transition: all 250ms ease-out
     border-width: 1px
     top: 0
     right: 0
@@ -101,7 +93,7 @@ export default {
       p
         font-size: 1rem !important
 
-      ::v-deep .logo.jar
+      :deep(.logo.jar)
         height: 30px !important
 
     // &:hover, &:focus
@@ -112,22 +104,22 @@ export default {
       white-space: nowrap
       color: inhere
 
-    ::v-deep .logo.jar
+    :deep(.logo.jar)
       height: 50px
       width: auto
 
   &-button-fade
     &-enter-active, &-leave-active
-      transition: all 500ms ease
+      transition: all 250ms ease
 
-    &-enter, &-leave-to
+    &-enter-from, &-leave-to
       opacity: 0
 
   &-container-fade
     &-enter-active, &-leave-active
-      transition: all 800ms ease
+      transition: all 300ms ease
 
-    &-enter, &-leave-to
+    &-enter-from, &-leave-to
       transform: translateX(-200px)
       opacity: 0
 
@@ -186,7 +178,6 @@ export default {
 
     .menu-content
       overflow-y: auto
-
 </style>
 
 <style lang="sass">

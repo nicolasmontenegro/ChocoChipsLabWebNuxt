@@ -1,44 +1,27 @@
 <template lang="pug">
 #template(:class='containerClass')
-  nuxt
+  slot
 </template>
 
-<script>
-export default {
-  computed: {
-    navegation () { return this.$store.state.navegation },
-    containerClass () { return this.$store.state.navegation.section.style }
-  },
-  mounted () {
-    this.$store.commit(
-      'navegation/setNavegation',
-      { section: { name: 'photography', style: 'photography' }, back: { name: 'photography' } }
-    )
-    document.querySelector('html').style.overflow = 'hidden'
-  },
-  beforeDestroy () {
-    document.querySelector('html').style.removeProperty('overflow')
-  },
-  head () {
-    const headI18nDefault = this.$nuxtI18nHead({ addSeoAttributes: true })
-    const openGraphDefault = this.$openGraph({
-      title: this.$i18n.t('meta.title'),
-      description: this.$i18n.t('meta.description'),
-      image: {
-        imgURL: require('~/static/icon.png'),
-        imgType: 'image/png',
-        imgwidth: '1024',
-        imgHeight: '1024',
-        imgAlt: this.$t('meta.img_alt')
-      }
-    })
-    headI18nDefault.meta = [...headI18nDefault.meta, ...openGraphDefault]
-    return headI18nDefault
-  }
-}
+<script setup>
+const navegationStore = useNavegationStore()
+const containerClass = computed(() => navegationStore.section.style)
+
+onMounted(() => {
+  navegationStore.setNavegation(
+    { section: { name: 'photography', style: 'photography' }, back: { name: 'photography' } },
+  )
+  document.querySelector('html').style.overflow = 'hidden'
+})
+
+onBeforeUnmount(() => {
+  document.querySelector('html').style.removeProperty('overflow')
+})
+
+const head = useDefaultHead()
+useHead(head)
 </script>
 
 <style lang="sass" scoped>
 #template
-  height: 100vh
-</style>
+  height: 100vh</style>

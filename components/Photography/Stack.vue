@@ -10,18 +10,18 @@ export default {
       type: Array,
       required: false,
       validator: value => (value.length > 0 && value.length <= 4),
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   methods: {
-    urlWithParams (urlPicture) {
+    urlWithParams(urlPicture) {
       const url = new URL(urlPicture)
       url.searchParams.append('fit', 'crop')
       url.searchParams.append('ar', '1')
       url.searchParams.append('h', '700')
       return url.toString()
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -59,7 +59,7 @@ export default {
     height: 70%
     background-repeat: no-repeat
     background-size: cover
-    border: 5px solid #FFFFFF
+    border: 5px solid ffffff
     box-sizing: border-box
     transition: top 333ms ease-in-out, left 333ms ease-in-out, width 333ms ease-in-out, height 333ms ease-in-out
 
@@ -77,6 +77,4 @@ export default {
 
     &.item-4
       top: 30%
-      left: 30%
-
-</style>
+      left: 30%</style>

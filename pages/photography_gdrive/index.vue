@@ -11,63 +11,58 @@
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
 </template>
 
+<script setup>
+import linkResolver from '~/prismic/linkResolver'
+
+const { $prismic } = useNuxtApp()
+const { t } = useI18n()
+const iso = usePrismicLocale()
+const navegationStore = useNavegationStore()
+const route = useRoute()
+const localePath = useLocalePath()
+const page = computed(() => route.query.page || 1)
+
+const { data: photographyQuery, error: fetchError } = await useAsyncData('photography-gdrive-index', () => {
+  return $prismic.client.get({
+    filters: [$prismic.filter.at('document.type', 'photography_gdrive_entry')],
+    lang: iso.value,
+    orderings: { field: 'document.first_publication_date', direction: 'desc' },
+    pageSize: 10,
+    page: page.value,
+  })
+}, { watch: [page] })
+
+if (fetchError.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+}
+
+const photographyPosts = computed(() => photographyQuery.value.results)
+const pagination = computed(() => ({
+  currentPage: photographyQuery.value.page,
+  totalPageCount: photographyQuery.value.total_pages,
+}))
+
+onMounted(() => {
+  navegationStore.setNavegation(
+    { section: { name: 'photography', style: 'photography' }, back: { name: 'index' } },
+  )
+})
+
+function link(entry) {
+  return linkResolver(entry)
+}
+
+function photosSlice(entry) {
+  return entry
+    .data
+    .photo_ids
+    .split('\n')
+    .slice(0, 4)
+    .map(id => `https://lh3.googleusercontent.com/u/0/d/${id.trim()}=w100-iv1-c`)
+}
+
+useHead({ title: t('sections.photography') })
+</script>
+
 <style lang="sass">
 </style>
-
-<script>
-import Prismic from 'prismic-javascript'
-import LinkResolver from '~/plugins/link-resolver.js'
-
-export default {
-  name: 'Fotography',
-  watchQuery: ['page'],
-  async asyncData ({ app, $prismic, params, error, req, query }) {
-    try {
-      // Query to get posts content to preview
-      const photographyPosts = await $prismic.api.query(
-        Prismic.Predicates.at('document.type', 'photography_gdrive_entry'),
-        {
-          lang: app.i18n.locales.find(e => e.code === app.i18n.locale).iso,
-          orderings: '[document.first_publication_date desc]',
-          pageSize: 10,
-          page: (query.page || 1)
-        }
-      )
-
-      // Returns data to be used in template
-      return {
-        photographyPosts: photographyPosts.results,
-        pagination: {
-          currentPage: photographyPosts.page,
-          totalPageCount: photographyPosts.total_pages
-        }
-      }
-    } catch (e) {
-      // Returns error page
-      error({ statusCode: 404, message: 'Page not found' })
-    }
-  },
-  mounted () {
-    this.$store.commit(
-      'navegation/setNavegation',
-      { section: { name: 'photography', style: 'photography' }, back: { name: 'index' } }
-    )
-  },
-  methods: {
-    link (entry) {
-      return LinkResolver(entry)
-    },
-    photosSlice (entry) {
-      return entry
-        .data
-        .photo_ids
-        .split('\n')
-        .slice(0, 4)
-        .map(id => `https://lh3.googleusercontent.com/u/0/d/${id.trim()}=w100-iv1-c`)
-    }
-  },
-  head () {
-    return { title: this.$t('sections.photography') }
-  }
-}
-</script>

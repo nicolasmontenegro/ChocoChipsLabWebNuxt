@@ -8,7 +8,7 @@
     template(v-if='slice.slice_type === "embed_video_audio"')
       SliceEmbedAudioVideo(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "photo"')
-      Shotoslice(:slice='slice', :index='index')
+      SlicePhoto(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "image_gallery"')
       SliceImageGallery(:slice='slice', :index='index')
     template(v-if='slice.slice_type === "entry_related"')
@@ -21,13 +21,12 @@ export default {
     slices: {
       type: Array,
       default: () => [],
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 
 <style scoped lang="sass">
 .slide
-  padding-bottom: 5rem
-</style>
+  padding-bottom: 5rem</style>

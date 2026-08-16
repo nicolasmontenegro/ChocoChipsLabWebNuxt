@@ -4,7 +4,7 @@
     .column.is-flex-grow-0
       h2.title.white-space-nowrap.is-2.m-0 {{ $t(`sections.portfolio`) }}
     .column.is-flex-grow-0.my-2
-      nuxt-link.has-text-weight-bold.white-space-nowrap(:to="localePath({name: 'portfolio'})") {{ $t('navigation.view_all') }}
+      nuxt-link.has-text-weight-bold.white-space-nowrap(:to="$localePath({name: 'portfolio'})") {{ $t('navigation.view_all') }}
   .portfolio-content
     .columns
       .column.is-12(v-if="homePageData.portfolio_main_related.id")
@@ -16,8 +16,8 @@ export default {
   props: {
     homePageData: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

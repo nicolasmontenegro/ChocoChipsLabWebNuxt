@@ -1,11 +1,22 @@
-FROM node:18-alpine
+# Use the official Node 24 Alpine image as the base
+FROM node:24-alpine AS base
 WORKDIR /home/node/app
-RUN apk update && apk add git
 
-# Install packages
-COPY package.json ./
-RUN npm install --quiet
+# Set up the pnpm home directory and update PATH
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+# Enable corepack to activate the pre-bundled pnpm package manager
+RUN corepack enable
+
+# Copy dependency configurations
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
+
+# Install dependencies production-ready or frozen
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of your application code
+COPY . .
 
 # Give owner rights to the current user
-RUN chown -Rh node:node /home/node/app
 USER node
