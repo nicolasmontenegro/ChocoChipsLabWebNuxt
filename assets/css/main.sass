@@ -31,33 +31,43 @@ h1, h2, h3, h4, h5, h6, .title
   line-height: 100% !important
 
 a:not(.simple)
-  display: inline-block
-
-  &, > *
-    position: relative
-    z-index: 3
-
-  &.outlined
-    border-width: 1px
-
-  &::before
-    content: ''
-    transition: width 333ms ease-out
-    background-color: #fff
-    position: absolute
+  &.button,
+  &:not(:has(*)),
+  &:not(.button) > *
+    background-image: linear-gradient(#fff, #fff)
+    background-repeat: no-repeat
+    background-position: 0% 55%
+    background-size: 0% 60%
     border-radius: 5px
-    height: 102%
-    width: 0%
-    top: 0px
-    bottom: 0px
-    right: -5px
-    z-index: -1
+    transition: background-size 333ms ease-out
+    box-decoration-break: slice
+    -webkit-box-decoration-break: slice
+  
+  &.button,
+  &:not(:has(*))
+    background-position: 0% 100%
+    background-size: 0% 100%
+  
+  &:not(.button) > *
+    display: inline
+    background-position: 0% 55%
+    background-size: 0% 60%
 
-  &:hover //, &:active, &:focus
-    &::before
-      width: calc(100% + 10px)
-      left: -5px
-      right: inherit
+  // &.button
+  //   display: inline-block
+
+  // &.outlined
+  //   border-width: 1px
+
+  //, &:active, &:focus
+
+  &:hover.button,
+  &:hover:not(:has(*))
+    background-size: 100% 100%
+
+  &:hover:not(.button) > *
+    background-size: 100% 60%
+    
 
 .title-main
   margin: 2rem

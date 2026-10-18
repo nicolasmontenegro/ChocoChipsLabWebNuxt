@@ -24,6 +24,7 @@
       & > .button
         background: rgba($background-color, 0.8)
         border-color: $text-color
+        overflow: hidden
 
         p
           @include transition-fade(color)
@@ -52,7 +53,7 @@
     a:not(.simple)
       &, & *
         position: relative
-        transition: color 500ms ease-out, fill 500ms ease-out
+        transition: color 500ms ease-out, fill 500ms ease-out, background-size 333ms ease-out
 
       &.outlined
         border-color: $text-color
