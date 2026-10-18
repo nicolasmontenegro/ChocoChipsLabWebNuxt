@@ -9,7 +9,11 @@
         span Nico
         span Choco
         span Chips
-      p {{ homePageData.subtitle }}
+      p.subtitle {{ homePageData.subtitle }}
+      ul.header-links.is-flex.is-flex-wrap-wrap.mb-4
+        li(v-for="external_link in homePageData.external_links")
+          prismic-link.button.is-ghost(:field="external_link.external_link_url" :aria-label="external_link.external_link_site" :title="external_link.external_link_site")
+            font-awesome-icon(:icon="arrayIcon(external_link.external_link_icon)" size="lg")
 </template>
 
 <script>
@@ -75,6 +79,9 @@ export default {
     document.removeEventListener('visibilitychange', this.bgAnimationVisibilityMethod)
   },
   methods: {
+    arrayIcon: (iconString) => {
+      return iconString.split(/-(.*)/).splice(0, 2)
+    },
     bgAnimationResizeMethod() {
       clearTimeout(this.resizeTimeout)
       this.resizeTimeout = setTimeout(() => {
@@ -96,32 +103,47 @@ export default {
 <style lang="sass" scoped>
 @use '~/assets/css/content.sass' as *
 
-#bg-animation
-  z-index: -1
-  position: fixed
-  width: 100vw
-  height: 100vh
-  top: 0
-  left: 0
+.home-section
+  #bg-animation
+    z-index: -1
+    position: fixed
+    width: 100vw
+    height: 100vh
+    top: 0
+    left: 0
 
-  display: flex
-  flex-wrap: wrap
-
-  opacity: 0.35
-
-  pointer-events: none
-
-  :deep(canvas)
-    transition: opacity 150ms ease-out
-    opacity: 1
-    width: 100%
-    height: auto !important
-    transform-origin: unset !important
-
-.title
-  font-size: 4.2rem
-
-  @media screen and (max-width: $desktop - 1px)
     display: flex
-    flex-direction: column
+    flex-wrap: wrap
+
+    opacity: 0.35
+
+    pointer-events: none
+
+    :deep(canvas)
+      transition: opacity 150ms ease-out
+      opacity: 1
+      width: 100%
+      height: auto !important
+      transform-origin: unset !important
+
+  .title
+    font-size: 3.75rem
+
+    @media screen and (max-width: $desktop - 1px)
+      display: flex
+      flex-direction: column
+
+  .subtitle
+    padding: 1rem  0.2rem 0
+
+  .header-links
+    gap: 0.5rem
+    list-style: none
+    margin-left: 0
+    padding-left: 0
+
+    li
+      margin: 0
+      border-radius: 0.75rem
+      overflow: hidden
 </style>

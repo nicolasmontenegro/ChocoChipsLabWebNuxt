@@ -2,7 +2,7 @@
 .main-space
   HomeHeader(:homePageData="homePageData")
   HomeAbout(:homePageData="homePageData")
-  HomePortfolio(:homePageData="homePageData")
+  //- HomePortfolio(:homePageData="homePageData")
   HomeBlog(:homePageData="homePageData")
   HomeConnections(:homePageData="homePageData")
 </template>
