@@ -2,8 +2,8 @@
 .columns.entry-header.blog(:class='stylo_class.name')
   .column(:class='stylo_class.cols[0]')
     nuxt-link.simple(v-if='linkable' :to='$localePath(link)')
-      .entry-picture-head(:style='picture_head' :class='stylo')
-    .entry-picture-head(v-else :style='picture_head' :class='stylo')
+      .entry-picture-head(:style='picture_head' :class='stylo_class.name')
+    .entry-picture-head(v-else :style='picture_head' :class='stylo_class.name')
 
   .column.content(:class='stylo_class.cols[1]')
     .pb-2
@@ -65,7 +65,9 @@ export default {
       return asText(this.entry.data.title)
     },
     stylo_class() {
-      const { type = '', responsiveness = '' } = typeof (this.stylo) === 'string' ? { type: this.stylo } : this.stylo
+      const stylo = typeof (this.stylo) === 'string' ? { type: this.stylo } : this.stylo
+      // mini: compact layout, picture beside the text
+      const { type = '', responsiveness = '' } = this.mini ? { type: 'horizontal-mini' } : stylo
       let cols = []
       switch (type) {
         case 'vertical':
@@ -95,5 +97,39 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+.entry-header
+  position: relative
+
+  & > *
+    position: relative
+    z-index: 3
+
+  .entry-picture-head
+    position: relative
+    width: 100%
+    height: 400px
+    border-radius: 10px
+    background-repeat: no-repeat !important
+    background-size: cover !important
+    background-position: center !important
+    z-index: 1
+
+    &.vertical-mini, &.horizontal-mini
+      height: 280px
+
+    // Wider breakpoint first, so the narrower one wins on phones
+    @media screen and (max-width: $desktop)
+      height: 300px
+
+    @media screen and (max-width: $tablet)
+      height: 200px
+
+  // prismic-rich-text's root element, reached by the scoped styles
+  .entry-lead
+    font-size: 120%
+
+  .entry-meta
+    font-size: 80%
+    font-weight: normal
 </style>

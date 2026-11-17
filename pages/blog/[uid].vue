@@ -61,10 +61,8 @@ useHead({
 })
 </script>
 
-<style lang="sass">
-.main .blog
-  .slide
-    padding-bottom: 0
-
-  .logo
-    width: 100%</style>
+<style lang="sass" scoped>
+// .slide is the root of SlicesBlock: scoped styles reach a child component's root
+.blog .slide
+  padding-bottom: 0
+</style>

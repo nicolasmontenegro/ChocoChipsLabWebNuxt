@@ -45,8 +45,9 @@ useHead({
 })
 </script>
 
-<style lang="sass">
-.main .portfolio
+<style lang="sass" scoped>
+// .slide is the root of SlicesBlock: scoped styles reach a child component's root
+.portfolio
   .description
     font-size: 120%
 

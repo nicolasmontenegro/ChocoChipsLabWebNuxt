@@ -1,11 +1,14 @@
 @use '~/assets/css/utils/colors.sass' as *
 
+// Colors of each section (home, blog, about, portfolio, photography). The layout sets the
+// section name as a class on #template, and the loading screen on .loading-page
+
 @mixin transition-fade($attribute)
   transition: $attribute 800ms ease-out
 
 @mixin container($selector, $text-color, $background-color, $link-hover-color)
   .loading-page.#{$selector}, .container.#{$selector}
-    .logo:not(.special) *
+    .logo *
       fill: $text-color
       @include transition-fade(fill)
 
@@ -39,12 +42,6 @@
 
           p
             color: $background-color
-
-    .sectionbar
-      background: $background-color
-
-      .arrow path
-        stroke: $text-color !important
 
     &, h1, h2, h3, h4, h5, h6, a, strong, p
       color: $text-color
@@ -82,31 +79,12 @@
       background-color: $background-color
       @include transition-fade(background-color)
 
-    .photo-slice .img-foot, .lingallery .lingallery_caption
+    .photo-slice .img-foot
       background: darken($background-color, 10%) !important
       color: $text-color !important
 
     .entry-related
       border-color: lighten($background-color, 10%)
-
-    .lingallery .control span, .VueCarousel .VueCarousel-navigation-button
-      color: lighten($text-color, 10%) !important
-      text-shadow: none
-      font-size: 1.25rem
-
-    .VueCarousel .VueCarousel-dot--active
-      background-color: darken($background-color, 20%) !important
-
-    .lingallery .lingallery_thumbnails_content_elem img
-      border-color: darken($background-color, 20%) !important
-      margin-left: 5px
-
-  .entry-header.generic
-    .entry_type > .subtitle.#{$selector}_entry
-      color: $text-color
-      &::before
-        background-color: $background-color
-        border-color: lighten($background-color, 10%)
 
 @include container("blog", $text-color-blog, $background-color-blog, $link-hover-color-blog)
 @include container("home", $text-color-home, $background-color-home, $link-hover-color-home)

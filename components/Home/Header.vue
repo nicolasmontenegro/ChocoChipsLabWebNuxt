@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'EntryHeaderGeneric',
+  name: 'HomeHeader',
   props: {
     homePageData: {
       type: Object,

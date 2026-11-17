@@ -532,7 +532,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .VueHoverfade-enter-active,
 .VueHoverfade-leave-active {
   transition: opacity .5s

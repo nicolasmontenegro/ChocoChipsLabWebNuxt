@@ -52,27 +52,6 @@ $slide-slot: $slide-duration - $slide-overlap
   grid-template-columns: 1fr
   grid-template-rows: 1fr
 
-  // &:hover, &.hover
-  //   .photo-item
-  //     width: 48%
-  //     height: 48%
-
-  //     &.item-1
-  //       top: 0%
-  //       left: 0%
-
-  //     &.item-2
-  //       top: 0%
-  //       left: 52%
-
-  //     &.item-3
-  //       top: 52%
-  //       left: 0%
-
-  //     &.item-4
-  //       top: 52%
-  //       left: 52%
-
   .photo-item
     width: 100%
     height: 100%
@@ -134,20 +113,4 @@ $slide-slot: $slide-duration - $slide-overlap
       transform: scale(0.8) translate(0%, -15%)
       opacity: 0
       z-index: 1
-
-    // &.item-1
-    //   top: 0%
-    //   left: 0%
-
-    // &.item-2
-    //   top: 10%
-    //   left: 10%
-
-    // &.item-3
-    //   top: 20%
-    //   left: 20%
-
-    // &.item-4
-    //   top: 30%
-    //   left: 30%
 </style>

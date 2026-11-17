@@ -43,6 +43,3 @@ onMounted(() => {
 
 useHead({ title: t('sections.portfolio') })
 </script>
-
-<style lang="sass">
-</style>

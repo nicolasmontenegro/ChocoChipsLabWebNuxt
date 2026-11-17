@@ -71,6 +71,3 @@ function formatAlbumDate(date) {
 
 useHead({ title: t('sections.photography') })
 </script>
-
-<style lang="sass">
-</style>

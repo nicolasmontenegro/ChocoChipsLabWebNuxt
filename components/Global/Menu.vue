@@ -92,13 +92,9 @@ onClickOutside(menuColumn, () => {
       :deep(.logo.jar)
         height: 30px !important
 
-    // &:hover, &:focus
-    //   transform: scale(1.15)
-
     p
       font-size: 1.25rem
       white-space: nowrap
-      color: inhere
 
     :deep(.logo.jar)
       height: 50px
@@ -147,9 +143,6 @@ onClickOutside(menuColumn, () => {
         color: inherit
         transition: transform 300ms
 
-        // &:hover, &:focus
-        //   transform: scale(1.15)
-
         .close
           line-height: 1.2rem
           font-size: 3rem
@@ -173,22 +166,6 @@ onClickOutside(menuColumn, () => {
         @media screen and (max-width: $tablet - 1px)
           width: 100%
 
-      // a
-      //   width: 100%
-
     .menu-content
       overflow-y: auto
-</style>
-
-<style lang="sass">
-#template.container
-  .container-content
-    & > div > div > div > *
-      transition: filter 800ms ease-out
-
-    &.is-menu-open > div > div > div > *
-      filter: blur(5px)
-
-html.block-scroll
-  overflow: hidden
 </style>

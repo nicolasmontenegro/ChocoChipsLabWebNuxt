@@ -13,6 +13,12 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
   ],
 
+  // Components used across sections live in Global/ and keep their bare name (<Menu>, <Pagination>, …).
+  // The rest are named after their folder (Photography/ImgZoom.vue → <PhotographyImgZoom>)
+  components: [
+    { path: '~/components/Global', pathPrefix: false },
+    '~/components',
+  ],
   plugins: [
     { src: '~/plugins/postscribe.js', mode: 'client' },
     '~/plugins/fontawesome.js',
@@ -50,7 +56,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         sass: {
-          additionalData: '@use "assets/css/utils/colors.sass" as *\n@use "assets/css/utils/variables.sass" as *\n@use "bulma/sass/utilities/_all.sass" as *\n',
+          additionalData: '@use "assets/css/utils/colors.sass" as *\n@use "bulma/sass/utilities/_all.sass" as *\n',
           loadPaths: [rootDir],
           includePaths: [rootDir],
           // Bulma 0.9.x's own Sass still uses functions Dart Sass is deprecating

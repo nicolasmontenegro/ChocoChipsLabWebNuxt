@@ -23,3 +23,14 @@ const localePath = useLocalePath()
 const head = useDefaultHead()
 useHead(head)
 </script>
+
+<style lang="sass" scoped>
+// Blurs the content behind the open menu (Menu.vue toggles .is-menu-open).
+// :deep because the page content comes from the slot, which has the page's scope
+.container-content
+  & > .column > :deep(div > div > *)
+    transition: filter 800ms ease-out
+
+  &.is-menu-open > .column > :deep(div > div > *)
+    filter: blur(5px)
+</style>

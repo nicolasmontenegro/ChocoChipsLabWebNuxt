@@ -68,6 +68,6 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 nav.pagination > ul.pagination-list
   list-style: none</style>

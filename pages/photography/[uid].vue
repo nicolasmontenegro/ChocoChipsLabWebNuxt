@@ -1,7 +1,7 @@
 <template lang="pug">
 .photography-entry
   .show-space.is-relative(:class="{'panel-is-open': panelIsOpen}")
-    LoadingOverlay(:active="!isLoaded")
+    PhotographyLoadingOverlay(:active="!isLoaded")
     .photo-space.is-flex.is-flex-direction-column.is-relative
       nuxt-link.back-button.p-2(:to="localePath({name: 'photography'})")
         span {{ $t('navigation.back') }}
@@ -11,7 +11,7 @@
           | {{ $t('photography.details.panel.open') }}
           font-awesome-icon.ml-2(icon="info-circle" size="lg" )
       .visor.p-2.is-relative.has-background-black
-        ImgZoom.image-zoom(
+        PhotographyImgZoom.image-zoom(
           v-if="photos.length"
           :regular="photos[currentPhoto].regular"
           :zoom="photos[currentPhoto].zoom"
@@ -215,7 +215,6 @@ html
           transform: rotate(-90deg)
 
     .details-panel
-      // height: 100%
       min-height: 0
       background-color: rgba(0, 0, 0, 0.32)
       overflow: hidden

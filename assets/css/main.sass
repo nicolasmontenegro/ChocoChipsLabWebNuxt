@@ -1,20 +1,20 @@
 @use '~/assets/css/content.sass' as *
-@use '~/assets/css/entry-header.sass' as *
+
+// ----------------------------------------------------------------------------
+// Base
+// ----------------------------------------------------------------------------
 
 html, body
   margin: 0 !important
   padding: 0 !important
   overflow-x: hidden
   overflow-y: auto
-
   font-family: 'Hind', sans-serif
 
   @media screen and (min-width: $tablet)
     font-size: 1.1em
 
-  #__layout
-    overflow: hidden
-
+// Full-screen background of the current section (colored in content.sass)
 #template
   &::before
     content: ''
@@ -30,10 +30,30 @@ h1, h2, h3, h4, h5, h6, .title
   font-family: 'Palanquin Dark', sans-serif
   line-height: 100% !important
 
-// Hover highlight for links. The bar under text is a rounded SVG rect instead of a gradient:
-// border-radius only rounds the element box, which a 60%-tall bar never reaches. The SVG has no
-// viewBox, so it renders at the background-size without stretching and rx stays 5px.
-// box-decoration-break: clone gives each line of a wrapped title its own rounded bar
+// ----------------------------------------------------------------------------
+// Layout helpers
+// ----------------------------------------------------------------------------
+
+.columns
+  flex-wrap: wrap
+  margin-top: inherit !important
+  margin-bottom: inherit !important
+
+.white-space-nowrap
+  &, *
+    white-space: nowrap
+
+// Set on <html> by Menu.vue while the menu is open
+html.block-scroll
+  overflow: hidden
+
+// ----------------------------------------------------------------------------
+// Link hover highlight (colors per section in content.sass)
+// ----------------------------------------------------------------------------
+
+// The bar under text is a rounded SVG rect instead of a gradient: border-radius only rounds the
+// element box, which a 60%-tall bar never reaches. The SVG has no viewBox, so it renders at the
+// background-size without stretching and rx stays 5px
 $link-highlight-bar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' rx='5' fill='white'/%3E%3C/svg%3E")
 
 %link-highlight-text
@@ -47,6 +67,7 @@ $link-highlight-bar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/200
   -webkit-box-decoration-break: slice
 
 a:not(.simple)
+  // Buttons and text-only links: full-height fill
   &.button,
   &:not(:has(*))
     background-image: linear-gradient(#fff, #fff)
@@ -58,20 +79,13 @@ a:not(.simple)
     box-decoration-break: slice
     -webkit-box-decoration-break: slice
 
-  &:not(.button) > *
-    @extend %link-highlight-text
-
-  // &.button
-  //   display: inline-block
-
-  // &.outlined
-  //   border-width: 1px
-
-  //, &:active, &:focus
-
   &:hover.button,
   &:hover:not(:has(*))
     background-size: 100% 100%
+
+  // Links wrapping elements: a bar under the text
+  &:not(.button) > *
+    @extend %link-highlight-text
 
   &:hover:not(.button) > *
     background-size: 100% 60%
@@ -83,25 +97,3 @@ a.simple .link-text > *
 
 a.simple:hover .link-text > *
   background-size: 100% 60%
-
-
-.title-main
-  margin: 2rem
-
-  .title
-    font-size: 3em !important
-
-.columns
-  margin-top: inherit !important
-  margin-bottom: inherit !important
-
-.columns
-  flex-wrap: wrap
-
-.white-space-nowrap
-  &, *
-    white-space: nowrap
-
-  // @media screen and (max-width: $desktop)
-  //   padding-left: $padding-mobile
-  //   padding-right: $padding-mobile
