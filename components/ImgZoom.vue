@@ -1,28 +1,28 @@
-<!-- eslint-disable vue/require-default-prop -->
-<!-- eslint-disable vue/require-default-prop -->
 <!-- eslint-disable vue/no-v-html -->
 <!-- eslint-disable vue/require-v-for-key -->
-<!-- https://github.com/samjonesigd/vue-image-zoomer -->
+<!-- Based on https://github.com/samjonesigd/vue-image-zoomer -->
 <template>
   <div
-    v-click-outside="isZoom"
+    v-click-outside="closeZoom"
     class="vh--outer vh--rel"
   >
     <slot v-if="showSlot && !lazyload" />
     <div
       v-show="!showSlot || lazyload"
-      ref="vue-hover-zs"
+      ref="holder"
       class="vh--holder vh--rel vh--jc"
-      @mouseenter="isZoom(true, 'hover')"
+      :class="{ 'vh--zoomed': zoomed }"
+      @mouseenter="isZoom(true, 'hover', $event)"
       @mouseleave="isZoom(false, 'hover')"
       @mousemove="mousePos"
-      @click="isZoom(!zoomed, 'click')"
+      @click="isZoom(!zoomed, 'click', $event)"
     >
+      <!-- Kept in the layout while zoomed (only hidden) so the holder doesn't change size -->
       <picture
         class="vh--picture-original"
-        :class="{ 'vh--none': zoomed }"
+        :class="{ 'vh--hidden': zoomed }"
       >
-        <template v-for="(breakpoint) in breakpoints">
+        <template v-for="breakpoint in breakpoints">
           <source
             v-if="breakpoint.regularWebp"
             :srcset="breakpoint.regularWebp"
@@ -42,70 +42,37 @@
         >
         <img
           :src="regular"
+          referrerpolicy="no-referrer"
           :loading="lazyload ? 'lazy' : 'eager'"
           :class="imgClass"
           :alt="alt"
           @load="$emit('regular-loaded'), showSlot = false"
+          @error="$emit('regular-error', $event)"
         >
       </picture>
-      <picture
-        v-if="zoomed"
-        class="vh--picture-zoomed"
+      <!-- Stays mounted once loaded, so zooming in again doesn't decode the image again -->
+      <div
+        v-if="loaded"
+        v-show="zoomed"
+        class="vh--picture-zoomed vh--abs"
       >
-        <template v-for="breakpoint in breakpoints">
-          <source
-            v-if="breakpoint.zoomWebp"
-            :srcset="breakpoint.zoomWebp"
-            type="image/webp"
-            :media="'(min-width:' + breakpoint.width + 'px)'"
-          >
-          <source
-            v-else-if="breakpoint.regularWebp"
-            :srcset="breakpoint.regularWebp"
-            type="image/webp"
-            :media="'(min-width:' + breakpoint.width + 'px)'"
-          >
-          <source
-            v-if="breakpoint.zoom"
-            :srcset="breakpoint.zoom"
-            :media="'(min-width:' + breakpoint.width + 'px)'"
-          >
-          <source
-            v-else-if="breakpoint.regular"
-            :srcset="breakpoint.regular"
-            :media="'(min-width:' + breakpoint.width + 'px)'"
-          >
-        </template>
-        <source
-          v-if="options.zoomWebp"
-          :src="options.zoomWebp"
-          type="image/webp"
-        >
         <img
-          :src="options.zoom"
+          :src="zoomSrc"
+          referrerpolicy="no-referrer"
           class="vh--image vh--abs"
-          :style="{ width: `${zoomWidth}px`, transform: touch ? translateMobile : translateDesktop }"
+          :alt="alt"
+          draggable="false"
+          :style="zoomStyle"
         >
-      </picture>
+      </div>
       <transition name="VueHoverfade">
         <div
-          v-if="!zoomed && !loading && !clickZoom && !touch && showMessage"
+          v-if="messageKey"
           class="vh--message vh--abs vh--flex vh--jc vh--ai"
           :class="'vh--message-' + messagePos"
-          v-html="hoverMessage"
-        />
-        <div
-          v-else-if="!zoomed && !loading && !touch && showMessage"
-          class="vh--message vh--abs vh--flex vh--jc vh--ai"
-          :class="'vh--message-' + messagePos"
-          v-html="clickMessage"
-        />
-        <div
-          v-else-if="!zoomed && !loading && touch && showMessageTouch"
-          class="vh--message vh--abs vh--flex vh--jc vh--ai"
-          :class="'vh--message-' + messagePos"
-          v-html="touchMessage"
-        />
+        >
+          {{ $t(messageKey) }}
+        </div>
       </transition>
     </div>
     <transition name="VueHoverfade">
@@ -113,7 +80,7 @@
         v-if="touch && zoomed && loaded"
         class="vh--close vh--abs vh--flex vh--jc vh--ai"
         :class="'vh--' + closePos"
-        @click.stop="zoomed = false"
+        @click.stop="closeZoom"
         v-html="'&times;'"
       />
       <div
@@ -130,14 +97,18 @@
 </template>
 
 <script>
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
+
+const HINT_DURATION = 10000
+// A touch that moves less than this (in px) is a tap, not a drag
+const TAP_MAX_MOVE = 10
+
 export default {
   directives: {
     clickOutside: {
       mounted(el, binding) {
-        el.clickOutsideEvent = function (event) {
-          // here I check that click was outside the el and his childrens
+        el.clickOutsideEvent = (event) => {
           if (!(el === event.target || el.contains(event.target))) {
-            // and if it did, call method provided in attribute value
             binding.value(event)
           }
         }
@@ -179,23 +150,12 @@ export default {
       required: false,
       default: '',
     },
+    // How many times bigger than the displayed image the zoom is. 0 uses the zoom image's natural size.
     zoomAmount: {
       type: Number,
       default: 0,
     },
     clickZoom: Boolean,
-    hoverMessage: {
-      type: String,
-      default: '<span class="vh--icon">&#9906;</span> Hover to zoom',
-    },
-    touchMessage: {
-      type: String,
-      default: '<span class="vh--icon">&#9906;</span> Tap to zoom',
-    },
-    clickMessage: {
-      type: String,
-      default: '<span class="vh--icon">&#9906;</span> Click to zoom',
-    },
     closePos: {
       type: String,
       default: 'top-left',
@@ -217,6 +177,7 @@ export default {
       required: false,
       default: () => [],
     },
+    // Initial zoom position on touch devices, as [x, y] ratios of the image
     touchZoomPos: {
       type: Array,
       default: () => [0.5, 0.5],
@@ -228,295 +189,335 @@ export default {
     },
   },
 
+  emits: ['regular-loaded', 'regular-error', 'zoom-loading', 'zoom-loaded', 'on-zoom', 'off-zoom'],
+
   data() {
     return {
       touch: false,
       zoomed: false,
-      x: 0,
-      y: 0,
-      touchPosition: 0,
-      origX: 0,
-      origY: 0,
-      offsetLeft: 0,
-      offsetTop: 0,
-      zoomWidth: 0,
-      zoomHeight: 0,
-      showSlot: false,
-
-      translateDesktop: '',
-      translateMobile: '',
-
-      options: {
-        zoomAmount: 0,
-        zoom: false,
-        zoomWebp: false,
-      },
-
       loaded: false,
       loading: false,
-      webp_supported: false,
-      cx: 0,
-      cy: 0,
+      // Zoom in as soon as the zoom image finishes loading
+      pendingZoom: false,
+      showSlot: false,
+      // The zoom hint is only shown for the first seconds after the component appears
+      hintExpired: false,
+      webpSupported: false,
+
+      zoomSrc: '',
+      naturalWidth: 0,
+      naturalHeight: 0,
+
+      // Size of the holder and of the zoomed image, in px
+      origX: 0,
+      origY: 0,
+      zoomWidth: 0,
+      zoomHeight: 0,
+
+      // Translation of the zoomed image, in px
+      panX: 0,
+      panY: 0,
+      // Last pointer position inside the holder, in px
+      pointerX: 0,
+      pointerY: 0,
     }
   },
 
   computed: {
-    propChanges() {
-      return `${this.breakpoints}|${this.regular}|${this.regularWebp}|${this.zoom}|${this.zoomAmount}|${this.zoomWebp}
-        |${this.lazyload}`
+    messageKey() {
+      if (this.hintExpired || this.zoomed || this.loading) {
+        return null
+      }
+      if (this.touch) {
+        return this.showMessageTouch ? 'photography.zoom.touchMessage' : null
+      }
+      if (!this.showMessage) {
+        return null
+      }
+      return this.clickZoom ? 'photography.zoom.clickMessage' : 'photography.zoom.hoverMessage'
+    },
+    sourceChanges() {
+      return `${JSON.stringify(this.breakpoints)}|${this.regular}|${this.regularWebp}|${this.zoom}|${this.zoomWebp}|${this.zoomAmount}`
+    },
+    zoomStyle() {
+      return {
+        width: `${this.zoomWidth}px`,
+        height: `${this.zoomHeight}px`,
+        transform: `translate3d(${this.panX}px, ${this.panY}px, 0)`,
+      }
     },
   },
 
   watch: {
-    propChanges() {
-      this.get_options()
+    sourceChanges() {
+      this.reset()
     },
   },
-  created() {
-  },
+
   mounted() {
-    window.addEventListener('resize', this.debounce(() => { this.resize() }, 500))
+    // Devices whose main pointer can't hover (phones, tablets). Touchscreen laptops keep the mouse behaviour.
+    this.touch = window.matchMedia('(hover: none)').matches
 
-    this.check_webp_feature('lossy', function (feature, isSupported) {
-      if (isSupported) {
-        this.webp_supported = true
-      }
-    }.bind(this))
+    this.checkWebp((supported) => {
+      this.webpSupported = supported
+    })
 
-    this.get_options()
-
-    // check if touch screen
-    if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-      this.touch = true
-    }
-    let sx, sy
-    // touch start
-    this.$refs['vue-hover-zs'].addEventListener('touchstart', function (e) {
+    this.onResize = this.debounce(() => {
       if (this.zoomed) {
-        if (e.cancelable) {
-          e.preventDefault()
-        }
-        const touchmovement = e.changedTouches[0]
-        sx = touchmovement.pageX - this.cx
-        sy = touchmovement.pageY - this.cy
+        this.measure()
+        this.panTo(this.pointerX, this.pointerY)
       }
-    }.bind(this))
+    }, 150)
+    window.addEventListener('resize', this.onResize)
 
-    // drag zoom if touch device
-    this.$refs['vue-hover-zs'].addEventListener('touchmove', function (e) {
-      if (this.zoomed) {
-        const touchmovement = e.changedTouches[0]
+    // passive: false so dragging the zoomed image doesn't scroll the page
+    const holder = this.$refs.holder
+    holder.addEventListener('touchstart', this.onTouchStart, { passive: false })
+    holder.addEventListener('touchmove', this.onTouchMove, { passive: false })
+    holder.addEventListener('touchend', this.onTouchEnd)
 
-        this.x = touchmovement.pageX - sx
-        this.y = touchmovement.pageY - sy
-
-        if (this.x <= (this.origX * -1)) {
-          this.x = this.origX * -1
-        }
-        if (touchmovement.pageX - sx >= 0) {
-          this.x = -1
-        }
-        if (this.y <= (this.origY * -1)) {
-          this.y = this.origY * -1
-        }
-        if (touchmovement.pageY - sy >= 0) {
-          this.y = -1
-        }
-
-        this.translateMobile = this.stringTranslate(this.x * -1, this.y * -1, true)
-      }
-    }.bind(this))
-
-    // end touch
-    this.$refs['vue-hover-zs'].addEventListener('touchend', function (e) {
-      if (this.zoomed) {
-        const touchmovement = e.changedTouches[0]
-        this.cx = touchmovement.pageX - sx
-        this.cy = touchmovement.pageY - sy
-      }
-    }.bind(this))
+    this.hintTimeout = setTimeout(() => {
+      this.hintExpired = true
+    }, HINT_DURATION)
   },
-  unmounted() {
-    window.removeEventListener('resize', this.resize())
+
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize)
+    const holder = this.$refs.holder
+    holder.removeEventListener('touchstart', this.onTouchStart)
+    holder.removeEventListener('touchmove', this.onTouchMove)
+    holder.removeEventListener('touchend', this.onTouchEnd)
+    cancelAnimationFrame(this.frame)
+    clearTimeout(this.hintTimeout)
   },
 
   methods: {
     debounce(callback, wait) {
       let timeout
       return (...args) => {
-        const context = this
         clearTimeout(timeout)
-        timeout = setTimeout(() => callback.apply(context, args), wait)
+        timeout = setTimeout(() => callback(...args), wait)
       }
     },
-    get_options() {
-      this.options.zoomAmount = this.zoomAmount
-      this.options.zoom = this.zoom
-      this.options.zoomWebp = this.zoomWebp
 
-      if (!this.zoom) {
-        this.options.zoom = this.regular
-        this.options.zoomAmount = 2
-      }
-
-      if (!this.zoomWebp && this.regularWebp) {
-        this.options.zoomWebp = this.regularWebp
-        this.options.zoomAmount = 2
-      }
-      this.resize()
-    },
-    resize() {
+    reset() {
       this.zoomed = false
       this.loaded = false
+      this.loading = false
+      this.pendingZoom = false
+      this.zoomSrc = ''
     },
-    check_webp_feature(feature, callback) {
-      const kTestImages = {
-        lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
-      }
-      const img = new Image()
-      img.onload = function () {
-        const result = (img.width > 0) && (img.height > 0)
-        callback(feature, result)
-      }
-      img.onerror = function () {
-        callback(feature, false)
-      }
-      img.src = 'data:image/webp;base64,' + kTestImages[feature]
-    },
-    loadImage(src, callback) {
-      const sprite = new Image()
-      sprite.onload = callback
-      sprite.src = src
-    },
-    loadZoom() {
-      // get width and height of container
-      this.offset()
 
-      // set zoom width if zoom amount option applied
-      if (this.options.zoomAmount !== 0) {
-        this.zoomWidth = this.origX * this.options.zoomAmount
-        this.zoomHeight = this.origY * this.options.zoomAmount
-        if (this.touch) {
-          this.mobilePos()
+    checkWebp(callback) {
+      const img = new Image()
+      img.onload = () => callback(img.width > 0 && img.height > 0)
+      img.onerror = () => callback(false)
+      img.src = 'data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA'
+    },
+
+    // Zoom image for the current screen width, following the breakpoints
+    pickZoomSrc() {
+      const useWebp = this.webpSupported && (this.zoomWebp || this.regularWebp)
+      let src = useWebp ? (this.zoomWebp || this.regularWebp) : (this.zoom || this.regular)
+      this.breakpoints.forEach((item) => {
+        if (window.innerWidth >= item.width) {
+          src = useWebp ? (item.zoomWebp || item.regularWebp || src) : (item.zoom || item.regular || src)
+        }
+      })
+      return src
+    },
+
+    async loadZoom() {
+      const src = this.pickZoomSrc()
+      if (!src || this.loading) {
+        return
+      }
+      this.loading = true
+      this.$emit('zoom-loading')
+
+      const image = new Image()
+      image.referrerPolicy = 'no-referrer'
+      image.src = src
+      try {
+        // Decode before showing it, so the zoom doesn't flash an empty frame
+        await image.decode()
+      }
+      catch {
+        // Still usable if decode() isn't supported; if the image failed, nothing is shown
+        if (!image.naturalWidth) {
+          this.loading = false
+          this.pendingZoom = false
+          return
         }
       }
 
-      // only do this if we havent loaded the zoom before
-      if (!this.loaded) {
-        this.zoomLoad()
+      // Another photo was selected while this one was loading
+      if (src !== this.pickZoomSrc()) {
+        this.loading = false
+        return
+      }
+
+      this.zoomSrc = src
+      this.naturalWidth = image.naturalWidth
+      this.naturalHeight = image.naturalHeight
+      this.loaded = true
+      this.loading = false
+      this.$emit('zoom-loaded')
+
+      if (this.pendingZoom) {
+        this.pendingZoom = false
+        this.zoomIn()
+      }
+    },
+
+    measure() {
+      const rect = this.$refs.holder.getBoundingClientRect()
+      this.origX = rect.width
+      this.origY = rect.height
+
+      if (this.zoomAmount > 0) {
+        // Scale of the image as shown (object-fit: contain), times the zoom amount
+        const fitScale = Math.min(this.origX / this.naturalWidth, this.origY / this.naturalHeight)
+        this.zoomWidth = this.naturalWidth * fitScale * this.zoomAmount
+        this.zoomHeight = this.naturalHeight * fitScale * this.zoomAmount
       }
       else {
-        this.zoomed = true
-        // get zoom amount for default zoom again as screen size may have changed
-        if (this.options.zoomAmount === 0) {
-          this.options.zoomAmount = this.zoomWidth / this.origX
-        }
+        this.zoomWidth = this.naturalWidth
+        this.zoomHeight = this.naturalHeight
       }
     },
-    zoomLoad() {
-      if (!this.clickZoom || this.touch) {
-        this.loading = true
-        this.$emit('zoom-loading')
+
+    // Moves the zoomed image so the point under (x, y) of the holder lines up with the same point of the image.
+    // An axis where the zoomed image is smaller than the holder stays centered.
+    panTo(x, y) {
+      const ratioX = this.origX ? clamp(x / this.origX, 0, 1) : 0.5
+      const ratioY = this.origY ? clamp(y / this.origY, 0, 1) : 0.5
+      this.panX = this.zoomWidth > this.origX ? -(this.zoomWidth - this.origX) * ratioX : (this.origX - this.zoomWidth) / 2
+      this.panY = this.zoomHeight > this.origY ? -(this.zoomHeight - this.origY) * ratioY : (this.origY - this.zoomHeight) / 2
+    },
+
+    zoomIn() {
+      this.measure()
+      if (this.touch) {
+        this.panTo(this.origX * this.touchZoomPos[0], this.origY * this.touchZoomPos[1])
       }
-      // load zoom image
-      let zoomToLoad = this.options.zoom
-      if (this.breakpoints) {
-        this.breakpoints.forEach(function (item, index) {
-          if (window.innerWidth >= item.width) {
-            if (item.zoom) {
-              zoomToLoad = item.zoom
-            }
-            else {
-              zoomToLoad = item.regular
-            }
-          }
+      else {
+        this.panTo(this.pointerX, this.pointerY)
+      }
+      this.zoomed = true
+    },
+
+    closeZoom() {
+      this.pendingZoom = false
+      if (this.zoomed) {
+        this.zoomed = false
+        this.$emit('off-zoom')
+      }
+    },
+
+    updatePointer(event) {
+      const rect = this.$refs.holder.getBoundingClientRect()
+      this.pointerX = event.clientX - rect.left
+      this.pointerY = event.clientY - rect.top
+    },
+
+    isZoom(type, action, event) {
+      // Some browsers still send the click after a tap that already zoomed out; don't zoom back in
+      if (action === 'click' && Date.now() - (this.lastTapClose ?? 0) < 500) {
+        return
+      }
+      const hoverAction = action === 'hover' && !this.clickZoom && !this.touch
+      const clickAction = action === 'click' && (this.clickZoom || this.touch)
+      if (!hoverAction && !clickAction) {
+        return
+      }
+
+      if (type !== true) {
+        this.closeZoom()
+        return
+      }
+
+      if (event) {
+        this.updatePointer(event)
+      }
+      this.$emit('on-zoom')
+      if (this.loaded) {
+        this.zoomIn()
+      }
+      else {
+        this.pendingZoom = true
+        this.loadZoom()
+      }
+    },
+
+    mousePos(event) {
+      if (this.touch) {
+        return
+      }
+      this.updatePointer(event)
+
+      // Start loading the zoom image as soon as the pointer is over the photo
+      if (!this.loaded) {
+        this.loadZoom()
+        return
+      }
+
+      // Update at most once per frame
+      if (this.zoomed && !this.frame) {
+        this.frame = requestAnimationFrame(() => {
+          this.frame = null
+          this.panTo(this.pointerX, this.pointerY)
         })
       }
-      if (this.webp_supported && this.options.zoomWebp) {
-        zoomToLoad = this.options.zoomWebp
-        if (this.breakpoints) {
-          this.breakpoints.forEach(function (item, index) {
-            if (window.innerWidth >= item.width) {
-              if (item.zoomWebp) {
-                zoomToLoad = item.zoomWebp
-              }
-              else {
-                zoomToLoad = item.regularWebp
-              }
-            }
-          })
-        }
-      }
-      this.loadImage(zoomToLoad, function (src) {
-        if (this.options.zoomAmount === 0) {
-          // if zoom amount not set, work it out from loaded zoom image width
-          this.zoomWidth = src.target.width
-          this.zoomHeight = src.target.height
-          this.options.zoomAmount = src.target.width / this.origX
-        }
-        this.loaded = true
-        this.loading = false
-        this.$emit('zoom-loaded')
-        if (!this.clickZoom || this.touch) {
-          this.zoomed = true
-          this.mobilePos()
-        }
-      }.bind(this))
     },
-    isZoom(type, action) {
-      if ((action === 'hover' && !this.clickZoom && !this.touch) || (action === 'click' && (this.clickZoom || this.touch)) || !action) {
-        // set zoomed to false
-        this.zoomed = false
 
-        // if true passed load the zoom image
-        if (type === true) {
-          this.loadZoom()
-          this.$emit('on-zoom')
-        }
-        else {
-          this.$emit('off-zoom')
-        }
+    onTouchStart(event) {
+      if (!this.zoomed) {
+        return
+      }
+      if (event.cancelable) {
+        event.preventDefault()
+      }
+      const touch = event.changedTouches[0]
+      this.touchStart = {
+        x: touch.clientX,
+        y: touch.clientY,
+        panX: this.panX,
+        panY: this.panY,
+        // A second finger (e.g. a pinch) is never a tap
+        moved: event.touches.length > 1,
       }
     },
-    mobilePos() {
-      // let X = (this.zoomWidth - this.origX) * this.touchZoomPos[0]
-      // let Y = (this.zoomHeight - this.origY) * this.touchZoomPos[1]
-      // if (this.touchZoomPos[0] > 1 || this.touchZoomPos[0] < 0 || this.touchZoomPos[1] > 1 || this.touchZoomPos[1] < 0) {
-      //   X = 0
-      //   Y = 0
-      // }
-      // this.cx = -X; this.cy = -Y; this.x = -X; this.y = -Y
-      // this.touchPosition = 'translate3d(-' + X + 'px,-' + Y + 'px,0)'
 
-      this.translateMobile = this.stringTranslate(this.origX / 2, this.origY / 2, true)
-    },
-    offset() {
-      this.origX = parseFloat(this.$refs['vue-hover-zs'].offsetWidth)
-      this.origY = parseFloat(this.$refs['vue-hover-zs'].offsetHeight)
-    },
-    mousePos(e) {
-      // get offset of container
-      this.offsetLeft = window.pageXOffset + this.$refs['vue-hover-zs'].getBoundingClientRect().left
-      this.offsetTop = window.pageYOffset + this.$refs['vue-hover-zs'].getBoundingClientRect().top
-      // set x and y of mouse in the container for the transform in style bind
-      if (!this.touch && !this.loading) {
-        if (!this.loaded) {
-          this.offset()
-          this.zoomLoad()
-        }
-        else {
-          this.translateDesktop = this.stringTranslate(e.layerX, e.layerY, false)
-        }
+    onTouchMove(event) {
+      if (!this.zoomed || !this.touchStart) {
+        return
+      }
+      if (event.cancelable) {
+        event.preventDefault()
+      }
+      const touch = event.changedTouches[0]
+      if (Math.hypot(touch.clientX - this.touchStart.x, touch.clientY - this.touchStart.y) > TAP_MAX_MOVE) {
+        this.touchStart.moved = true
+      }
+      // Drag the image with the finger, without showing past its edges
+      if (this.zoomWidth > this.origX) {
+        this.panX = clamp(this.touchStart.panX + touch.clientX - this.touchStart.x, this.origX - this.zoomWidth, 0)
+      }
+      if (this.zoomHeight > this.origY) {
+        this.panY = clamp(this.touchStart.panY + touch.clientY - this.touchStart.y, this.origY - this.zoomHeight, 0)
       }
     },
-    stringTranslate(x, y, hasZ) {
-      const transX = `${((x - (this.origX / 2)) / this.origX) * -80}`
-      const transY = `${((y - (this.origY / 2)) / this.origY) * -80}`
 
-      return hasZ ? `translate3d(${transX}%, ${transY}%, 0)` : `translate(${transX}%, ${transY}%)`
+    // touchstart cancels the click while zoomed (so dragging doesn't scroll the page), so a tap zooms out here
+    onTouchEnd() {
+      if (this.zoomed && this.touchStart && !this.touchStart.moved) {
+        this.lastTapClose = Date.now()
+        this.closeZoom()
+      }
+      this.touchStart = null
     },
   },
-
 }
 </script>
 
@@ -526,7 +527,7 @@ export default {
   transition: opacity .5s
 }
 
-.VueHoverfade-enter,
+.VueHoverfade-enter-from,
 .VueHoverfade-leave-to {
   opacity: 0
 }
@@ -656,9 +657,8 @@ export default {
   height: 70px
 }
 
-.vh--none {
-  opacity: 0;
-  display: none !important;
+.vh--hidden {
+  visibility: hidden;
 }
 
 .vh--picture-original {
@@ -676,17 +676,23 @@ export default {
   object-fit: contain;
 }
 
+.vh--zoomed {
+  cursor: zoom-out;
+}
+
 .vh--picture-zoomed {
-  position: relative;
-  display: block;
-  width: auto;
-  height: inherit;
+  inset: 0;
+  overflow: hidden;
 
   .vh--image {
-    height: fit-content;
-    max-width: inherit;
-    transform-origin: center center;
-    inset: -100%;
+    top: 0;
+    left: 0;
+    max-width: none;
+    max-height: none;
+    transform-origin: 0 0;
+    will-change: transform;
+    user-select: none;
+    pointer-events: none;
   }
 }
 

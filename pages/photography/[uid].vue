@@ -1,7 +1,7 @@
 <template lang="pug">
 .photography-entry
   .show-space.is-relative(:class="{'panel-is-open': panelIsOpen}")
-    LoadingOverlay(:active="isLoading")
+    LoadingOverlay(:active="!isLoaded")
     .photo-space.is-flex.is-flex-direction-column.is-relative
       nuxt-link.back-button.p-2(:to="localePath({name: 'photography'})")
         span {{ $t('navigation.back') }}
@@ -12,43 +12,45 @@
           font-awesome-icon.ml-2(icon="info-circle" size="lg" )
       .visor.p-2.is-relative.has-background-black
         ImgZoom.image-zoom(
-          :regular="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?fit=clip&h=800&w=800&q=70`"
-          :zoom="`${entry.data.body[0].items[currentPhoto].gallery_image.url}?q=70`"
+          v-if="photos.length"
+          :regular="photos[currentPhoto].regular"
+          :zoom="photos[currentPhoto].zoom"
           :zoom-amount="3"
           :click-zoom="true"
-          :hoverMessage="$t('photography.zoom.hoverMessage')"
-          :touchMessage="$t('photography.zoom.touchMessage')"
-          :clickMessage="$t('photography.zoom.clickMessage')"
-          @regular-loaded="isLoaded.img = true")
+          @regular-loaded="isLoaded = true"
+          @regular-error="retryDriveImage")
     .details-panel.is-flex.is-flex-direction-column
       .metadata
-        p.title.is-5.mx-5.mt-4
-          font-awesome-icon.mr-2(icon="info-circle" size="lg" )
+        p.title.is-5.mx-5.mt-4.mb-2
+          font-awesome-icon.mr-2(icon="camera" size="lg" )
           | {{ $t('photography.details.metadata.title') }}
         .columns.mx-3.mb-4
-          template(v-if="currentPhotoMetadata.Exif")
-            .column.is-6
-              p.has-text-weight-bold {{ $t('photography.details.metadata.exposure') }}
-              p {{ exposureTime(currentPhotoMetadata.Exif.ExposureTime) }} seg
-            .column.is-6
-              p.has-text-weight-bold {{ $t('photography.details.metadata.focal_length') }}
-              p {{ currentPhotoMetadata.Exif.FocalLength }} mm
-            .column.is-6
-              p.has-text-weight-bold {{ $t('photography.details.metadata.aperture') }}
-              p ƒ/{{ currentPhotoMetadata.Exif.FNumber }}
-            .column.is-6
-              p.has-text-weight-bold {{ $t('photography.details.metadata.iso') }}
-              p {{ currentPhotoMetadata.Exif.ISOSpeedRatings[0] }}
-            .column.is-12
-              p.has-text-weight-bold {{ $t('photography.details.metadata.date') }}
-              p {{ currentPhotoMetadata.Exif.DateTimeOriginal }}
-          template(v-if="currentPhotoMetadata.TIFF")
-            .column.is-12
-              p.has-text-weight-bold {{ $t('photography.details.metadata.model') }}
-              p {{ currentPhotoMetadata.TIFF.Model }}
-            .column.is-12
-              p.has-text-weight-bold {{ $t('photography.details.metadata.software') }}
-              p {{ currentPhotoMetadata.TIFF.Software }}
+          .column.is-6(v-if="currentPhotoMetadata.exposureTime")
+            p.has-text-weight-bold {{ $t('photography.details.metadata.exposure') }}
+            p {{ currentPhotoMetadata.exposureTime }}
+          .column.is-6(v-if="currentPhotoMetadata.aperture")
+            p.has-text-weight-bold {{ $t('photography.details.metadata.aperture') }}
+            p {{ currentPhotoMetadata.aperture }}
+          .column.is-6(v-if="currentPhotoMetadata.iso")
+            p.has-text-weight-bold {{ $t('photography.details.metadata.iso') }}
+            p {{ currentPhotoMetadata.iso }}
+          .column.is-6(v-if="cameraModel")
+            p.has-text-weight-bold {{ $t('photography.details.metadata.model') }}
+            p {{ cameraModel }}
+          .column.is-12(v-if="currentPhotoMetadata.dateTimeOriginal")
+            p.has-text-weight-bold {{ $t('photography.details.metadata.date') }}
+            p {{ formatExifDate(currentPhotoMetadata.dateTimeOriginal) }}
+
+        template(v-if="currentLinks.length")
+          p.title.is-5.mx-5.mt-6.mb-3
+            font-awesome-icon.mr-2(icon="info" size="lg" )
+            | {{ $t('photography.details.moreInfo') }}
+          ul.photo-links.mx-5.mt-4
+            li.mb-2(v-for="link in currentLinks" :key="link.url")
+              a.button.is-ghost.outlined.is-fullwidth(:href="link.url" target="_blank" rel="noopener noreferrer")
+                font-awesome-icon.mr-2(v-if="link.icon" :icon="link.icon" size="lg")
+                strong {{ link.label }} &#8599;
+
       a.simple.toggle-panel-button.px-5.py-2.is-relative(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen")
         font-awesome-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
         span {{ $t(panelIsOpen ? 'photography.details.panel.close' : 'photography.details.panel.open') }}
@@ -56,8 +58,13 @@
     .column.is-12
       .thumbnails-list.p-2.is-flex.is-flex-direction-row.is-justify-content-flex-start.is-align-content-center
         img.is-clickable.mx-2(
-          v-for="(picture, index) in entry.data.body[0].items"
-          :src="`${picture.gallery_image.url}?ar=1:1&fit=crop&h=100&w=100&q=30`"
+          v-for="(picture, index) in photos"
+          :key="picture.id"
+          :src="picture.thumbnail"
+          :alt="picture.filename"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          @error="retryDriveImage"
           @click="currentPhoto = index"
           :class="{'selected': currentPhoto === index}")
 </template>
@@ -74,7 +81,7 @@ const route = useRoute()
 const localePath = useLocalePath()
 
 const { data: entry, error: fetchError } = await useAsyncData(`photography-${route.params.uid}`, () => {
-  return $prismic.client.getByUID('photography_entry', route.params.uid, { lang: iso.value })
+  return $prismic.client.getByUID('photography_gdrive_entry', route.params.uid, { lang: iso.value })
 })
 
 if (fetchError.value) {
@@ -82,36 +89,39 @@ if (fetchError.value) {
 }
 
 const currentPhoto = ref(0)
-const currentPhotoMetadata = ref({})
 const panelIsOpen = ref(true)
-const isLoaded = reactive({ img: false, meta: false })
+const isLoaded = ref(false)
 
+const photos = computed(() => parseGdrivePhotos(entry.value?.data.photo_ids)
+  .map(photo => ({
+    ...photo,
+    regular: driveImage(photo.id, 'w1200-h1200'),
+    zoom: driveImage(photo.id, 'w2400-h2400'),
+    thumbnail: driveImage(photo.id, 'w100-h100-c'),
+  })))
+
+const currentLinks = computed(() => photos.value[currentPhoto.value]?.links ?? [])
+const currentPhotoMetadata = computed(() => photos.value[currentPhoto.value]?.exif ?? {})
+const cameraModel = computed(() => {
+  const { cameraMake: make, cameraModel: model } = currentPhotoMetadata.value
+  return make && model && !model.toLowerCase().startsWith(make.toLowerCase()) ? `${make} ${model}` : model
+})
 const title = computed(() => entry.value ? asText(entry.value.data.title) : t('sections.photography'))
-const isLoading = computed(() => !(isLoaded.img && isLoaded.meta))
 
-async function loadMetadata() {
-  isLoaded.img = false
-  isLoaded.meta = false
+watch(currentPhoto, () => {
+  isLoaded.value = false
+})
 
-  if (entry.value) {
-    const url = new URL(entry.value.data.body[0].items[currentPhoto.value].gallery_image.url)
-    for (const key of url.searchParams.keys()) {
-      url.searchParams.delete(key)
-    }
-    url.searchParams.set('fm', 'json')
-    await fetch(url)
-      .then(res => res.json())
-      .then((resJson) => {
-        currentPhotoMetadata.value = resJson
-      })
+// EXIF dates are written as "2023:11:12 04:30:10"
+function formatExifDate(date) {
+  const match = date.match(/^(\d{4}):(\d{2}):(\d{2})/)
+  if (!match) {
+    return date
   }
-  isLoaded.meta = true
-}
-
-watch(currentPhoto, loadMetadata, { immediate: true })
-
-function exposureTime(time) {
-  return time > 0.25 ? `${time}`.toFixed(1).replace('.', '"') : `1/${1 / time}`
+  const [, year, month, day] = match.map(Number)
+  // UTC on both sides so the day doesn't shift with the visitor's timezone
+  return new Intl.DateTimeFormat(iso.value, { dateStyle: 'long', timeZone: 'UTC' })
+    .format(new Date(Date.UTC(year, month - 1, day)))
 }
 
 useHead({ title })

@@ -59,6 +59,7 @@ export default {
         close: 'Ocultar info',
         open: 'Ver info',
       },
+      moreInfo: 'Acerca de la foto',
     },
     zoom: {
       hoverMessage: 'Pasa el mouse para acercar zoom',

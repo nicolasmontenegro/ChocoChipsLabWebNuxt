@@ -38,6 +38,13 @@ export default {
       Freelance: 'Freelance',
     },
   },
+  photography: {
+    zoom: {
+      hoverMessage: 'Hover to zoom',
+      touchMessage: 'Tap to zoom',
+      clickMessage: 'Click to zoom',
+    },
+  },
   slices: {
     photo: {
       source: 'Source',

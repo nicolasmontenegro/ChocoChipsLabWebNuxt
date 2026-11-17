@@ -15,7 +15,7 @@ export default function (doc) {
     return '/portfolio/' + doc.uid
   }
 
-  if (doc.type === 'photography_entry') {
+  if (doc.type === 'photography_gdrive_entry') {
     return '/photography/' + doc.uid
   }
 

@@ -2,16 +2,18 @@
 .photography
   .columns
     .column.is-12-tablet.is-12-desktop.is-6-widescreen(v-for='entry in photographyPosts' :key="entry.id")
+      //- One link for the photos and the title; only the title gets the link effect
       nuxt-link.simple(:to='localePath(link(entry))')
-        PhotographyStack.mb-3(:photos="photosSlice (entry)")
-      nuxt-link(:to='localePath(link(entry))')
-        prismic-rich-text.mb-3(:field='entry.data.title')
-      prismic-rich-text(:field='entry.data.description')
+        PhotographyStack.mb-3(:photos="photosSlice(entry)")
+        prismic-rich-text.link-text.mb-3(:field='entry.data.title')
+      p.has-text-grey-light.mb-3(v-if='entry.data.album_date') {{ formatAlbumDate(entry.data.album_date) }}
+      prismic-rich-text(v-if='isFilled.richText(entry.data.description)' :field='entry.data.description')
 
   pagination(:currentPage='pagination.currentPage' :totalPageCount='pagination.totalPageCount')
 </template>
 
 <script setup>
+import { isFilled } from '@prismicio/client'
 import linkResolver from '~/prismic/linkResolver'
 
 const { $prismic } = useNuxtApp()
@@ -24,9 +26,12 @@ const page = computed(() => route.query.page || 1)
 
 const { data: photographyQuery, error: fetchError } = await useAsyncData('photography-index', () => {
   return $prismic.client.get({
-    filters: [$prismic.filter.at('document.type', 'photography_entry')],
+    filters: [$prismic.filter.at('document.type', 'photography_gdrive_entry')],
     lang: iso.value,
-    orderings: { field: 'document.first_publication_date', direction: 'desc' },
+    orderings: [
+      { field: 'my.photography_gdrive_entry.album_date', direction: 'desc' },
+      { field: 'document.first_publication_date', direction: 'desc' },
+    ],
     pageSize: 10,
     page: page.value,
   })
@@ -53,13 +58,15 @@ function link(entry) {
 }
 
 function photosSlice(entry) {
-  return entry.data.body[0].items.slice(0, 4).map((photo) => {
-    const url = new URL(photo.gallery_image.url)
-    url.searchParams.append('fit', 'crop')
-    url.searchParams.append('ar', '1')
-    url.searchParams.append('h', '700')
-    return url.toString()
-  })
+  return parseGdrivePhotos(entry.data.photo_ids)
+    .slice(0, 4)
+    .map(({ id }) => driveImage(id, 'w400-h400-c'))
+}
+
+// Prismic dates are "YYYY-MM-DD"; UTC so the day doesn't shift with the visitor's timezone
+function formatAlbumDate(date) {
+  return new Intl.DateTimeFormat(iso.value, { dateStyle: 'long', timeZone: 'UTC' })
+    .format(new Date(`${date}T00:00:00Z`))
 }
 
 useHead({ title: t('sections.photography') })
