@@ -6,7 +6,8 @@
   .connections-content
     .columns.connections-content-twitch.pb-4
       .column.is-4
-        prismic-rich-text.mb-5(:field="homePageData.conection_embed_title")
+        .mb-5
+          prismic-rich-text(:field="homePageData.conection_embed_title")
         prismic-rich-text(:field="homePageData.conection_embed_body")
       .column.is-8
         iframe(:src="homePageData.conection_embed_frame.embed_url" frameborder="0" allowfullscreen="true" scrolling="no")

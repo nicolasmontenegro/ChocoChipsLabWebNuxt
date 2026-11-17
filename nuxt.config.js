@@ -4,11 +4,16 @@ import { defineNuxtConfig } from 'nuxt/config'
 const rootDir = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineNuxtConfig({
+  // Pins the behaviour of Nuxt/Nitro features that change by date
+  compatibilityDate: '2026-11-17',
+
+  // Nuxt 4 defaults to an app/ folder; this project keeps its folders (pages/, components/, …) at the root
+  srcDir: '.',
 
   modules: [
     '@nuxtjs/prismic',
     '@nuxtjs/i18n',
-    '@nuxtjs/google-fonts',
+    '@nuxt/fonts',
     '@pinia/nuxt',
     '@nuxt/eslint',
   ],
@@ -30,7 +35,7 @@ export default defineNuxtConfig({
       titleTemplate: '%s - NicoChocoChips',
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+        { key: 'description', name: 'description', content: process.env.npm_package_description || '' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -74,13 +79,16 @@ export default defineNuxtConfig({
     },
   },
 
-  googleFonts: {
-    families: {
-      'Roboto': true,
-      'Palanquin+Dark': [400, 500, 600, 700],
-      'Hind': [300, 400, 600],
+  // Fonts are downloaded at build time and served from the site (no requests to Google from visitors).
+  // Only families used in the CSS are loaded
+  fonts: {
+    defaults: {
+      display: 'swap',
     },
-    display: 'swap',
+    families: [
+      { name: 'Palanquin Dark', provider: 'google', weights: [400, 500, 600, 700] },
+      { name: 'Hind', provider: 'google', weights: [300, 400, 600] },
+    ],
   },
 
   i18n: {
@@ -99,9 +107,15 @@ export default defineNuxtConfig({
     langDir: 'lang/',
   },
 
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
+
   prismic: {
     endpoint: 'https://chocochips-lab-blog.cdn.prismic.io/api/v2',
     linkResolver: '~/prismic/linkResolver',
-    richTextSerializer: '~/prismic/richTextSerializer',
+    components: {
+      richTextComponents: '~/prismic/richTextComponents',
+    },
   },
 })

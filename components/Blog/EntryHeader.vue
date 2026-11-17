@@ -11,7 +11,8 @@
         h2.title.is-2.m-0.entry-title {{ title }}
       h2.title.is-2.m-0.entry-title(v-if='!linkable') {{ title }}
 
-    prismic-rich-text.mb-3(class='entry-lead' :field='entry.data.lead')
+    .entry-lead.mb-3
+      prismic-rich-text(:field='entry.data.lead')
 
     p.entry-meta
       span {{ $t('blog.published', {date: toLocalDate(entry.first_publication_date)}) }}
@@ -125,7 +126,6 @@ export default {
     @media screen and (max-width: $tablet)
       height: 200px
 
-  // prismic-rich-text's root element, reached by the scoped styles
   .entry-lead
     font-size: 120%
 

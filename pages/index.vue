@@ -8,13 +8,15 @@
 </template>
 
 <script setup>
+import { filter } from '@prismicio/client'
+
 const { $prismic } = useNuxtApp()
 const iso = usePrismicLocale()
 const navegationStore = useNavegationStore()
 
 const { data: homePageData, error: fetchError } = await useAsyncData('homepage', async () => {
   const pageData = await $prismic.client.get({
-    filters: [$prismic.filter.at('document.type', 'homepage')],
+    filters: [filter.at('document.type', 'homepage')],
     lang: iso.value,
     pageSize: 1,
     page: 1,

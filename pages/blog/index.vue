@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+import { filter } from '@prismicio/client'
+
 const { $prismic } = useNuxtApp()
 const { t } = useI18n()
 const iso = usePrismicLocale()
@@ -17,7 +19,7 @@ const page = computed(() => route.query.page || 1)
 
 const { data: blogQuery, error: fetchError } = await useAsyncData('blog-index', () => {
   return $prismic.client.get({
-    filters: [$prismic.filter.at('document.type', 'blog_entry')],
+    filters: [filter.at('document.type', 'blog_entry')],
     lang: iso.value,
     orderings: { field: 'document.first_publication_date', direction: 'desc' },
     pageSize: 10,

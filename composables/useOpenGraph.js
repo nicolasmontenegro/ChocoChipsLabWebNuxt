@@ -5,12 +5,12 @@ export const useOpenGraph = ({ twitter = true, title, description, image, articl
   if (twitter) {
     listMeta.push(...[
       {
-        hid: 'twitter:card',
+        key: 'twitter:card',
         name: 'twitter:card',
         content: 'summary',
       },
       {
-        hid: 'twitter:creator',
+        key: 'twitter:creator',
         name: 'twitter:creator',
         content: '@NicoChocoChips',
       },
@@ -20,17 +20,17 @@ export const useOpenGraph = ({ twitter = true, title, description, image, articl
   // Facebook's OpenGraph meta
   listMeta.push(...[
     {
-      hid: 'og:title',
+      key: 'og:title',
       property: 'og:title',
       content: title,
     },
     {
-      hid: 'og:description',
+      key: 'og:description',
       property: 'og:description',
       content: description,
     },
     {
-      hid: 'og:type',
+      key: 'og:type',
       property: 'og:type',
       content: (article ? 'article' : 'website'),
     },
@@ -41,12 +41,12 @@ export const useOpenGraph = ({ twitter = true, title, description, image, articl
     if (imgURL) {
       listMeta.push(...[
         {
-          hid: 'og:image',
+          key: 'og:image',
           property: 'og:image',
           content: imgURL,
         },
         {
-          hid: 'og:image:url',
+          key: 'og:image:url',
           property: 'og:image:url',
           content: imgURL,
         },
@@ -54,21 +54,21 @@ export const useOpenGraph = ({ twitter = true, title, description, image, articl
     }
     if (imgwidth) {
       listMeta.push({
-        hid: 'og:image:width',
+        key: 'og:image:width',
         property: 'og:image:width',
         content: imgwidth,
       })
     }
     if (imgHeight) {
       listMeta.push({
-        hid: 'og:image:height',
+        key: 'og:image:height',
         property: 'og:image:height',
         content: imgHeight,
       })
     }
     if (imgAlt) {
       listMeta.push({
-        hid: 'og:image:alt',
+        key: 'og:image:alt',
         property: 'og:image:alt',
         content: imgAlt,
       })
@@ -78,48 +78,48 @@ export const useOpenGraph = ({ twitter = true, title, description, image, articl
   if (article) {
     const { publishedTime, modifiedTime, expirationTime, author, section, tags } = article
     listMeta.push({
-      hid: 'og:type',
+      key: 'og:type',
       property: 'og:type',
       content: 'article',
     })
     if (publishedTime) {
       listMeta.push({
-        hid: 'article:published_time',
+        key: 'article:published_time',
         property: 'article:published_time',
         content: publishedTime,
       })
     }
     if (modifiedTime) {
       listMeta.push({
-        hid: 'article:modified_time',
+        key: 'article:modified_time',
         property: 'article:modified_time',
         content: modifiedTime,
       })
     }
     if (expirationTime) {
       listMeta.push({
-        hid: 'article:expiration_time',
+        key: 'article:expiration_time',
         property: 'article:expiration_time',
         content: expirationTime,
       })
     }
     if (author) {
       listMeta.push({
-        hid: 'article:author',
+        key: 'article:author',
         property: 'article:author',
         content: author,
       })
     }
     if (section) {
       listMeta.push({
-        hid: 'article:section',
+        key: 'article:section',
         property: 'article:section',
         content: section,
       })
     }
     if (tags) {
       listMeta.push(...tags.map(tag => ({
-        hid: 'article:tag',
+        key: 'article:tag',
         property: 'article:tag',
         content: tag,
       })))

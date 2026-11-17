@@ -8,8 +8,10 @@
   div
     p.m-0
       nuxt-link(v-if='linkable' :to='$localePath(link)')
-        prismic-rich-text(class='entry-title' :field='entry.data.title')
-      prismic-rich-text(v-else class='entry-title' :field='entry.data.title')
+        .entry-title
+          prismic-rich-text(:field='entry.data.title')
+      .entry-title(v-else)
+        prismic-rich-text(:field='entry.data.title')
 
     p.m-0
       span

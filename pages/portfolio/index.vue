@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+import { filter } from '@prismicio/client'
+
 const { $prismic } = useNuxtApp()
 const { t } = useI18n()
 const iso = usePrismicLocale()
@@ -17,7 +19,7 @@ const page = computed(() => route.query.portfolio || 1)
 
 const { data: portfolioQuery, error: fetchError } = await useAsyncData('portfolio-index', () => {
   return $prismic.client.get({
-    filters: [$prismic.filter.at('document.type', 'portfolio_entry')],
+    filters: [filter.at('document.type', 'portfolio_entry')],
     lang: iso.value,
     orderings: { field: 'document.first_publication_date', direction: 'desc' },
     pageSize: 10,

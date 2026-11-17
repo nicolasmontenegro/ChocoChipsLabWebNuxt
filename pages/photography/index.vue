@@ -5,7 +5,8 @@
       //- One link for the photos and the title; only the title gets the link effect
       nuxt-link.simple(:to='localePath(link(entry))')
         PhotographyStack.mb-3(:photos="photosSlice(entry)")
-        prismic-rich-text.link-text.mb-3(:field='entry.data.title')
+        .link-text.mb-3
+          prismic-rich-text(:field='entry.data.title')
       p.has-text-grey-light.mb-3(v-if='entry.data.album_date') {{ formatAlbumDate(entry.data.album_date) }}
       prismic-rich-text(v-if='isFilled.richText(entry.data.description)' :field='entry.data.description')
 
@@ -13,7 +14,7 @@
 </template>
 
 <script setup>
-import { isFilled } from '@prismicio/client'
+import { filter, isFilled } from '@prismicio/client'
 import linkResolver from '~/prismic/linkResolver'
 
 const { $prismic } = useNuxtApp()
@@ -26,7 +27,7 @@ const page = computed(() => route.query.page || 1)
 
 const { data: photographyQuery, error: fetchError } = await useAsyncData('photography-index', () => {
   return $prismic.client.get({
-    filters: [$prismic.filter.at('document.type', 'photography_gdrive_entry')],
+    filters: [filter.at('document.type', 'photography_gdrive_entry')],
     lang: iso.value,
     orderings: [
       { field: 'my.photography_gdrive_entry.album_date', direction: 'desc' },

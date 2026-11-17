@@ -5,8 +5,10 @@
       figure#img-me.image.is-1by1
         img(:src="homePageData.about_me_image.url")
     .column.is-7-desktop.is-5-tablet.is-12-mobile.is-flex.is-flex-direction-column.is-align-self-center
-      prismic-rich-text.mb-5(:field="homePageData.about_me_title")
-      prismic-rich-text.mb-5(:field="homePageData.about_me_body")
+      .mb-5
+        prismic-rich-text(:field="homePageData.about_me_title")
+      .mb-5
+        prismic-rich-text(:field="homePageData.about_me_body")
       .columns
         .column.is-6.is-12-mobile
           nuxt-link.outlined.button.is-ghost.is-fullwidth(:to="$localePath({name: 'about-me'})")
