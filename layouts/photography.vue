@@ -24,4 +24,6 @@ useHead(head)
 
 <style lang="sass" scoped>
 #template
-  height: 100vh</style>
+  height: 100vh
+  // Dynamic viewport height: excludes the mobile browser bars, so they don't cover the bottom
+  height: 100dvh</style>

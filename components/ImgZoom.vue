@@ -77,14 +77,7 @@
     </div>
     <transition name="VueHoverfade">
       <div
-        v-if="touch && zoomed && loaded"
-        class="vh--close vh--abs vh--flex vh--jc vh--ai"
-        :class="'vh--' + closePos"
-        @click.stop="closeZoom"
-        v-html="'&times;'"
-      />
-      <div
-        v-else-if="loading"
+        v-if="loading"
         class="vh--loading-o vh--abs vh--flex vh--jc vh--ai"
       >
         <div
@@ -102,6 +95,8 @@ const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 const HINT_DURATION = 10000
 // A touch that moves less than this (in px) is a tap, not a drag
 const TAP_MAX_MOVE = 10
+// A horizontal touch move longer than this (in px), while not zoomed, is a swipe to change the photo
+const SWIPE_MIN_MOVE = 50
 
 export default {
   directives: {
@@ -156,10 +151,6 @@ export default {
       default: 0,
     },
     clickZoom: Boolean,
-    closePos: {
-      type: String,
-      default: 'top-left',
-    },
     messagePos: {
       type: String,
       default: 'bottom',
@@ -189,7 +180,7 @@ export default {
     },
   },
 
-  emits: ['regular-loaded', 'regular-error', 'zoom-loading', 'zoom-loaded', 'on-zoom', 'off-zoom'],
+  emits: ['regular-loaded', 'regular-error', 'zoom-loading', 'zoom-loaded', 'on-zoom', 'off-zoom', 'swipe-left', 'swipe-right'],
 
   data() {
     return {
@@ -262,16 +253,20 @@ export default {
       this.webpSupported = supported
     })
 
-    this.onResize = this.debounce(() => {
-      if (this.zoomed) {
-        this.measure()
-        this.panTo(this.pointerX, this.pointerY)
+    // Any change of the holder size (window resize, the details panel opening, …) refits the zoom.
+    // At most once per frame, so it follows CSS transitions smoothly
+    const holder = this.$refs.holder
+    this.resizeObserver = new ResizeObserver(() => {
+      if (this.zoomed && !this.resizeFrame) {
+        this.resizeFrame = requestAnimationFrame(() => {
+          this.resizeFrame = null
+          this.refit()
+        })
       }
-    }, 150)
-    window.addEventListener('resize', this.onResize)
+    })
+    this.resizeObserver.observe(holder)
 
     // passive: false so dragging the zoomed image doesn't scroll the page
-    const holder = this.$refs.holder
     holder.addEventListener('touchstart', this.onTouchStart, { passive: false })
     holder.addEventListener('touchmove', this.onTouchMove, { passive: false })
     holder.addEventListener('touchend', this.onTouchEnd)
@@ -282,7 +277,8 @@ export default {
   },
 
   beforeUnmount() {
-    window.removeEventListener('resize', this.onResize)
+    this.resizeObserver?.disconnect()
+    cancelAnimationFrame(this.resizeFrame)
     const holder = this.$refs.holder
     holder.removeEventListener('touchstart', this.onTouchStart)
     holder.removeEventListener('touchmove', this.onTouchMove)
@@ -292,14 +288,6 @@ export default {
   },
 
   methods: {
-    debounce(callback, wait) {
-      let timeout
-      return (...args) => {
-        clearTimeout(timeout)
-        timeout = setTimeout(() => callback(...args), wait)
-      }
-    },
-
     reset() {
       this.zoomed = false
       this.loaded = false
@@ -396,6 +384,14 @@ export default {
       this.panY = this.zoomHeight > this.origY ? -(this.zoomHeight - this.origY) * ratioY : (this.origY - this.zoomHeight) / 2
     },
 
+    // Re-measures after the holder changed size, keeping the same part of the photo in view
+    refit() {
+      const ratioX = this.zoomWidth > this.origX ? -this.panX / (this.zoomWidth - this.origX) : 0.5
+      const ratioY = this.zoomHeight > this.origY ? -this.panY / (this.zoomHeight - this.origY) : 0.5
+      this.measure()
+      this.panTo(this.origX * ratioX, this.origY * ratioY)
+    },
+
     zoomIn() {
       this.measure()
       if (this.touch) {
@@ -422,8 +418,8 @@ export default {
     },
 
     isZoom(type, action, event) {
-      // Some browsers still send the click after a tap that already zoomed out; don't zoom back in
-      if (action === 'click' && Date.now() - (this.lastTapClose ?? 0) < 500) {
+      // Some browsers still send the click after a tap that already zoomed out (or after a swipe); don't zoom in
+      if (action === 'click' && Date.now() - Math.max(this.lastTapClose ?? 0, this.lastSwipe ?? 0) < 500) {
         return
       }
       const hoverAction = action === 'hover' && !this.clickZoom && !this.touch
@@ -473,6 +469,9 @@ export default {
 
     onTouchStart(event) {
       if (!this.zoomed) {
+        // Not zoomed: only watch for a swipe, and let the page handle the touch as usual
+        const touch = event.changedTouches[0]
+        this.swipeStart = event.touches.length === 1 ? { x: touch.clientX, y: touch.clientY } : null
         return
       }
       if (event.cancelable) {
@@ -510,7 +509,19 @@ export default {
     },
 
     // touchstart cancels the click while zoomed (so dragging doesn't scroll the page), so a tap zooms out here
-    onTouchEnd() {
+    onTouchEnd(event) {
+      if (!this.zoomed && this.swipeStart) {
+        const touch = event.changedTouches[0]
+        const moveX = touch.clientX - this.swipeStart.x
+        const moveY = touch.clientY - this.swipeStart.y
+        this.swipeStart = null
+        // Mostly horizontal, so a vertical scroll isn't taken as a swipe
+        if (Math.abs(moveX) >= SWIPE_MIN_MOVE && Math.abs(moveX) > Math.abs(moveY) * 1.5) {
+          this.lastSwipe = Date.now()
+          this.$emit(moveX < 0 ? 'swipe-left' : 'swipe-right')
+        }
+        return
+      }
       if (this.zoomed && this.touchStart && !this.touchStart.moved) {
         this.lastTapClose = Date.now()
         this.closeZoom()
@@ -573,6 +584,11 @@ export default {
 }
 
 .vh--message {
+  // Centered explicitly: without left, the position depends on the browser's flex static position
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 20px);
+  width: max-content;
   background-color: rgb(0 0 0 / 65%);
   padding: 8px 15px;
   border-radius: 50px;
@@ -594,48 +610,6 @@ export default {
   font-size: 20px;
   margin-right: 5px;
   line-height: 20px
-}
-
-.vh--close {
-  line-height: 0;
-  background-color: rgb(0 0 0 / 65%);
-  border-radius: 50px;
-  font-size: 23px;
-  cursor: pointer;
-  height: 28px;
-  width: 28px
-}
-
-.vh--top-left {
-  top: 5px;
-  left: 5px
-}
-
-.vh--top-right {
-  top: 5px;
-  right: 5px
-}
-
-.vh--top-center {
-  top: 5px;
-  left: 50%;
-  transform: translateX(-50%)
-}
-
-.vh--bottom-left {
-  bottom: 5px;
-  left: 5px
-}
-
-.vh--bottom-right {
-  bottom: 5px;
-  right: 5px
-}
-
-.vh--bottom-center {
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%)
 }
 
 .vh--loading-o {

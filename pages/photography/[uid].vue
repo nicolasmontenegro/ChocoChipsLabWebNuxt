@@ -6,7 +6,7 @@
       nuxt-link.back-button.p-2(:to="localePath({name: 'photography'})")
         span {{ $t('navigation.back') }}
       a.simple.toggle-panel-button.px-3.py-2(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen" v-if="!panelIsOpen")
-        font-awesome-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
+        font-awesome-icon.toggle-panel-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
         span
           | {{ $t('photography.details.panel.open') }}
           font-awesome-icon.ml-2(icon="info-circle" size="lg" )
@@ -18,23 +18,25 @@
           :zoom-amount="3"
           :click-zoom="true"
           @regular-loaded="isLoaded = true"
-          @regular-error="retryDriveImage")
+          @regular-error="retryDriveImage"
+          @swipe-left="showPhoto(currentPhoto + 1)"
+          @swipe-right="showPhoto(currentPhoto - 1)")
     .details-panel.is-flex.is-flex-direction-column
       .metadata
         p.title.is-5.mx-5.mt-4.mb-2
           font-awesome-icon.mr-2(icon="camera" size="lg" )
           | {{ $t('photography.details.metadata.title') }}
         .columns.mx-3.mb-4
-          .column.is-6(v-if="currentPhotoMetadata.exposureTime")
+          .column.is-6.is-6-mobile(v-if="currentPhotoMetadata.exposureTime")
             p.has-text-weight-bold {{ $t('photography.details.metadata.exposure') }}
             p {{ currentPhotoMetadata.exposureTime }}
-          .column.is-6(v-if="currentPhotoMetadata.aperture")
+          .column.is-6.is-6-mobile(v-if="currentPhotoMetadata.aperture")
             p.has-text-weight-bold {{ $t('photography.details.metadata.aperture') }}
             p {{ currentPhotoMetadata.aperture }}
-          .column.is-6(v-if="currentPhotoMetadata.iso")
+          .column.is-6.is-6-mobile(v-if="currentPhotoMetadata.iso")
             p.has-text-weight-bold {{ $t('photography.details.metadata.iso') }}
             p {{ currentPhotoMetadata.iso }}
-          .column.is-6(v-if="cameraModel")
+          .column.is-6.is-6-mobile(v-if="cameraModel")
             p.has-text-weight-bold {{ $t('photography.details.metadata.model') }}
             p {{ cameraModel }}
           .column.is-12(v-if="currentPhotoMetadata.dateTimeOriginal")
@@ -52,7 +54,7 @@
                 strong {{ link.label }} &#8599;
 
       a.simple.toggle-panel-button.px-5.py-2.is-relative(href="#" :class="{'show-overflow': !panelIsOpen}" v-on:click.stop.prevent="panelIsOpen = !panelIsOpen")
-        font-awesome-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
+        font-awesome-icon.toggle-panel-icon.mr-2(icon="angle-left" size="lg" :rotation="panelIsOpen ? 180 : 0"  )
         span {{ $t(panelIsOpen ? 'photography.details.panel.close' : 'photography.details.panel.open') }}
   .columns.thumbnails.is-gapless
     .column.is-12
@@ -90,6 +92,14 @@ if (fetchError.value) {
 
 const currentPhoto = ref(0)
 const panelIsOpen = ref(true)
+
+// Details panel: open by default on desktop, closed on mobile (same breakpoint as the CSS: Bulma's $tablet).
+// Set on mount because the server doesn't know the screen size
+onMounted(() => {
+  if (window.matchMedia('(max-width: 769px)').matches) {
+    panelIsOpen.value = false
+  }
+})
 const isLoaded = ref(false)
 
 const photos = computed(() => parseGdrivePhotos(entry.value?.data.photo_ids)
@@ -111,6 +121,13 @@ const title = computed(() => entry.value ? asText(entry.value.data.title) : t('s
 watch(currentPhoto, () => {
   isLoaded.value = false
 })
+
+// Swiping past the first or last photo does nothing
+function showPhoto(index) {
+  if (index >= 0 && index < photos.value.length) {
+    currentPhoto.value = index
+  }
+}
 
 // EXIF dates are written as "2023:11:12 04:30:10"
 function formatExifDate(date) {
@@ -135,7 +152,9 @@ html
   height: 100%
   display: grid
   grid-auto-flow: row
-  grid-template-rows: auto 70px
+  // minmax(0, …): the tracks never grow to fit the photo, so the viewer keeps its size between photos
+  grid-template-rows: minmax(0, 1fr) 70px
+  grid-template-columns: minmax(0, 1fr)
   row-gap: 0
 
   .show-space
@@ -150,12 +169,13 @@ html
 
     @media screen and (max-width: $tablet)
       grid-auto-flow: row
-      grid-template-rows: auto 0
-      grid-template-columns: none !important
+      grid-template-rows: minmax(0, 1fr) minmax(0, 0fr)
+      grid-template-columns: minmax(0, 1fr) !important
       transition: grid-template-rows 150ms ease-in-out
 
+      // Photo 60% / details 40%; the details panel scrolls inside its own row
       &.panel-is-open
-        grid-template-rows: auto 40%
+        grid-template-rows: minmax(0, 3fr) minmax(0, 2fr)
 
     :deep(.loading-overlay .loading-background)
       background-color: rgba(0, 0, 0, 0.5)
@@ -186,8 +206,17 @@ html
           width: 100%
           object-fit: contain
 
+    // On mobile the panel opens below the photo: point the arrow up/down instead of left/right
+    .toggle-panel-icon
+      @media screen and (max-width: $tablet)
+        transform: rotate(90deg)
+
+        &.fa-rotate-180
+          transform: rotate(-90deg)
+
     .details-panel
       // height: 100%
+      min-height: 0
       background-color: rgba(0, 0, 0, 0.32)
       overflow: hidden
       .metadata
