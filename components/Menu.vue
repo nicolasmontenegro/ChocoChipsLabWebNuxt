@@ -26,9 +26,9 @@
               .my-4
                 p {{ $t(`menu.sections`) }}
               .my-4
-                nuxt-link.is-flex-grow-1(:to="localePath({name: 'portfolio'})")
+                nuxt-link.is-flex-grow-1(:to="localePath({name: 'about-me'})")
                   span.title.is-1
-                    strong(@click="is_expanded = false") {{ $t('sections.portfolio') }}
+                    strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
               .my-4
                 nuxt-link.is-flex-grow-1(:to="localePath({name: 'blog'})")
                   span.title.is-1
@@ -37,10 +37,6 @@
                 nuxt-link.is-flex-grow-1(:to="localePath({name: 'photography'})")
                   span.title.is-1
                     strong(@click="is_expanded = false") {{ $t('sections.photography') }}
-              .my-4
-                nuxt-link.is-flex-grow-1(:to="localePath({name: 'about-me'})")
-                  span.title.is-1
-                    strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
 </template>
 
 <script setup>

@@ -28,8 +28,8 @@ export default {
   },
   menu: {
     title: 'Menú',
-    close: 'cerrar',
-    sections: 'seccione',
+    close: 'Cerrar',
+    sections: 'Secciones',
   },
   blog: {
     related: 'Publicación relacionada',
