@@ -1,6 +1,18 @@
 <template lang="pug">
 .home-section.is-flex.is-align-content-center.py-6(intersection-style="home")
-  #bg-animation
+  //- Background: a static SVG of dots, slowly panned with a CSS animation
+  #bg-animation(aria-hidden="true")
+    //- Experiment: ?bg=canvas draws the same background on a canvas, to compare performance
+    HomeBgMosaicCanvas(
+      v-if="bgRenderer === 'canvas'"
+      :paused="!isIntersectingBg"
+      :style="{ opacity: bgOpacity }")
+    .bg-mosaic-frame(v-else)
+      img.bg-mosaic(
+        src="/images/bg-mosaic.svg"
+        alt=""
+        :class="{ 'is-paused': !isIntersectingBg }"
+        :style="{ opacity: bgOpacity }")
   .columns.is-centered.is-flex-grow-1
     .column.is-3-desktop.is-4-tablet.is-8-mobile.is-flex.is-flex-direction-column.is-align-self-center
       VectorLogo
@@ -28,73 +40,38 @@ export default {
   data() {
     return {
       intersectionObserverBg: null,
-      bg_animation: null,
-      resizeTimeout: null,
       isIntersectingBg: false,
+      bgOpacity: 1,
     }
   },
+  computed: {
+    bgRenderer() {
+      return this.$route.query.bg === 'canvas' ? 'canvas' : 'css'
+    },
+  },
   mounted() {
-    this.$lottie.setQuality('low')
-    this.$lottie.setSubframeRendering(false)
-    this.bg_animation = this.$lottie.loadAnimation({
-      container: document.querySelector('#bg-animation'),
-      renderer: 'canvas',
-      loop: true,
-      autoplay: true,
-      path: '/lottie/bg-mosaic.json',
-      rendererSettings: {
-        preserveAspectRatio: 'xMinYMin slice',
-        clearCanvas: true,
-      },
-    })
-
-    window.addEventListener('resize', this.bgAnimationResizeMethod)
-    document.addEventListener('visibilitychange', this.bgAnimationVisibilityMethod)
-
+    // Fades the background out while scrolling past the header, and pauses the animation when hidden
     this.intersectionObserverBg = new IntersectionObserver(
-      // callback
-      (entries, observer) => {
+      (entries) => {
         entries.forEach((entry) => {
-          document
-            .querySelector('#bg-animation canvas')
-            .style.opacity = entry.intersectionRatio / 0.4
+          this.bgOpacity = entry.intersectionRatio / 0.4
           this.isIntersectingBg = entry.isIntersecting
-          entry.isIntersecting ? this.bg_animation.play() : this.bg_animation.pause()
         })
       },
-      // options
       {
         root: null,
         rootMargin: '-50% 0px 0px 0px',
         threshold: [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4],
       },
     )
-
-    this.intersectionObserverBg.observe(document.querySelector('.home-section'))
+    this.intersectionObserverBg.observe(this.$el)
   },
   beforeUnmount() {
-    if (this.intersectionObserverBg) { this.intersectionObserverBg.disconnect() }
-    if (this.resizeTimeout) { clearTimeout(this.resizeTimeout) }
-    window.removeEventListener('resize', this.bgAnimationResizeMethod)
-    document.removeEventListener('visibilitychange', this.bgAnimationVisibilityMethod)
+    this.intersectionObserverBg?.disconnect()
   },
   methods: {
     arrayIcon: (iconString) => {
       return iconString.split(/-(.*)/).splice(0, 2)
-    },
-    bgAnimationResizeMethod() {
-      clearTimeout(this.resizeTimeout)
-      this.resizeTimeout = setTimeout(() => {
-        this.bg_animation.resize()
-      }, 150)
-    },
-    bgAnimationVisibilityMethod() {
-      if (document.hidden) {
-        this.bg_animation.pause()
-      }
-      else if (this.isIntersectingBg) {
-        this.bg_animation.play()
-      }
     },
   },
 }
@@ -112,19 +89,41 @@ export default {
     top: 0
     left: 0
 
-    display: flex
-    flex-wrap: wrap
-
+    overflow: hidden
     opacity: 0.35
-
     pointer-events: none
 
-    :deep(canvas)
-      transition: opacity 150ms ease-out
-      opacity: 1
-      width: 100%
-      height: auto !important
-      transform-origin: unset !important
+  // Same framing as the original animation: a 2000×2000 frame covering the viewport from the top-left
+  // corner. The values below are the mosaic's position and movement inside that frame, in %
+  .bg-mosaic-frame
+    position: absolute
+    top: 0
+    left: 0
+    width: max(100vw, 100vh)
+    aspect-ratio: 1
+
+  .bg-mosaic
+    position: absolute
+    // Mosaic (2905×3236) placed at (-676.5, -954) of the 2000×2000 frame
+    top: -47.7%
+    left: -33.825%
+    width: 145.25%
+    max-width: none
+    height: auto
+    transition: opacity 150ms ease-out
+    will-change: transform
+    animation: bg-mosaic-pan 6s cubic-bezier(0.167, 0.167, 0.833, 0.833) infinite
+
+    &.is-paused
+      animation-play-state: paused
+
+    @media (prefers-reduced-motion: reduce)
+      animation: none
+
+  // Moves (330, 337) frame units: percentages of the mosaic's own size (2905×3236)
+  @keyframes bg-mosaic-pan
+    to
+      transform: translate(11.36%, 10.414%)
 
   .title
     font-size: 3.75rem

@@ -29,7 +29,6 @@
     "@vueuse/core": "^11.1.0",
     "bulma": "^0.9.4",
     "cross-env": "^7.0.3",
-    "lottie-web": "^5.7.13",
     "nuxt": "^3.13.2",
     "pinia": "^2.2.4",
     "postscribe": "^2.0.8"

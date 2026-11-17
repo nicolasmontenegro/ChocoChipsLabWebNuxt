@@ -22,7 +22,6 @@ export default defineNuxtConfig({
   plugins: [
     { src: '~/plugins/postscribe.js', mode: 'client' },
     '~/plugins/fontawesome.js',
-    { src: '~/plugins/lottie.js', mode: 'client' },
   ],
   ssr: false,
 
