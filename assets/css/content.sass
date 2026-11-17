@@ -65,6 +65,19 @@
       &:focus, &:focus > *, &:focus-within, &:focus-within > *
         color: darken( $link-hover-color, 10% ) !important
 
+    // Same colors for the .link-text part of a .simple link (see main.sass)
+    a.simple .link-text
+      &, & *
+        transition: color 500ms ease-out, background-size 333ms ease-out
+
+    a.simple:hover .link-text
+      &, & *
+        color: $link-hover-color !important
+
+    a.simple:focus .link-text, a.simple:focus-within .link-text
+      &, & *
+        color: darken( $link-hover-color, 10% ) !important
+
     &::before
       background-color: $background-color
       @include transition-fade(background-color)

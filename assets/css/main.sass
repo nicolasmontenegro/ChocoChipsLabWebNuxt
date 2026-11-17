@@ -30,28 +30,36 @@ h1, h2, h3, h4, h5, h6, .title
   font-family: 'Palanquin Dark', sans-serif
   line-height: 100% !important
 
+// Hover highlight for links. The bar under text is a rounded SVG rect instead of a gradient:
+// border-radius only rounds the element box, which a 60%-tall bar never reaches. The SVG has no
+// viewBox, so it renders at the background-size without stretching and rx stays 5px.
+// box-decoration-break: clone gives each line of a wrapped title its own rounded bar
+$link-highlight-bar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' rx='5' fill='white'/%3E%3C/svg%3E")
+
+%link-highlight-text
+  display: inline
+  background-image: $link-highlight-bar
+  background-repeat: no-repeat
+  background-position: 0% 55%
+  background-size: 0% 60%
+  transition: background-size 333ms ease-out
+  box-decoration-break: slice
+  -webkit-box-decoration-break: slice
+
 a:not(.simple)
   &.button,
-  &:not(:has(*)),
-  &:not(.button) > *
+  &:not(:has(*))
     background-image: linear-gradient(#fff, #fff)
     background-repeat: no-repeat
-    background-position: 0% 55%
-    background-size: 0% 60%
+    background-position: 0% 100%
+    background-size: 0% 100%
     border-radius: 5px
     transition: background-size 333ms ease-out
     box-decoration-break: slice
     -webkit-box-decoration-break: slice
-  
-  &.button,
-  &:not(:has(*))
-    background-position: 0% 100%
-    background-size: 0% 100%
-  
+
   &:not(.button) > *
-    display: inline
-    background-position: 0% 55%
-    background-size: 0% 60%
+    @extend %link-highlight-text
 
   // &.button
   //   display: inline-block
@@ -67,7 +75,15 @@ a:not(.simple)
 
   &:hover:not(.button) > *
     background-size: 100% 60%
-    
+
+// For links that wrap more than text (e.g. photos and a title): the link uses .simple to skip the
+// effect, and only the content marked with .link-text gets it
+a.simple .link-text > *
+  @extend %link-highlight-text
+
+a.simple:hover .link-text > *
+  background-size: 100% 60%
+
 
 .title-main
   margin: 2rem

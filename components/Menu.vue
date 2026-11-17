@@ -137,6 +137,10 @@ onClickOutside(menuColumn, () => {
       .title
         display: inline-block
 
+      // Inside links keep it inline, so the hover highlight (main.sass) follows the text lines
+      a > .title
+        display: inline
+
     & > .columns
         height: 100vh
 

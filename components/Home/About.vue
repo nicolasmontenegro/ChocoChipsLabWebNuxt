@@ -9,10 +9,10 @@
       prismic-rich-text.mb-5(:field="homePageData.about_me_body")
       .columns
         .column.is-6.is-12-mobile
-          nuxt-link(:to="$localePath({name: 'about-me'})")
+          nuxt-link.outlined.button.is-ghost.is-fullwidth(:to="$localePath({name: 'about-me'})")
             strong(@click="is_expanded = false") {{ $t('sections.about_me') }}
         .column.is-6.is-12-mobile
-          prismic-link(:field="homePageData.about_me_link_url")
+          prismic-link.outlined.button.is-ghost.is-fullwidth(:field="homePageData.about_me_link_url")
             strong
               font-awesome-icon.mr-2(:icon="arrayIcon(homePageData.about_me_link_icon)" size="lg" )
               | {{ homePageData.about_me_link_label }} &#8599;
