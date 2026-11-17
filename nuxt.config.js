@@ -86,8 +86,13 @@ export default defineNuxtConfig({
 
   i18n: {
     restructureDir: '.',
+    // Public URL of the site, needed for the canonical/hreflang SEO links. Set it with the
+    // NUXT_PUBLIC_I18N_BASE_URL environment variable (e.g. in .env or the deploy environment)
+    baseUrl: '',
     locales: [
-      { name: 'Español', code: 'es', iso: 'es-cl', file: 'es-CL.js' },
+      // language: used by i18n for the SEO tags (<html lang>, hreflang, og:locale)
+      // iso: Prismic's locale code, read by usePrismicLocale and useEntryData
+      { name: 'Español', code: 'es', language: 'es-CL', iso: 'es-cl', file: 'es-CL.js' },
     ],
     defaultLocale: 'es',
     strategy: 'prefix',

@@ -2,9 +2,6 @@
   <!-- <?xml version="1.0" encoding="UTF-8" standalone="no"?> -->
   <svg
     id="svg24"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:cc="http://creativecommons.org/ns#"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:svg="http://www.w3.org/2000/svg"
     xmlns="http://www.w3.org/2000/svg"
     height="90"
@@ -15,13 +12,7 @@
     x="0px"
     version="1.1"
     class="logo cookie"
-  ><metadata
-    id="metadata30"
-  ><rdf:RDF><cc:Work
-    rdf:about=""
-  ><dc:format>image/svg+xml</dc:format><dc:type
-    rdf:resource="http://purl.org/dc/dcmitype/StillImage"
-  /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+  ><defs
     id="defs28"
   /><path
     id="path2"
